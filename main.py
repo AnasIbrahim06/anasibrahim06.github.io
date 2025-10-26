@@ -10,7 +10,7 @@ def home():
 def projects():
     return render_template("projects.html")
 
-@app.route("/projectsdetails1")
+@app.route("/projectdetails1")
 def projectsdetails1():
     return render_template("projectdetails1.html")
 
