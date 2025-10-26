@@ -933,9 +933,9 @@
                 <div class="project-header">
                     <div class="project-icon"><i class="fas fa-chart-line"></i></div>
                     <div class="project-links">
-                        <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                        <a href="/projects" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
+  <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+  <a href="/projects" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+</div>
                 </div>
                 <h3>Sales Analytics Dashboard</h3>
                 <p>Built an interactive dashboard to visualize sales trends, customer segmentation, and revenue forecasting. Helped identify a 20% increase in conversion opportunities through data-driven insights.</p>
@@ -1229,6 +1229,13 @@
                 el.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
+
+        fetch('projects.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('intex-container').innerHTML = data;
+    });
+
     </script>
 </body>
 </html>
