@@ -220,6 +220,12 @@
             overflow: hidden;
         }
 
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .project-image::before {
             content: '';
             position: absolute;
@@ -362,10 +368,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 1.2rem;
             border: 1px solid rgba(96, 165, 250, 0.2);
             cursor: pointer;
             transition: all 0.3s;
+            color: #60a5fa;
+            font-weight: 600;
         }
 
         .gallery-item:hover {
@@ -417,10 +425,7 @@
             <a href="/" class="logo">AI</a>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
-                <!-- <li><a href="skills.html">Skills</a></li>
                 <li><a href="projects.html" class="active">Projects</a></li>
-                <li><a href="experience.html">Experience</a></li>
-                <li><a href="contact.html">Contact</a></li> -->
             </ul>
         </div>
     </nav>
@@ -434,8 +439,8 @@
 
             <!-- Project Header -->
             <div class="project-header">
-                <div class="project-icon">📊</div>
-                <h1>Social Media Advertisement</h1>
+                <div class="project-icon">📱</div>
+                <h1>Social Media Advertisement Performance</h1>
                 
                 <div class="project-meta">
                     <div class="meta-item">
@@ -454,48 +459,49 @@
 
                 <div class="project-tags">
                     <span class="tag">Power BI</span>
-                    <span class="tag">SQL</span>
-                    <span class="tag">Excel</span>
+                    <span class="tag">Social Media Analytics</span>
+                    <span class="tag">Marketing Intelligence</span>
                     <span class="tag">Data Visualization</span>
+                    <span class="tag">Campaign Analysis</span>
                 </div>
 
                 <div class="action-buttons">
-                    <a href="https://app.powerbi.com/view?r=eyJrIjoiYmFiN2ZlNDctYzNkZi00MDBkLTg2MGYtZmJiY2UxOTEwM2U4IiwidCI6IjQ2NTRiNmYxLTBlNDctNDU3OS1hOGExLTAyZmU5ZDk0M2M3YiIsImMiOjl9" class="btn btn-primary">
+                    <a href="https://app.powerbi.com/view?r=eyJrIjoiYmFiN2ZlNDctYzNkZi00MDBkLTg2MGYtZmJiY2UxOTEwM2U4IiwidCI6IjQ2NTRiNmYxLTBlNDctNDU3OS1hOGExLTAyZmU5ZDk0M2M3YiIsImMiOjl9" class="btn btn-primary" target="_blank">
                         <span>🔗</span>
                         View Live Dashboard
                     </a>
-                    <a href="https://app.powerbi.com/view?r=eyJrIjoiYmFiN2ZlNDctYzNkZi00MDBkLTg2MGYtZmJiY2UxOTEwM2U4IiwidCI6IjQ2NTRiNmYxLTBlNDctNDU3OS1hOGExLTAyZmU5ZDk0M2M3YiIsImMiOjl9" class="btn">
+                    <a href="https://app.powerbi.com/view?r=eyJrIjoiYmFiN2ZlNDctYzNkZi00MDBkLTg2MGYtZmJiY2UxOTEwM2U4IiwidCI6IjQ2NTRiNmYxLTBlNDctNDU3OS1hOGExLTAyZmU5ZDk0M2M3YiIsImMiOjl9" class="btn" target="_blank">
                         <span>📄</span>
-                        Download Report
+                        View Report
                     </a>
                 </div>
             </div>
 
             <!-- Project Image -->
-        <div class="project-image-container">
-  <div>
-    <img src="images/Screenshot 2025-11-25 224158.png" alt="Project Screenshot">
-  </div>
-</div>
+            <div class="project-image-container">
+                <div class="project-image">
+                    📊
+                </div>
+            </div>
 
             <!-- Overview Section -->
             <div class="content-section">
                 <h2><span>📋</span> Project Overview</h2>
                 <p>
-                    This project involves acting as a data analyst for the Consumer Financial Protection Bureau (CFPB). The primary goal is to analyze a comprehensive dataset of consumer complaints regarding financial products and services across the United States.
+                    This project delivers a comprehensive analysis of social media advertisement performance across multiple platforms including Facebook, Instagram, and TikTok. The dashboard provides actionable insights into campaign effectiveness, audience engagement patterns, and budget allocation strategies.
                 </p>
                 <p>
-                    The analysis focuses on identifying key trends, patterns, and areas of concern. This includes evaluating the timeliness and effectiveness of company responses, identifying geographic hotspots for complaints, and pinpointing which financial products and issues are most problematic for consumers.
+                    The analysis encompasses three key dimensions: audience demographics and behavior, overall campaign performance metrics, and temporal trends in engagement and budget utilization. This multi-faceted approach enables data-driven decision-making for optimizing social media advertising strategies.
                 </p>
 
                 <h3>Problem Statement</h3>
                 <p>
-                    The CFPB collects thousands of complaints, but this raw data is difficult to act upon without a structured analysis. The core problem is to translate this large volume of complaint data into clear, actionable insights.
+                    Social media advertising generates vast amounts of data across multiple platforms, making it challenging to extract meaningful insights. Marketing teams need to understand which demographics respond best, when to post for maximum engagement, and how to allocate budgets effectively across campaigns and platforms.
                 </p>
 
                 <h3>Solution</h3>
                 <p>
-                    Created an interactive Power BI dashboard that consolidates data from multiple sources, providing real-time visibility into sales performance with drill-down capabilities for detailed analysis.
+                    Created an interactive Power BI dashboard with three specialized pages that consolidate social media advertising data, providing real-time visibility into audience insights, campaign performance, and engagement trends with drill-down capabilities for detailed analysis across demographics, geography, and time periods.
                 </p>
             </div>
 
@@ -503,14 +509,21 @@
             <div class="content-section">
                 <h2><span>📊</span> Key Results & Impact</h2>
                 <div class="metrics-grid">
-                    
                     <div class="metric-card">
-                        <div class="metric-value">20+</div>
-                        <div class="metric-label">KPIs Tracked</div>
+                        <div class="metric-value">340K</div>
+                        <div class="metric-label">Total Impressions</div>
                     </div>
                     <div class="metric-card">
-                        <div class="metric-value">80%</div>
-                        <div class="metric-label">User Satisfaction</div>
+                        <div class="metric-value">60K</div>
+                        <div class="metric-label">Total Engagement</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">15.05%</div>
+                        <div class="metric-label">Engagement Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">400K</div>
+                        <div class="metric-label">Ads Viewed</div>
                     </div>
                 </div>
             </div>
@@ -519,12 +532,16 @@
             <div class="content-section">
                 <h2><span>✨</span> Key Features</h2>
                 <ul>
-                    <li>Dual-page design for high-level "Overview" and granular "Strategic Insights".</li>
-                    <li>At-a-glance KPIs display critical metrics like Total Complaints and Resolution Rate.</li>
-                    <li>Geographic map and bar charts pinpoint state-level complaint hotspots.</li>
-                    <li>Line and bar charts reveal key seasonal (summer peak) and long-term (2017-2023) trends</li>
-                    <li>Treemap and tables drill down into the most common products, issues, and sub-issues.</li>
-                    <li>Donut chart clearly identifies the Web (72.66%) as the primary complaint channel.</li>
+                    <li>Three-page design structure: Overview for campaign performance, Ad & Audience for demographic insights, and Trends for temporal analysis</li>
+                    <li>Comprehensive KPI tracking including impressions (340K), engagement (60K), engagement rate (15.05%), shares (2K), likes (12K), and 50 total campaigns</li>
+                    <li>Demographic analysis revealing audience composition by age and gender, with 16-24 age group showing highest engagement at 71K views</li>
+                    <li>Time-based insights showing Wednesday as peak engagement day and 20:00-21:00 as peak hour for user interaction</li>
+                    <li>Geographic heat map displaying global ad distribution and user engagement across multiple countries and regions</li>
+                    <li>Platform-specific performance metrics comparing Facebook and Instagram across different ad types (Stories, Carousel, Image, Video)</li>
+                    <li>Budget allocation analysis with total budget of 2.54M distributed across seasonal campaigns (Winter 46.34%, Launch 19.41%, Summer 16.7%, Q3 17.53%)</li>
+                    <li>Gender distribution analysis showing balanced targeting with female audience at 41.43% and male at 23.04%</li>
+                    <li>Campaign performance trends tracking engagement patterns across months from February to July</li>
+                    <li>Interactive filtering capabilities for drilling down into specific platforms, age groups, ad types, and time periods</li>
                 </ul>
             </div>
 
@@ -534,18 +551,20 @@
                 
                 <h3>Data Pipeline</h3>
                 <ul>
-                    <li>Extracted data from multiple sources including SQL Server, Excel files</li>
-                    <li>Implemented ETL processes using Power Query for data cleaning and transformation</li>
-                    <li>Created a star schema data model for optimal query performance</li>
-                    <li>Set up automated data refresh schedules using Power BI Service</li>
+                    <li>Integrated data from multiple social media platforms including Facebook, Instagram, and TikTok APIs</li>
+                    <li>Implemented ETL processes using Power Query for cleaning and standardizing cross-platform advertising data</li>
+                    <li>Created a star schema data model linking campaign, audience, location, and time dimensions</li>
+                    <li>Set up automated data refresh schedules to capture real-time advertising performance metrics</li>
                 </ul>
 
                 <h3>Analysis Techniques</h3>
                 <ul>
-                    <li>Time series analysis for trend identification and forecasting</li>
-                    <li>The data model enables cross-filtering across the entire report.</li>
-                    <li>Map visual and a bar chart to spatially identify complaint hotspots</li>
-                    <li>DAX calculations for complex business metrics and KPIs</li>
+                    <li>Time series analysis to identify peak engagement days (Wednesday) and hours (20:00-21:00)</li>
+                    <li>Demographic segmentation analysis revealing optimal audience targeting by age groups and gender</li>
+                    <li>Geographic visualization using map visuals to identify high-performing regions and user distribution</li>
+                    <li>Budget optimization analysis tracking adjusted budget (578.08K) vs average budget (48.17K) across campaigns</li>
+                    <li>Platform performance comparison using stacked bar charts and tables for granular ad type analysis</li>
+                    <li>DAX calculations for complex metrics including engagement rates, cumulative trends, and time-slot performance</li>
                 </ul>
 
                 <h3>Technologies Used</h3>
@@ -555,14 +574,13 @@
                         <div class="tech-name">Power BI</div>
                     </div>
                     <div class="tech-item">
-                        <div class="tech-icon">🗄️</div>
-                        <div class="tech-name">SQL Server</div>
+                        <div class="tech-icon">📱</div>
+                        <div class="tech-name">Social Media APIs</div>
                     </div>
                     <div class="tech-item">
                         <div class="tech-icon">📈</div>
                         <div class="tech-name">Excel</div>
                     </div>
-                    
                     <div class="tech-item">
                         <div class="tech-icon">🔄</div>
                         <div class="tech-name">Power Query</div>
@@ -571,61 +589,36 @@
                         <div class="tech-icon">📐</div>
                         <div class="tech-name">DAX</div>
                     </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🗺️</div>
+                        <div class="tech-name">Azure Maps</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Challenges Section -->
-            <!-- <div class="content-section">
-                <h2><span>⚡</span> Challenges & Solutions</h2>
-                
-                <h3>Challenge 1: Data Quality Issues</h3>
-                <p>
-                    Initial data contained inconsistencies, duplicates, and missing values from multiple legacy systems.
-                </p>
-                <p>
-                    <strong>Solution:</strong> Implemented robust data validation rules in Power Query, created data quality reports, and worked with source system owners to improve data entry processes.
-                </p>
-
-                <h3>Challenge 2: Performance Optimization</h3>
-                <p>
-                    Dashboard was initially slow with large datasets containing millions of transactions.
-                </p>
-                <p>
-                    <strong>Solution:</strong> Optimized the data model using aggregations, implemented incremental refresh, and created calculated columns vs measures strategically for better performance.
-                </p>
-
-                <h3>Challenge 3: User Adoption</h3>
-                <p>
-                    Initial resistance from sales team unfamiliar with BI tools.
-                </p>
-                <p>
-                    <strong>Solution:</strong> Conducted training sessions, created user guides, and incorporated feedback loops to make the dashboard more intuitive and user-friendly.
-                </p>
-            </div> -->
-
             <!-- Lessons Learned -->
             <div class="content-section">
-                <h2><span>💡</span> Lessons  Learned</h2>
+                <h2><span>💡</span> Key Insights & Learnings</h2>
                 <ul>
-                    <li>Importance of stakeholder engagement throughout the development process</li>
-                    <li>Value of iterative development with regular feedback cycles</li>
-                    <li>Need for comprehensive data documentation and metadata management</li>
-                    <li>Significance of performance testing with production-scale data early in development</li>
-                    <li>Critical role of user training and change management in BI project success</li>
+                    <li>Peak engagement occurs on Wednesday between 20:00-21:00, indicating optimal posting times for maximum reach</li>
+                    <li>The 16-24 age demographic demonstrates highest engagement levels, suggesting content should be tailored for younger audiences</li>
+                    <li>Female audience shows higher engagement rate (41.43%) compared to male (23.04%), informing gender-specific targeting strategies</li>
+                    <li>Winter campaigns captured largest budget share (46.34%), reflecting seasonal advertising priorities</li>
+                    <li>Platform diversification across Facebook and Instagram with varied ad types (Stories, Carousel, Image, Video) yields comprehensive reach</li>
+                    <li>Geographic distribution reveals concentrated engagement in specific regions, enabling localized campaign optimization</li>
+                    <li>Importance of multi-dimensional analysis combining temporal, demographic, and geographic factors for holistic performance understanding</li>
                 </ul>
             </div>
 
             <!-- Gallery Section -->
             <div class="content-section">
-                <h2><span>🖼️</span> Dashboard Screenshots</h2>
+                <h2><span>🖼️</span> Dashboard Pages</h2>
                 <div class="gallery">
-                    <div class="gallery-item">📈</div>
-                    <div class="gallery-item">🗺️</div>
-                    <div class="gallery-item">👥</div>
+                    <div class="gallery-item">📱 Ad & Audience</div>
+                    <div class="gallery-item">📊 Overview</div>
+                    <div class="gallery-item">📈 Trends</div>
                 </div>
             </div>
-
-            
 
         </div>
     </main>
