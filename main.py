@@ -14,5 +14,7 @@ def projects():
 def projectsdetails1():
     return render_template("projectdetails1.html")
 
+
+
 if __name__ == "__main__":
     app.run(debug=True)
