@@ -1462,7 +1462,7 @@
     
     <section id="contact">
         <h2 class="section-title">
-            <span class="section-number">05.</span>
+            <span class="section-number">08.</span>
             Get In Touch
         </h2>
         <div class="contact-content">
@@ -1698,7 +1698,7 @@
         });
 
 
-        // Quiz Game
+        // Quiz Game - Fixed
 const quizQuestions = [
     {
         question: "What does SQL stand for?",
@@ -1724,18 +1724,25 @@ const quizQuestions = [
 
 let currentQuestion = 0;
 let score = 0;
+let quizActive = false;
 
 function startQuiz() {
-    document.getElementById('quiz-area').style.display = 'block';
+    const quizArea = document.getElementById('quiz-area');
+    quizArea.style.display = 'block';
     currentQuestion = 0;
     score = 0;
+    quizActive = true;
     showQuestion();
 }
 
 function showQuestion() {
+    const questionContainer = document.getElementById('question-container');
+    const scoreDisplay = document.getElementById('score-display');
+    
     if (currentQuestion >= quizQuestions.length) {
-        document.getElementById('question-container').innerHTML = '';
-        document.getElementById('score-display').innerHTML = `Quiz Complete! Score: ${score}/${quizQuestions.length}`;
+        questionContainer.innerHTML = '<h3 style="color: var(--accent); text-align: center;">Quiz Complete!</h3>';
+        scoreDisplay.innerHTML = `Final Score: ${score}/${quizQuestions.length} ✨`;
+        quizActive = false;
         return;
     }
 
@@ -1743,16 +1750,26 @@ function showQuestion() {
     let html = `<h4 style="color: var(--white); margin-bottom: 1rem;">Q${currentQuestion + 1}: ${q.question}</h4>`;
     
     q.options.forEach((option, index) => {
-        html += `<div class="quiz-option" onclick="checkAnswer(${index})">${option}</div>`;
+        html += `<div class="quiz-option" data-index="${index}">${option}</div>`;
     });
     
-    document.getElementById('question-container').innerHTML = html;
-    document.getElementById('score-display').innerHTML = `Score: ${score}`;
+    questionContainer.innerHTML = html;
+    scoreDisplay.innerHTML = `Score: ${score}/${quizQuestions.length}`;
+    
+    // Add click listeners to options
+    document.querySelectorAll('.quiz-option').forEach((option, index) => {
+        option.addEventListener('click', () => checkAnswer(index));
+    });
 }
 
 function checkAnswer(selected) {
+    if (!quizActive) return;
+    
     const correct = quizQuestions[currentQuestion].correct;
     const options = document.querySelectorAll('.quiz-option');
+    
+    // Disable all options
+    options.forEach(opt => opt.style.pointerEvents = 'none');
     
     if (selected === correct) {
         options[selected].classList.add('correct');
@@ -1768,19 +1785,22 @@ function checkAnswer(selected) {
     }, 1500);
 }
 
-// Memory Game
+// Memory Game - Fixed
 const memoryIcons = ['📊', '📈', '📉', '💹', '🎯', '🔍', '💻', '🎲'];
 let memoryCards = [];
 let flippedCards = [];
 let matchedPairs = 0;
+let canFlip = true;
 
 function startMemoryGame() {
-    document.getElementById('memory-game').style.display = 'grid';
+    const gameGrid = document.getElementById('memory-game');
+    gameGrid.style.display = 'grid';
+    
     memoryCards = [...memoryIcons, ...memoryIcons].sort(() => Math.random() - 0.5);
     flippedCards = [];
     matchedPairs = 0;
+    canFlip = true;
     
-    const gameGrid = document.getElementById('memory-game');
     gameGrid.innerHTML = '';
     
     memoryCards.forEach((icon, index) => {
@@ -1789,19 +1809,24 @@ function startMemoryGame() {
         card.dataset.icon = icon;
         card.dataset.index = index;
         card.innerHTML = '❓';
-        card.onclick = () => flipCard(card);
+        card.addEventListener('click', function() {
+            flipCard(this);
+        });
         gameGrid.appendChild(card);
     });
 }
 
 function flipCard(card) {
-    if (flippedCards.length >= 2 || card.classList.contains('flipped')) return;
+    if (!canFlip || flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) {
+        return;
+    }
     
     card.classList.add('flipped');
     card.innerHTML = card.dataset.icon;
     flippedCards.push(card);
     
     if (flippedCards.length === 2) {
+        canFlip = false;
         setTimeout(checkMatch, 1000);
     }
 }
@@ -1815,7 +1840,9 @@ function checkMatch() {
         matchedPairs++;
         
         if (matchedPairs === memoryIcons.length) {
-            setTimeout(() => alert('Congratulations! You won!'), 500);
+            setTimeout(() => {
+                alert('🎉 Congratulations! You won!');
+            }, 500);
         }
     } else {
         card1.classList.remove('flipped');
@@ -1825,62 +1852,106 @@ function checkMatch() {
     }
     
     flippedCards = [];
+    canFlip = true;
 }
 
-// Typing Speed Test
+// Typing Speed Test - Fixed
 const codeSnippets = [
     "import pandas as pd",
     "df = pd.read_csv('data.csv')",
     "SELECT * FROM users WHERE age > 18",
     "def analyze_data(df): return df.describe()",
-    "plt.plot(x, y)"
+    "plt.plot(x, y)",
+    "df.groupby('category').mean()",
+    "np.array([1, 2, 3, 4, 5])"
 ];
 
-let typingStartTime;
-let typingText;
+let typingStartTime = null;
+let typingText = '';
+let typingActive = false;
 
 function startTypingTest() {
-    document.getElementById('typing-test').style.display = 'block';
+    const testDiv = document.getElementById('typing-test');
+    testDiv.style.display = 'block';
+    
     typingText = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
     document.getElementById('typing-text').textContent = typingText;
-    document.getElementById('typing-input').value = '';
-    document.getElementById('typing-stats').textContent = '';
-    typingStartTime = null;
     
     const input = document.getElementById('typing-input');
-    input.oninput = checkTyping;
+    input.value = '';
+    input.disabled = false;
+    input.focus();
+    
+    document.getElementById('typing-stats').textContent = 'Start typing...';
+    typingStartTime = null;
+    typingActive = true;
+    
+    // Remove old listener and add new one
+    input.removeEventListener('input', checkTyping);
+    input.addEventListener('input', checkTyping);
 }
 
-function checkTyping() {
-    if (!typingStartTime) typingStartTime = Date.now();
+function checkTyping(e) {
+    if (!typingActive) return;
     
-    const input = document.getElementById('typing-input').value;
+    const input = e.target.value;
+    
+    if (!typingStartTime && input.length > 0) {
+        typingStartTime = Date.now();
+    }
+    
+    if (!typingStartTime) return;
+    
     const elapsed = (Date.now() - typingStartTime) / 1000;
-    const wpm = Math.round((input.length / 5) / (elapsed / 60));
+    const words = input.length / 5;
+    const minutes = elapsed / 60;
+    const wpm = Math.round(words / minutes) || 0;
+    
+    const accuracy = calculateAccuracy(input, typingText);
     
     if (input === typingText) {
         document.getElementById('typing-stats').innerHTML = `
-            ✅ Complete! Time: ${elapsed.toFixed(1)}s | Speed: ${wpm} WPM
+            <div style="color: #00ff00;">✅ Complete!</div>
+            <div>Time: ${elapsed.toFixed(1)}s</div>
+            <div>Speed: ${wpm} WPM</div>
+            <div>Accuracy: ${accuracy}%</div>
         `;
-        document.getElementById('typing-input').oninput = null;
+        typingActive = false;
+        document.getElementById('typing-input').disabled = true;
     } else {
-        document.getElementById('typing-stats').textContent = `Speed: ${wpm} WPM`;
+        document.getElementById('typing-stats').innerHTML = `
+            <div>Speed: ${wpm} WPM</div>
+            <div>Accuracy: ${accuracy}%</div>
+        `;
     }
 }
 
-// Statistics Calculator
+function calculateAccuracy(input, target) {
+    let correct = 0;
+    const length = Math.min(input.length, target.length);
+    
+    for (let i = 0; i < length; i++) {
+        if (input[i] === target[i]) correct++;
+    }
+    
+    return length > 0 ? Math.round((correct / length) * 100) : 100;
+}
+
+// Statistics Calculator - Fixed
 function calculateStats() {
     const input = document.getElementById('calc-data').value;
     const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
     
+    const resultsDiv = document.getElementById('stats-results');
+    
     if (numbers.length === 0) {
-        document.getElementById('stats-results').innerHTML = '<div style="color: #ff6b6b;">Please enter valid numbers</div>';
+        resultsDiv.innerHTML = '<div style="color: #ff6b6b;">⚠️ Please enter valid numbers separated by commas</div>';
         return;
     }
     
     const sum = numbers.reduce((a, b) => a + b, 0);
     const mean = sum / numbers.length;
-    const sorted = numbers.sort((a, b) => a - b);
+    const sorted = [...numbers].sort((a, b) => a - b);
     const median = sorted.length % 2 === 0 
         ? (sorted[sorted.length/2 - 1] + sorted[sorted.length/2]) / 2
         : sorted[Math.floor(sorted.length/2)];
@@ -1888,49 +1959,82 @@ function calculateStats() {
     const max = Math.max(...numbers);
     const range = max - min;
     
-    document.getElementById('stats-results').innerHTML = `
-        <div><strong>Count:</strong> ${numbers.length}</div>
-        <div><strong>Sum:</strong> ${sum.toFixed(2)}</div>
-        <div><strong>Mean:</strong> ${mean.toFixed(2)}</div>
-        <div><strong>Median:</strong> ${median.toFixed(2)}</div>
-        <div><strong>Min:</strong> ${min}</div>
-        <div><strong>Max:</strong> ${max}</div>
-        <div><strong>Range:</strong> ${range.toFixed(2)}</div>
+    // Calculate standard deviation
+    const variance = numbers.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / numbers.length;
+    const stdDev = Math.sqrt(variance);
+    
+    resultsDiv.innerHTML = `
+        <div><strong style="color: var(--accent);">Count:</strong> ${numbers.length}</div>
+        <div><strong style="color: var(--accent);">Sum:</strong> ${sum.toFixed(2)}</div>
+        <div><strong style="color: var(--accent);">Mean:</strong> ${mean.toFixed(2)}</div>
+        <div><strong style="color: var(--accent);">Median:</strong> ${median.toFixed(2)}</div>
+        <div><strong style="color: var(--accent);">Std Dev:</strong> ${stdDev.toFixed(2)}</div>
+        <div><strong style="color: var(--accent);">Min:</strong> ${min}</div>
+        <div><strong style="color: var(--accent);">Max:</strong> ${max}</div>
+        <div><strong style="color: var(--accent);">Range:</strong> ${range.toFixed(2)}</div>
     `;
 }
 
-// Simple Chart Generator (using ASCII art since we can't use Chart.js without importing)
+// Chart Generator - Fixed
 function generateChart() {
     const input = document.getElementById('chart-data').value;
     const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
     
-    if (numbers.length === 0) return;
-    
     const canvas = document.getElementById('quick-chart');
+    
+    if (numbers.length === 0) {
+        alert('Please enter valid numbers separated by commas (e.g., 10,20,30,40)');
+        return;
+    }
+    
     const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth;
+    canvas.width = canvas.parentElement.offsetWidth - 40;
     canvas.height = 300;
     
+    // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     const max = Math.max(...numbers);
-    const barWidth = canvas.width / numbers.length - 10;
-    const heightScale = (canvas.height - 40) / max;
+    const padding = 40;
+    const chartHeight = canvas.height - padding * 2;
+    const chartWidth = canvas.width - padding * 2;
+    const barWidth = chartWidth / numbers.length - 10;
+    const heightScale = chartHeight / max;
     
+    // Draw bars
     numbers.forEach((num, i) => {
         const barHeight = num * heightScale;
-        const x = i * (barWidth + 10) + 5;
-        const y = canvas.height - barHeight - 20;
+        const x = padding + i * (barWidth + 10);
+        const y = canvas.height - padding - barHeight;
         
-        // Draw bar
-        ctx.fillStyle = '#64ffda';
+        // Draw bar with gradient
+        const gradient = ctx.createLinearGradient(x, y, x, canvas.height - padding);
+        gradient.addColorStop(0, '#64ffda');
+        gradient.addColorStop(1, '#4dd8ba');
+        
+        ctx.fillStyle = gradient;
         ctx.fillRect(x, y, barWidth, barHeight);
         
-        // Draw value
+        // Draw value on top
         ctx.fillStyle = '#ccd6f6';
+        ctx.font = 'bold 14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(num.toString(), x + barWidth/2, y - 10);
+        
+        // Draw index at bottom
+        ctx.fillStyle = '#8892b0';
         ctx.font = '12px Arial';
-        ctx.fillText(num.toString(), x + barWidth/2 - 10, y - 5);
+        ctx.fillText((i + 1).toString(), x + barWidth/2, canvas.height - padding + 20);
     });
+    
+    // Draw axes
+    ctx.strokeStyle = '#8892b0';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, canvas.height - padding);
+    ctx.lineTo(canvas.width - padding, canvas.height - padding);
+    ctx.stroke();
 }
     </script>
 </body>
