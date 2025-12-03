@@ -818,6 +818,324 @@
                 padding: 80px 1.5rem;
             }
         }
+
+        /* Games Section Styles */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.game-card {
+    background: var(--secondary);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.game-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+}
+
+.game-icon {
+    font-size: 3rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.game-card h3 {
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.game-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.game-btn {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+}
+
+.game-btn:hover {
+    background: rgba(100, 255, 218, 0.1);
+    transform: scale(1.05);
+}
+
+/* Quiz Styles */
+.quiz-container {
+    margin-top: 2rem;
+    text-align: left;
+}
+
+#question-container {
+    background: rgba(100, 255, 218, 0.05);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.quiz-option {
+    background: var(--primary);
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    transition: var(--transition);
+}
+
+.quiz-option:hover {
+    background: rgba(100, 255, 218, 0.1);
+    border-color: var(--accent);
+}
+
+.quiz-option.correct {
+    background: rgba(0, 255, 0, 0.2);
+    border-color: #00ff00;
+}
+
+.quiz-option.wrong {
+    background: rgba(255, 0, 0, 0.2);
+    border-color: #ff0000;
+}
+
+#score-display {
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* Memory Game Styles */
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.memory-card {
+    aspect-ratio: 1;
+    background: var(--primary);
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.memory-card:hover {
+    transform: scale(1.05);
+    border-color: var(--accent);
+}
+
+.memory-card.flipped {
+    background: rgba(100, 255, 218, 0.2);
+    transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+    background: rgba(0, 255, 0, 0.2);
+    border-color: #00ff00;
+}
+
+/* Typing Test Styles */
+#typing-test {
+    margin-top: 2rem;
+}
+
+#typing-text {
+    background: rgba(100, 255, 218, 0.05);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-family: 'Courier New', monospace;
+    color: var(--text-secondary);
+}
+
+#typing-input {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+}
+
+#typing-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+#typing-stats {
+    margin-top: 1rem;
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+/* Resources Section */
+.resources-container {
+    margin-bottom: 3rem;
+}
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.video-card {
+    background: var(--secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    transition: var(--transition);
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+.video-thumbnail {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--primary);
+}
+
+.video-card h4 {
+    color: var(--white);
+    padding: 1rem 1rem 0.5rem;
+}
+
+.video-card p {
+    color: var(--text-secondary);
+    padding: 0 1rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* Links Grid */
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.resource-link {
+    background: var(--secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.resource-link:hover {
+    border-color: var(--accent);
+    transform: translateX(10px);
+}
+
+.resource-link i {
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.resource-link h4 {
+    color: var(--white);
+    margin-bottom: 0.3rem;
+}
+
+.resource-link p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Playground Styles */
+.playground-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.playground-card {
+    background: var(--secondary);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.playground-card h3 {
+    color: var(--white);
+    margin-bottom: 1.5rem;
+}
+
+.chart-controls input,
+.playground-card textarea {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    border-radius: 4px;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-family: inherit;
+}
+
+.playground-card textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#quick-chart {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#stats-results {
+    background: rgba(100, 255, 218, 0.05);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    color: var(--text-secondary);
+}
+
+#stats-results div {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+#stats-results div:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .memory-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .playground-container {
+        grid-template-columns: 1fr;
+    }
+}
     </style>
 </head>
 <body>
@@ -992,6 +1310,155 @@
             
         </div>
     </section>
+
+    <!-- Fun Interactive Sections - Add before contact section -->
+
+<!-- Games Section -->
+<section id="games">
+    <h2 class="section-title">
+        <span class="section-number">05.</span>
+        Fun & Games
+    </h2>
+    <div class="games-grid">
+        <!-- Data Quiz Game -->
+        <div class="game-card">
+            <div class="game-icon"><i class="fas fa-question-circle"></i></div>
+            <h3>Data Analytics Quiz</h3>
+            <p>Test your data analysis knowledge!</p>
+            <button class="game-btn" onclick="startQuiz()">Start Quiz</button>
+            <div id="quiz-area" class="quiz-container" style="display: none;">
+                <div id="question-container"></div>
+                <div id="score-display"></div>
+            </div>
+        </div>
+
+        <!-- Memory Game -->
+        <div class="game-card">
+            <div class="game-icon"><i class="fas fa-brain"></i></div>
+            <h3>Memory Match</h3>
+            <p>Match data visualization icons!</p>
+            <button class="game-btn" onclick="startMemoryGame()">Play Game</button>
+            <div id="memory-game" class="memory-grid" style="display: none;"></div>
+        </div>
+
+        <!-- Typing Speed Test -->
+        <div class="game-card">
+            <div class="game-icon"><i class="fas fa-keyboard"></i></div>
+            <h3>Coding Speed Test</h3>
+            <p>How fast can you type code?</p>
+            <button class="game-btn" onclick="startTypingTest()">Start Test</button>
+            <div id="typing-test" style="display: none;">
+                <div id="typing-text"></div>
+                <input type="text" id="typing-input" placeholder="Start typing...">
+                <div id="typing-stats"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Learning Resources Section -->
+<section id="resources">
+    <h2 class="section-title">
+        <span class="section-number">06.</span>
+        Learning Resources
+    </h2>
+    
+    <!-- Video Tutorials -->
+    <div class="resources-container">
+        <h3 style="color: var(--white); margin-bottom: 2rem;">📹 Recommended Videos</h3>
+        <div class="videos-grid">
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/rfscVS0vtbw" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <h4>Python for Data Analysis</h4>
+                <p>Complete tutorial on Python basics for data analysis</p>
+            </div>
+            
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/jbkSRLYSojo" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <h4>Power BI Tutorial</h4>
+                <p>Learn Power BI from scratch</p>
+            </div>
+            
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/HXV3zeQKqGY" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <h4>SQL for Beginners</h4>
+                <p>Master SQL queries and database management</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Useful Links -->
+    <div class="links-container">
+        <h3 style="color: var(--white); margin: 3rem 0 2rem;">🔗 Useful Resources</h3>
+        <div class="links-grid">
+            <a href="https://www.kaggle.com/" class="resource-link" target="_blank">
+                <i class="fab fa-kaggle"></i>
+                <div>
+                    <h4>Kaggle</h4>
+                    <p>Datasets & Competitions</p>
+                </div>
+            </a>
+            
+            <a href="https://www.datacamp.com/" class="resource-link" target="_blank">
+                <i class="fas fa-graduation-cap"></i>
+                <div>
+                    <h4>DataCamp</h4>
+                    <p>Interactive Learning</p>
+                </div>
+            </a>
+            
+            <a href="https://github.com/topics/data-analysis" class="resource-link" target="_blank">
+                <i class="fab fa-github"></i>
+                <div>
+                    <h4>GitHub Projects</h4>
+                    <p>Open Source Code</p>
+                </div>
+            </a>
+            
+            <a href="https://stackoverflow.com/questions/tagged/data-analysis" class="resource-link" target="_blank">
+                <i class="fab fa-stack-overflow"></i>
+                <div>
+                    <h4>Stack Overflow</h4>
+                    <p>Q&A Community</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Data Visualization Playground -->
+<section id="playground">
+    <h2 class="section-title">
+        <span class="section-number">07.</span>
+        Interactive Playground
+    </h2>
+    
+    <div class="playground-container">
+        <!-- Chart Generator -->
+        <div class="playground-card">
+            <h3><i class="fas fa-chart-bar"></i> Quick Chart Generator</h3>
+            <div class="chart-controls">
+                <input type="text" id="chart-data" placeholder="Enter numbers (e.g., 10,20,30,40)">
+                <button class="game-btn" onclick="generateChart()">Generate Chart</button>
+            </div>
+            <canvas id="quick-chart"></canvas>
+        </div>
+
+        <!-- Data Calculator -->
+        <div class="playground-card">
+            <h3><i class="fas fa-calculator"></i> Statistics Calculator</h3>
+            <textarea id="calc-data" placeholder="Enter numbers separated by commas"></textarea>
+            <button class="game-btn" onclick="calculateStats()">Calculate</button>
+            <div id="stats-results"></div>
+        </div>
+    </div>
+</section>
     
     <section id="contact">
         <h2 class="section-title">

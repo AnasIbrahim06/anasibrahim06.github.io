@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -250px;
+            left: -250px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -200px;
+            right: -200px;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            max-width: 800px;
+            width: 100%;
+            padding: 50px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.6s ease;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #4facfe);
+            background-size: 300% 100%;
+            animation: gradientShift 3s ease infinite;
+            border-radius: 30px 30px 0 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '📊';
+            font-size: 4em;
+            display: block;
+            margin-bottom: 15px;
+            animation: pulse 2s ease infinite;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .quiz-section {
+            display: none;
+        }
+
+        .quiz-section.active {
+            display: block;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: 600;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .question::before {
+            content: '❓';
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            padding: 18px 25px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-size: 1.05em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .option.selected::after {
+            content: '✓';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border-color: #28a745;
+            animation: pulse 0.6s ease;
+        }
+
+        .option.correct::after {
+            content: '✓';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .option.incorrect {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .option.incorrect::after {
+            content: '✗';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background: linear-gradient(135deg, #ccc 0%, #999 100%);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease infinite;
+            transition: width 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+
+        .result-section {
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .result-section h2 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 4em;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+            margin: 30px 0;
+            animation: pulse 2s ease infinite;
+            position: relative;
+        }
+
+        .score::before {
+            content: '🏆';
+            display: block;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .result-message {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .start-section {
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .start-section::before {
+            content: '🚀';
+            font-size: 5em;
+            display: block;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 30px;
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-top: 30px;
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .start-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .start-button:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Power BI Quiz</h1>
+            <p>Test your Power BI knowledge!</p>
+        </div>
+
+        <div id="startSection" class="quiz-section active start-section">
+            <p style="font-size: 1.2em; color: #666; margin-bottom: 20px;">
+                This quiz contains 10 questions about Power BI. Click the start button when you're ready!
+            </p>
+            <button class="start-button" onclick="startQuiz()">Start Quiz</button>
+        </div>
+
+        <div id="quizSection" class="quiz-section">
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <div id="questionContainer"></div>
+            <div class="button-container">
+                <button onclick="previousQuestion()" id="prevBtn">Previous</button>
+                <button onclick="nextQuestion()" id="nextBtn">Next</button>
+            </div>
+        </div>
+
+        <div id="resultSection" class="quiz-section result-section">
+            <h2>Quiz Complete!</h2>
+            <div class="score" id="scoreDisplay"></div>
+            <p class="result-message" id="resultMessage"></p>
+            <button onclick="restartQuiz()">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is Power BI primarily used for?",
+                options: ["Data visualization and business intelligence", "Video editing", "Project management", "Email marketing"],
+                correct: 0
+            },
+            {
+                question: "Which component is used to create reports in Power BI?",
+                options: ["Power BI Service", "Power BI Desktop", "Power BI Mobile", "Power Query"],
+                correct: 1
+            },
+            {
+                question: "What does DAX stand for?",
+                options: ["Data Analysis Extensions", "Data Analytics X-ray", "Data Analysis Expressions", "Digital Analysis Expert"],
+                correct: 2
+            },
+            {
+                question: "Which of these is NOT a valid Power BI visualization?",
+                options: ["Bar chart", "Pie chart", "Scatter plot", "Hologram chart"],
+                correct: 3
+            },
+            {
+                question: "What is the maximum file size for a Power BI Desktop file (.pbix)?",
+                options: ["500 MB", "1 GB", "2 GB", "No limit"],
+                correct: 1
+            },
+            {
+                question: "Which feature allows you to create calculated columns and measures?",
+                options: ["Power Query", "DAX", "M Language", "SQL"],
+                correct: 1
+            },
+            {
+                question: "What is Power Query used for?",
+                options: ["Creating visualizations", "Data transformation and preparation", "Publishing reports", "Managing security"],
+                correct: 1
+            },
+            {
+                question: "Which of these can be a data source for Power BI?",
+                options: ["Excel", "SQL Server", "Web APIs", "All of the above"],
+                correct: 3
+            },
+            {
+                question: "What is a Power BI Gateway used for?",
+                options: ["Creating reports", "Connecting cloud service to on-premises data", "Sharing dashboards", "Writing DAX formulas"],
+                correct: 1
+            },
+            {
+                question: "Which relationship cardinality is most common in Power BI?",
+                options: ["One-to-One", "Many-to-Many", "One-to-Many", "None"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startSection').classList.remove('active');
+            document.getElementById('quizSection').classList.add('active');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            let html = `
+                <div class="question-container">
+                    <div class="question">Question ${currentQuestion + 1} of ${questions.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options">
+            `;
+
+            q.options.forEach((option, index) => {
+                const selected = userAnswers[currentQuestion] === index ? 'selected' : '';
+                html += `
+                    <div class="option ${selected}" onclick="selectAnswer(${index})">
+                        ${option}
+                    </div>
+                `;
+            });
+
+            html += `</div></div>`;
+            container.innerHTML = html;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectAnswer(index) {
+            userAnswers[currentQuestion] = index;
+            loadQuestion();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateButtons() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = 'Submit';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                calculateScore();
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function calculateScore() {
+            score = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === questions[index].correct) {
+                    score++;
+                }
+            });
+        }
+
+        function showResults() {
+            document.getElementById('quizSection').classList.remove('active');
+            document.getElementById('resultSection').classList.add('active');
+            
+            const percentage = (score / questions.length) * 100;
+            document.getElementById('scoreDisplay').textContent = `${score} / ${questions.length}`;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = 'Excellent! You have a great understanding of Power BI!';
+            } else if (percentage >= 60) {
+                message = 'Good job! You have a solid grasp of Power BI basics.';
+            } else if (percentage >= 40) {
+                message = 'Not bad! Keep learning to improve your Power BI skills.';
+            } else {
+                message = 'Keep practicing! There\'s room for improvement.';
+            }
+            
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            document.getElementById('resultSection').classList.remove('active');
+            document.getElementById('startSection').classList.add('active');
+        }
+    </script>
+</body>
+</html>
