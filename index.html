@@ -1696,6 +1696,242 @@
                 el.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
+
+
+        // Quiz Game
+const quizQuestions = [
+    {
+        question: "What does SQL stand for?",
+        options: ["Structured Query Language", "Simple Question Language", "Standard Query Logic", "System Query Language"],
+        correct: 0
+    },
+    {
+        question: "Which Python library is best for data manipulation?",
+        options: ["NumPy", "Pandas", "Matplotlib", "Seaborn"],
+        correct: 1
+    },
+    {
+        question: "What is the most common data visualization tool?",
+        options: ["Excel", "Tableau", "PowerPoint", "Word"],
+        correct: 1
+    },
+    {
+        question: "What does ETL stand for?",
+        options: ["Extract, Transform, Load", "Execute, Test, Launch", "Export, Transfer, Link", "Evaluate, Track, Log"],
+        correct: 0
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function startQuiz() {
+    document.getElementById('quiz-area').style.display = 'block';
+    currentQuestion = 0;
+    score = 0;
+    showQuestion();
+}
+
+function showQuestion() {
+    if (currentQuestion >= quizQuestions.length) {
+        document.getElementById('question-container').innerHTML = '';
+        document.getElementById('score-display').innerHTML = `Quiz Complete! Score: ${score}/${quizQuestions.length}`;
+        return;
+    }
+
+    const q = quizQuestions[currentQuestion];
+    let html = `<h4 style="color: var(--white); margin-bottom: 1rem;">Q${currentQuestion + 1}: ${q.question}</h4>`;
+    
+    q.options.forEach((option, index) => {
+        html += `<div class="quiz-option" onclick="checkAnswer(${index})">${option}</div>`;
+    });
+    
+    document.getElementById('question-container').innerHTML = html;
+    document.getElementById('score-display').innerHTML = `Score: ${score}`;
+}
+
+function checkAnswer(selected) {
+    const correct = quizQuestions[currentQuestion].correct;
+    const options = document.querySelectorAll('.quiz-option');
+    
+    if (selected === correct) {
+        options[selected].classList.add('correct');
+        score++;
+    } else {
+        options[selected].classList.add('wrong');
+        options[correct].classList.add('correct');
+    }
+    
+    setTimeout(() => {
+        currentQuestion++;
+        showQuestion();
+    }, 1500);
+}
+
+// Memory Game
+const memoryIcons = ['📊', '📈', '📉', '💹', '🎯', '🔍', '💻', '🎲'];
+let memoryCards = [];
+let flippedCards = [];
+let matchedPairs = 0;
+
+function startMemoryGame() {
+    document.getElementById('memory-game').style.display = 'grid';
+    memoryCards = [...memoryIcons, ...memoryIcons].sort(() => Math.random() - 0.5);
+    flippedCards = [];
+    matchedPairs = 0;
+    
+    const gameGrid = document.getElementById('memory-game');
+    gameGrid.innerHTML = '';
+    
+    memoryCards.forEach((icon, index) => {
+        const card = document.createElement('div');
+        card.className = 'memory-card';
+        card.dataset.icon = icon;
+        card.dataset.index = index;
+        card.innerHTML = '❓';
+        card.onclick = () => flipCard(card);
+        gameGrid.appendChild(card);
+    });
+}
+
+function flipCard(card) {
+    if (flippedCards.length >= 2 || card.classList.contains('flipped')) return;
+    
+    card.classList.add('flipped');
+    card.innerHTML = card.dataset.icon;
+    flippedCards.push(card);
+    
+    if (flippedCards.length === 2) {
+        setTimeout(checkMatch, 1000);
+    }
+}
+
+function checkMatch() {
+    const [card1, card2] = flippedCards;
+    
+    if (card1.dataset.icon === card2.dataset.icon) {
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        matchedPairs++;
+        
+        if (matchedPairs === memoryIcons.length) {
+            setTimeout(() => alert('Congratulations! You won!'), 500);
+        }
+    } else {
+        card1.classList.remove('flipped');
+        card2.classList.remove('flipped');
+        card1.innerHTML = '❓';
+        card2.innerHTML = '❓';
+    }
+    
+    flippedCards = [];
+}
+
+// Typing Speed Test
+const codeSnippets = [
+    "import pandas as pd",
+    "df = pd.read_csv('data.csv')",
+    "SELECT * FROM users WHERE age > 18",
+    "def analyze_data(df): return df.describe()",
+    "plt.plot(x, y)"
+];
+
+let typingStartTime;
+let typingText;
+
+function startTypingTest() {
+    document.getElementById('typing-test').style.display = 'block';
+    typingText = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+    document.getElementById('typing-text').textContent = typingText;
+    document.getElementById('typing-input').value = '';
+    document.getElementById('typing-stats').textContent = '';
+    typingStartTime = null;
+    
+    const input = document.getElementById('typing-input');
+    input.oninput = checkTyping;
+}
+
+function checkTyping() {
+    if (!typingStartTime) typingStartTime = Date.now();
+    
+    const input = document.getElementById('typing-input').value;
+    const elapsed = (Date.now() - typingStartTime) / 1000;
+    const wpm = Math.round((input.length / 5) / (elapsed / 60));
+    
+    if (input === typingText) {
+        document.getElementById('typing-stats').innerHTML = `
+            ✅ Complete! Time: ${elapsed.toFixed(1)}s | Speed: ${wpm} WPM
+        `;
+        document.getElementById('typing-input').oninput = null;
+    } else {
+        document.getElementById('typing-stats').textContent = `Speed: ${wpm} WPM`;
+    }
+}
+
+// Statistics Calculator
+function calculateStats() {
+    const input = document.getElementById('calc-data').value;
+    const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+    
+    if (numbers.length === 0) {
+        document.getElementById('stats-results').innerHTML = '<div style="color: #ff6b6b;">Please enter valid numbers</div>';
+        return;
+    }
+    
+    const sum = numbers.reduce((a, b) => a + b, 0);
+    const mean = sum / numbers.length;
+    const sorted = numbers.sort((a, b) => a - b);
+    const median = sorted.length % 2 === 0 
+        ? (sorted[sorted.length/2 - 1] + sorted[sorted.length/2]) / 2
+        : sorted[Math.floor(sorted.length/2)];
+    const min = Math.min(...numbers);
+    const max = Math.max(...numbers);
+    const range = max - min;
+    
+    document.getElementById('stats-results').innerHTML = `
+        <div><strong>Count:</strong> ${numbers.length}</div>
+        <div><strong>Sum:</strong> ${sum.toFixed(2)}</div>
+        <div><strong>Mean:</strong> ${mean.toFixed(2)}</div>
+        <div><strong>Median:</strong> ${median.toFixed(2)}</div>
+        <div><strong>Min:</strong> ${min}</div>
+        <div><strong>Max:</strong> ${max}</div>
+        <div><strong>Range:</strong> ${range.toFixed(2)}</div>
+    `;
+}
+
+// Simple Chart Generator (using ASCII art since we can't use Chart.js without importing)
+function generateChart() {
+    const input = document.getElementById('chart-data').value;
+    const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+    
+    if (numbers.length === 0) return;
+    
+    const canvas = document.getElementById('quick-chart');
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth;
+    canvas.height = 300;
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    const max = Math.max(...numbers);
+    const barWidth = canvas.width / numbers.length - 10;
+    const heightScale = (canvas.height - 40) / max;
+    
+    numbers.forEach((num, i) => {
+        const barHeight = num * heightScale;
+        const x = i * (barWidth + 10) + 5;
+        const y = canvas.height - barHeight - 20;
+        
+        // Draw bar
+        ctx.fillStyle = '#64ffda';
+        ctx.fillRect(x, y, barWidth, barHeight);
+        
+        // Draw value
+        ctx.fillStyle = '#ccd6f6';
+        ctx.font = '12px Arial';
+        ctx.fillText(num.toString(), x + barWidth/2 - 10, y - 5);
+    });
+}
     </script>
 </body>
 </html>
