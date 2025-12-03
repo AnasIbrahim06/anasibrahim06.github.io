@@ -1870,15 +1870,15 @@ const codeSnippets = [
 ];
 
 let typingStartTime = null;
-let typingText = '';
+let currentTypingText = '';  // CHANGED: Renamed from typingText to currentTypingText
 let typingActive = false;
 
 function startTypingTest() {
     const testDiv = document.getElementById('typing-test');
     testDiv.style.display = 'block';
     
-    typingText = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-    document.getElementById('typing-text').textContent = typingText;
+    currentTypingText = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];  // CHANGED
+    document.getElementById('typing-text').textContent = currentTypingText;  // CHANGED
     
     const input = document.getElementById('typing-input');
     input.value = '';
@@ -1893,8 +1893,6 @@ function startTypingTest() {
     input.removeEventListener('input', checkTyping);
     input.addEventListener('input', checkTyping);
 }
-
-
 
 function checkTyping(e) {
     if (!typingActive) return;
@@ -1912,9 +1910,9 @@ function checkTyping(e) {
     const minutes = elapsed / 60;
     const wpm = Math.round(words / minutes) || 0;
     
-    const accuracy = calculateAccuracy(input, typingText);
+    const accuracy = calculateAccuracy(input, currentTypingText);  // CHANGED
     
-    if (input === typingText) {
+    if (input === currentTypingText) {  // CHANGED
         document.getElementById('typing-stats').innerHTML = `
             <div style="color: #00ff00;">✅ Complete!</div>
             <div>Time: ${elapsed.toFixed(1)}s</div>
