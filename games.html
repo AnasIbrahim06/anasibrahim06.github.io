@@ -573,19 +573,171 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Additional styles for new games */
+.sql-input {
+    width: 100%;
+    min-height: 100px;
+    padding: 1rem;
+    background: var(--secondary);
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.sql-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.sql-challenge {
+    background: rgba(100, 255, 218, 0.05);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--accent);
+    color: var(--white);
+}
+
+.result-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.result-box.correct {
+    background: rgba(0, 255, 0, 0.2);
+    border: 2px solid #00ff00;
+    color: #00ff00;
+}
+
+.result-box.incorrect {
+    background: rgba(255, 0, 0, 0.2);
+    border: 2px solid #ff0000;
+    color: #ff0000;
+}
+
+.pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.pattern-cell {
+    aspect-ratio: 1;
+    background: var(--secondary);
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pattern-cell:hover {
+    transform: scale(1.1);
+    border-color: var(--accent);
+}
+
+.pattern-cell.selected {
+    background: rgba(100, 255, 218, 0.3);
+    border-color: var(--accent);
+}
+
+.pattern-cell.correct {
+    background: rgba(0, 255, 0, 0.3);
+    border-color: #00ff00;
+}
+
+.pattern-cell.wrong {
+    background: rgba(255, 0, 0, 0.3);
+    border-color: #ff0000;
+}
+
+.chart-scenario {
+    background: rgba(100, 255, 218, 0.05);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--accent);
+    color: var(--white);
+}
+
+.chart-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.chart-option {
+    background: var(--secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.chart-option:hover {
+    border-color: var(--accent);
+    transform: scale(1.05);
+}
+
+.chart-option i {
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.cleaning-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.cleaning-table td {
+    padding: 0.8rem;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.cleaning-table td:hover {
+    background: rgba(100, 255, 218, 0.1);
+}
+
+.cleaning-table td.error {
+    background: rgba(255, 100, 100, 0.2);
+}
+
+.cleaning-table td.found {
+    background: rgba(0, 255, 0, 0.2);
+    border-color: #00ff00;
+}
+
+.cleaning-table td.missed {
+    background: rgba(255, 0, 0, 0.2);
+    border-color: #ff0000;
+}
+
     </style>
 </head>
 <body>
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">← Back to Portfolio</a>
-            <ul class="nav-links">
-                <li><a href="#quiz">Quiz</a></li>
-                <li><a href="#memory">Memory</a></li>
-                <li><a href="#typing">Typing</a></li>
-                <li><a href="#tools">Tools</a></li>
-                <li><a href="#resources">Resources</a></li>
-            </ul>
+            
         </div>
     </nav>
     
@@ -641,6 +793,93 @@
                 </div>
             </div>
         </div>
+
+        <!-- SQL Query Builder Game -->
+<div class="game-card">
+    <i class="fas fa-database game-icon"></i>
+    <h3>SQL Query Challenge</h3>
+    <p>Write SQL queries to solve real-world data problems. Test your database skills with progressively harder challenges!</p>
+    <button class="game-btn" onclick="startSQLGame()">Start Challenge</button>
+    <div id="sql-game" class="game-area" style="display: none;">
+        <div class="sql-challenge" id="sql-question"></div>
+        <textarea class="sql-input" id="sql-answer" placeholder="Write your SQL query here..."></textarea>
+        <button class="game-btn" onclick="checkSQL()" style="margin-top: 1rem;">Submit Query</button>
+        <div id="sql-result"></div>
+        <div class="score-display" id="sql-score"></div>
+    </div>
+</div>
+
+<!-- Data Pattern Recognition -->
+<div class="game-card">
+    <i class="fas fa-chart-line game-icon"></i>
+    <h3>Pattern Recognition</h3>
+    <p>Identify patterns and trends in data sequences. Train your analytical eye for spotting anomalies and patterns!</p>
+    <button class="game-btn" onclick="startPatternGame()">Start Game</button>
+    <div id="pattern-game" class="game-area" style="display: none;">
+        <div id="pattern-question" style="color: var(--white); margin-bottom: 1rem; font-size: 1.1rem;"></div>
+        <div class="pattern-grid" id="pattern-grid"></div>
+        <div class="score-display" id="pattern-score"></div>
+    </div>
+</div>
+
+<!-- Chart Type Matcher -->
+<div class="game-card">
+    <i class="fas fa-chart-pie game-icon"></i>
+    <h3>Chart Type Matcher</h3>
+    <p>Match the right visualization to different data scenarios. Master the art of choosing the perfect chart!</p>
+    <button class="game-btn" onclick="startChartMatcher()">Start Matching</button>
+    <div id="chart-matcher" class="game-area" style="display: none;">
+        <div class="chart-scenario" id="chart-scenario"></div>
+        <div class="chart-options" id="chart-options"></div>
+        <div class="score-display" id="chart-score"></div>
+    </div>
+</div>
+
+<!-- Data Cleaning Challenge -->
+<div class="game-card">
+    <i class="fas fa-broom game-icon"></i>
+    <h3>Data Cleaning Sprint</h3>
+    <p>Find and fix errors in messy datasets. Click on all the data quality issues as fast as you can!</p>
+    <button class="game-btn" onclick="startCleaningGame()">Start Cleaning</button>
+    <div id="cleaning-game" class="game-area" style="display: none;">
+        <div id="cleaning-instructions" style="color: var(--text-secondary); margin-bottom: 1rem;">
+            Click on all cells with data quality issues (duplicates, nulls, formatting errors)
+        </div>
+        <div id="cleaning-grid" style="overflow-x: auto;"></div>
+        <div class="score-display" id="cleaning-score"></div>
+    </div>
+</div>
+
+<!-- Python Code Debugger -->
+<div class="game-card">
+    <i class="fas fa-bug game-icon"></i>
+    <h3>Code Debugger</h3>
+    <p>Find bugs in data analysis code! Spot syntax errors, logic issues, and common mistakes in Python snippets.</p>
+    <button class="game-btn" onclick="startDebugGame()">Start Debugging</button>
+    <div id="debug-game" class="game-area" style="display: none;">
+        <div id="debug-question" style="margin-bottom: 1rem;"></div>
+        <pre id="debug-code" style="background: rgba(100, 255, 218, 0.05); padding: 1.5rem; border-radius: 8px; overflow-x: auto; color: var(--text-primary); border-left: 4px solid var(--accent);"></pre>
+        <textarea class="sql-input" id="debug-answer" placeholder="Describe what's wrong with this code..." style="min-height: 80px; margin-top: 1rem;"></textarea>
+        <button class="game-btn" onclick="checkDebug()" style="margin-top: 1rem;">Submit Answer</button>
+        <div id="debug-result"></div>
+        <div class="score-display" id="debug-score"></div>
+    </div>
+</div>
+
+<!-- Metric Calculator Race -->
+<div class="game-card">
+    <i class="fas fa-stopwatch game-icon"></i>
+    <h3>Metric Calculator Race</h3>
+    <p>Calculate business metrics as fast as possible! Race against the clock to compute KPIs and percentages.</p>
+    <button class="game-btn" onclick="startMetricRace()">Start Race</button>
+    <div id="metric-race" class="game-area" style="display: none;">
+        <div id="metric-question" style="color: var(--white); font-size: 1.2rem; margin-bottom: 1.5rem; padding: 1.5rem; background: rgba(100, 255, 218, 0.05); border-radius: 8px;"></div>
+        <input type="number" id="metric-answer" class="chart-input" placeholder="Enter your answer..." style="margin-bottom: 1rem;">
+        <button class="game-btn" onclick="checkMetric()">Submit</button>
+        <div id="metric-result"></div>
+        <div class="typing-stats" id="metric-stats" style="margin-top: 1rem;"></div>
+    </div>
+</div>
 
         <!-- Interactive Tools Section -->
         <div class="section" id="tools">
@@ -1058,4 +1297,505 @@
         ctx.textAlign = 'center';
         ctx.fillText('Data Visualization', canvas.width / 2, 30);
     }
+
+    // SQL Query Challenge
+const sqlChallenges = [
+    {
+        question: "Select all columns from a table named 'employees'",
+        answers: ["SELECT * FROM employees", "select * from employees"],
+        hint: "Use SELECT * FROM table_name"
+    },
+    {
+        question: "Select only the 'name' and 'salary' columns from 'employees' where salary > 50000",
+        answers: ["SELECT name, salary FROM employees WHERE salary > 50000"],
+        hint: "Use SELECT columns FROM table WHERE condition"
+    },
+    {
+        question: "Count the number of records in the 'orders' table",
+        answers: ["SELECT COUNT(*) FROM orders", "select count(*) from orders"],
+        hint: "Use COUNT(*) to count rows"
+    },
+    {
+        question: "Find the average salary from 'employees' table",
+        answers: ["SELECT AVG(salary) FROM employees", "select avg(salary) from employees"],
+        hint: "Use AVG(column_name)"
+    },
+    {
+        question: "Order employees by salary in descending order",
+        answers: ["SELECT * FROM employees ORDER BY salary DESC"],
+        hint: "Use ORDER BY column DESC"
+    }
+];
+
+let sqlCurrentQuestion = 0;
+let sqlScore = 0;
+
+function startSQLGame() {
+    document.getElementById('sql-game').style.display = 'block';
+    sqlCurrentQuestion = 0;
+    sqlScore = 0;
+    showSQLQuestion();
+}
+
+function showSQLQuestion() {
+    if (sqlCurrentQuestion >= sqlChallenges.length) {
+        document.getElementById('sql-question').innerHTML = '<h3 style="color: var(--accent);">🎉 Challenge Complete!</h3>';
+        document.getElementById('sql-answer').style.display = 'none';
+        document.querySelector('#sql-game .game-btn').style.display = 'none';
+        return;
+    }
+    
+    const challenge = sqlChallenges[sqlCurrentQuestion];
+    document.getElementById('sql-question').innerHTML = `
+        <strong>Challenge ${sqlCurrentQuestion + 1}:</strong><br>${challenge.question}<br>
+        <small style="color: var(--text-secondary); margin-top: 0.5rem; display: block;">💡 Hint: ${challenge.hint}</small>
+    `;
+    document.getElementById('sql-answer').value = '';
+    document.getElementById('sql-result').innerHTML = '';
+    document.getElementById('sql-score').innerHTML = `Score: ${sqlScore}/${sqlChallenges.length}`;
+}
+
+function checkSQL() {
+    const userAnswer = document.getElementById('sql-answer').value.trim().toLowerCase();
+    const challenge = sqlChallenges[sqlCurrentQuestion];
+    const isCorrect = challenge.answers.some(ans => 
+        userAnswer.replace(/\s+/g, ' ') === ans.toLowerCase().replace(/\s+/g, ' ')
+    );
+    
+    const resultDiv = document.getElementById('sql-result');
+    
+    if (isCorrect) {
+        sqlScore++;
+        resultDiv.innerHTML = '<div class="result-box correct">✅ Correct! Great query!</div>';
+    } else {
+        resultDiv.innerHTML = `<div class="result-box incorrect">❌ Not quite. Expected: ${challenge.answers[0]}</div>`;
+    }
+    
+    setTimeout(() => {
+        metricCurrent++;
+        showMetricQuestion();
+    }, 2000);
+}
+</script>
+
+
+
+// Pattern Recognition Game
+let patternCurrentLevel = 0;
+let patternScore = 0;
+const patterns = [
+    { sequence: [2, 4, 6, 8, '?'], answer: 10, options: [9, 10, 12, 14, 16] },
+    { sequence: [1, 4, 9, 16, '?'], answer: 25, options: [20, 24, 25, 30, 36] },
+    { sequence: [5, 10, 20, 40, '?'], answer: 80, options: [60, 70, 80, 90, 100] },
+    { sequence: [100, 95, 90, 85, '?'], answer: 80, options: [75, 80, 85, 90, 95] },
+    { sequence: [3, 6, 12, 24, '?'], answer: 48, options: [36, 42, 48, 54, 60] }
+];
+
+function startPatternGame() {
+    document.getElementById('pattern-game').style.display = 'block';
+    patternCurrentLevel = 0;
+    patternScore = 0;
+    showPattern();
+}
+
+function showPattern() {
+    if (patternCurrentLevel >= patterns.length) {
+        document.getElementById('pattern-question').innerHTML = '<h3 style="color: var(--accent);">🎉 All Patterns Complete!</h3>';
+        document.getElementById('pattern-grid').innerHTML = '';
+        return;
+    }
+    
+    const pattern = patterns[patternCurrentLevel];
+    document.getElementById('pattern-question').innerHTML = `
+        <strong>Find the next number in the sequence:</strong><br>
+        ${pattern.sequence.join(' → ')}
+    `;
+    
+    const grid = document.getElementById('pattern-grid');
+    grid.innerHTML = '';
+    
+    pattern.options.forEach(option => {
+        const cell = document.createElement('div');
+        cell.className = 'pattern-cell';
+        cell.textContent = option;
+        cell.onclick = () => checkPattern(option, cell);
+        grid.appendChild(cell);
+    });
+    
+    document.getElementById('pattern-score').innerHTML = `Score: ${patternScore}/${patterns.length}`;
+}
+
+function checkPattern(selected, cell) {
+    const pattern = patterns[patternCurrentLevel];
+    const cells = document.querySelectorAll('.pattern-cell');
+    cells.forEach(c => c.style.pointerEvents = 'none');
+    
+    if (selected === pattern.answer) {
+        cell.classList.add('correct');
+        patternScore++;
+    } else {
+        cell.classList.add('wrong');
+        cells.forEach(c => {
+            if (parseInt(c.textContent) === pattern.answer) {
+                c.classList.add('correct');
+            }
+        });
+    }
+    
+    setTimeout(() => {
+        patternCurrentLevel++;
+        showPattern();
+    }, 1500);
+}
+
+// Chart Type Matcher
+const chartScenarios = [
+    {
+        scenario: "You need to show how market share is distributed among 5 competitors",
+        correct: "pie",
+        options: [
+            { type: "pie", icon: "fa-chart-pie", name: "Pie Chart" },
+            { type: "bar", icon: "fa-chart-bar", name: "Bar Chart" },
+            { type: "line", icon: "fa-chart-line", name: "Line Chart" },
+            { type: "scatter", icon: "fa-braille", name: "Scatter Plot" }
+        ]
+    },
+    {
+        scenario: "Display sales performance over the last 12 months to show trends",
+        correct: "line",
+        options: [
+            { type: "pie", icon: "fa-chart-pie", name: "Pie Chart" },
+            { type: "bar", icon: "fa-chart-bar", name: "Bar Chart" },
+            { type: "line", icon: "fa-chart-line", name: "Line Chart" },
+            { type: "area", icon: "fa-chart-area", name: "Area Chart" }
+        ]
+    },
+    {
+        scenario: "Compare revenue across different product categories",
+        correct: "bar",
+        options: [
+            { type: "bar", icon: "fa-chart-bar", name: "Bar Chart" },
+            { type: "line", icon: "fa-chart-line", name: "Line Chart" },
+            { type: "pie", icon: "fa-chart-pie", name: "Pie Chart" },
+            { type: "scatter", icon: "fa-braille", name: "Scatter Plot" }
+        ]
+    },
+    {
+        scenario: "Show the relationship between advertising spend and sales revenue",
+        correct: "scatter",
+        options: [
+            { type: "scatter", icon: "fa-braille", name: "Scatter Plot" },
+            { type: "bar", icon: "fa-chart-bar", name: "Bar Chart" },
+            { type: "pie", icon: "fa-chart-pie", name: "Pie Chart" },
+            { type: "line", icon: "fa-chart-line", name: "Line Chart" }
+        ]
+    }
+];
+
+let chartCurrentQuestion = 0;
+let chartScore = 0;
+
+function startChartMatcher() {
+    document.getElementById('chart-matcher').style.display = 'block';
+    chartCurrentQuestion = 0;
+    chartScore = 0;
+    showChartScenario();
+}
+
+function showChartScenario() {
+    if (chartCurrentQuestion >= chartScenarios.length) {
+        document.getElementById('chart-scenario').innerHTML = '<h3 style="color: var(--accent);">🎉 Perfect Matching!</h3>';
+        document.getElementById('chart-options').innerHTML = '';
+        return;
+    }
+    
+    const scenario = chartScenarios[chartCurrentQuestion];
+    document.getElementById('chart-scenario').innerHTML = `
+        <strong>Scenario ${chartCurrentQuestion + 1}:</strong><br>${scenario.scenario}
+    `;
+    
+    const optionsDiv = document.getElementById('chart-options');
+    optionsDiv.innerHTML = '';
+    
+    scenario.options.forEach(option => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'chart-option';
+        optionDiv.innerHTML = `
+            <i class="fas ${option.icon}"></i>
+            <div>${option.name}</div>
+        `;
+        optionDiv.onclick = () => checkChart(option.type, optionDiv);
+        optionsDiv.appendChild(optionDiv);
+    });
+    
+    document.getElementById('chart-score').innerHTML = `Score: ${chartScore}/${chartScenarios.length}`;
+}
+
+function checkChart(selected, element) {
+    const scenario = chartScenarios[chartCurrentQuestion];
+    const options = document.querySelectorAll('.chart-option');
+    options.forEach(opt => opt.style.pointerEvents = 'none');
+    
+    if (selected === scenario.correct) {
+        element.style.borderColor = '#00ff00';
+        element.style.background = 'rgba(0, 255, 0, 0.2)';
+        chartScore++;
+    } else {
+        element.style.borderColor = '#ff0000';
+        element.style.background = 'rgba(255, 0, 0, 0.2)';
+        options.forEach(opt => {
+            if (opt.querySelector('div').textContent === scenario.options.find(o => o.type === scenario.correct).name) {
+                opt.style.borderColor = '#00ff00';
+                opt.style.background = 'rgba(0, 255, 0, 0.2)';
+            }
+        });
+    }
+    
+    setTimeout(() => {
+        chartCurrentQuestion++;
+        showChartScenario();
+    }, 2000);
+}
+
+// Data Cleaning Challenge
+const cleaningDatasets = [
+    {
+        data: [
+            ['Name', 'Age', 'Email', 'Salary'],
+            ['John', '25', 'john@email.com', '50000'],
+            ['Sarah', 'NULL', 'sarah@email.com', '60000'],
+            ['John', '25', 'john@email.com', '50000'],
+            ['Mike', '30', 'mike@invalid', '55000'],
+            ['Lisa', '28', 'lisa@email.com', 'N/A']
+        ],
+        errors: [[2, 1], [3, 0], [4, 2], [5, 3]]
+    }
+];
+
+let cleaningFound = [];
+let cleaningDataset = 0;
+
+function startCleaningGame() {
+    document.getElementById('cleaning-game').style.display = 'block';
+    cleaningDataset = 0;
+    cleaningFound = [];
+    showCleaningData();
+}
+
+function showCleaningData() {
+    const dataset = cleaningDatasets[cleaningDataset];
+    const grid = document.getElementById('cleaning-grid');
+
+    let tableHTML = '<table class="cleaning-table">';
+    dataset.data.forEach((row, rowIndex) => {
+        tableHTML += '<tr>';
+        row.forEach((cell, colIndex) => {
+            const isError = dataset.errors.some(([r, c]) => r === rowIndex && c === colIndex);
+            const cellId = `cell-${rowIndex}-${colIndex}`;
+            tableHTML += `<td id="${cellId}" onclick="clickCell(${rowIndex}, ${colIndex}, '${isError}')">${cell}</td>`;
+        });
+        tableHTML += '</tr>'; // ✅ moved outside the inner loop
+    });
+    tableHTML += '</table>';
+
+    grid.innerHTML = tableHTML;
+    document.getElementById('cleaning-score').innerHTML =
+        `Found: ${cleaningFound.length}/${dataset.errors.length} errors`;
+}
+
+function clickCell(row, col, isError) {
+    const cellId = `cell-${row}-${col}`;
+    const cell = document.getElementById(cellId);
+    
+    if (isError && !cleaningFound.some(([r, c]) => r === row && c === col)) {
+        cell.classList.add('found');
+        cleaningFound.push([row, col]);
+        
+        const dataset = cleaningDatasets[cleaningDataset];
+        document.getElementById('cleaning-score').innerHTML = `Found: ${cleaningFound.length}/${dataset.errors.length} errors`;
+        
+        if (cleaningFound.length === dataset.errors.length) {
+            setTimeout(() => {
+                alert('🎉 All errors found! Great job cleaning the data!');
+            }, 500);
+        }
+    }
+}
+
+// Python Code Debugger
+const debugChallenges = [
+    {
+        code: `import pandas as pd
+df = pd.read_csv('data.csv')
+print(df.head)`,
+        issue: "Missing parentheses on head()",
+        answer: ["parentheses", "head()"]
+    },
+    {
+        code: `data = [1, 2, 3, 4, 5]
+mean = sum(data) / len(data)
+print('Average:', mean)`,
+        issue: "No error - code is correct!",
+        answer: ["correct", "no error", "fine"]
+    },
+    {
+        code: `import numpy as np
+arr = np.array([1, 2, 3])
+result = arr + '10'`,
+        issue: "Cannot add string to numpy array",
+        answer: ["string", "type", "integer"]
+    }
+];
+
+let debugCurrent = 0;
+let debugScore = 0;
+
+function startDebugGame() {
+    document.getElementById('debug-game').style.display = 'block';
+    debugCurrent = 0;
+    debugScore = 0;
+    showDebugChallenge();
+}
+
+function showDebugChallenge() {
+    if (debugCurrent >= debugChallenges.length) {
+        document.getElementById('debug-question').innerHTML = '<h3 style="color: var(--accent);">🎉 All Bugs Found!</h3>';
+        document.getElementById('debug-code').style.display = 'none';
+        document.getElementById('debug-answer').style.display = 'none';
+        document.querySelector('#debug-game .game-btn').style.display = 'none';
+        return;
+    }
+    
+    const challenge = debugChallenges[debugCurrent];
+    document.getElementById('debug-question').innerHTML = `<strong style="color: var(--white);">Debug Challenge ${debugCurrent + 1}:</strong> What's wrong with this code?`;
+    document.getElementById('debug-code').textContent = challenge.code;
+    document.getElementById('debug-answer').value = '';
+    document.getElementById('debug-result').innerHTML = '';
+    document.getElementById('debug-score').innerHTML = `Score: ${debugScore}/${debugChallenges.length}`;
+}
+
+function checkDebug() {
+    const userAnswer = document.getElementById('debug-answer').value.toLowerCase();
+    const challenge = debugChallenges[debugCurrent];
+    const isCorrect = challenge.answer.some(ans => userAnswer.includes(ans));
+    
+    const resultDiv = document.getElementById('debug-result');
+    
+    if (isCorrect) {
+        debugScore++;
+        resultDiv.innerHTML = '<div class="result-box correct">✅ Correct! You found the bug!</div>';
+    } else {
+        resultDiv.innerHTML = `<div class="result-box incorrect">❌ Not quite. The issue is: ${challenge.issue}</div>`;
+    }
+    
+    setTimeout(() => {
+        debugCurrent++;
+        showDebugChallenge();
+    }, 3000);
+}
+
+// Metric Calculator Race
+const metricQuestions = [
+    {
+        question: "If revenue is $120,000 and costs are $80,000, what is the profit margin (%)? (Round to nearest whole number)",
+        answer: 33,
+        tolerance: 1
+    },
+    {
+        question: "A product had 500 visitors and 50 conversions. What's the conversion rate (%)? (Round to nearest whole number)",
+        answer: 10,
+        tolerance: 0
+    },
+    {
+        question: "Sales increased from 1000 to 1300 units. What's the growth rate (%)? (Round to nearest whole number)",
+        answer: 30,
+        tolerance: 1
+    },
+    {
+        question: "If 80 out of 200 customers returned, what's the retention rate (%)? (Round to nearest whole number)",
+        answer: 40,
+        tolerance: 0
+    },
+    {
+        question: "Revenue per user: Total revenue $50,000, 250 users. Calculate RPU (no decimals)",
+        answer: 200,
+        tolerance: 0
+    }
+];
+
+let metricCurrent = 0;
+let metricScore = 0;
+let metricStartTime = null;
+let metricTimes = [];
+
+function startMetricRace() {
+    document.getElementById('metric-race').style.display = 'block';
+    metricCurrent = 0;
+    metricScore = 0;
+    metricTimes = [];
+    metricStartTime = Date.now();
+    showMetricQuestion();
+}
+
+function showMetricQuestion() {
+    if (metricCurrent >= metricQuestions.length) {
+        const avgTime = (metricTimes.reduce((a, b) => a + b, 0) / metricTimes.length).toFixed(1);
+        const totalTime = ((Date.now() - metricStartTime) / 1000).toFixed(1);
+        
+        document.getElementById('metric-question').innerHTML = '<h3 style="color: var(--accent);">🏁 Race Complete!</h3>';
+        document.getElementById('metric-answer').style.display = 'none';
+        document.querySelector('#metric-race .game-btn').style.display = 'none';
+        document.getElementById('metric-stats').innerHTML = `
+            <div class="stat-item">
+                <div class="stat-value">${metricScore}/${metricQuestions.length}</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${totalTime}s</div>
+                <div class="stat-label">Total Time</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${avgTime}s</div>
+                <div class="stat-label">Avg Time</div>
+            </div>
+        `;
+        return;
+    }
+    
+    const questionStartTime = Date.now();
+    const question = metricQuestions[metricCurrent];
+    document.getElementById('metric-question').innerHTML = `<strong>Question ${metricCurrent + 1}:</strong><br>${question.question}`;
+    document.getElementById('metric-answer').value = '';
+    document.getElementById('metric-result').innerHTML = '';
+    
+    window.metricQuestionStart = questionStartTime;
+}
+
+function checkMetric() {
+    const userAnswer = parseFloat(document.getElementById('metric-answer').value);
+    const question = metricQuestions[metricCurrent];
+    const isCorrect = Math.abs(userAnswer - question.answer) <= question.tolerance;
+    
+    const questionTime = ((Date.now() - window.metricQuestionStart) / 1000).toFixed(1);
+    metricTimes.push(parseFloat(questionTime));
+    
+    const resultDiv = document.getElementById('metric-result');
+    
+    if (isCorrect) {
+        metricScore++;
+        resultDiv.innerHTML = `<div class="result-box correct">✅ Correct! Time: ${questionTime}s</div>`;
+    } else {
+        resultDiv.innerHTML = `<div class="result-box incorrect">❌ Wrong. Answer: ${question.answer}. Time: ${questionTime}s</div>`;
+    }
+    
+    // Continue after a short delay
+    setTimeout(() => {
+        metricCurrent++;
+        if (metricCurrent < metricQuestions.length) {
+            loadMetricQuestion(); // show next question
+        } else {
+            showMetricSummary(); // end of quiz
+        }
+    }, 1500); // 1.5s delay before moving on
+}
 </script>
