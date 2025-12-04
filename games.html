@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games & Activities - Anas Ibrahim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #112240;
+            --accent: #64ffda;
+            --accent-dim: #4dd8ba;
+            --text-primary: #ccd6f6;
+            --text-secondary: #8892b0;
+            --white: #e6f1ff;
+            --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 2rem 60px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            color: var(--text-secondary);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: 5rem;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--white);
+        }
+        
+        .section-header::before {
+            content: '';
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* Game Card Styles */
+        .game-card {
+            background: var(--secondary);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.05), transparent);
+            transition: left 0.5s;
+        }
+        
+        .game-card:hover::before {
+            left: 100%;
+        }
+        
+        .game-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(100, 255, 218, 0.2);
+        }
+        
+        .game-icon {
+            font-size: 3.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .game-card h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .game-card p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .game-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+        }
+        
+        .game-btn:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+        
+        .game-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* Game Area Styles */
+        .game-area {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(10, 25, 47, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+        
+        /* Quiz Styles */
+        .quiz-container {
+            text-align: left;
+        }
+        
+        .question-text {
+            color: var(--white);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(100, 255, 218, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .quiz-option {
+            background: var(--secondary);
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid rgba(100, 255, 218, 0.2);
+            transition: var(--transition);
+            color: var(--text-primary);
+        }
+        
+        .quiz-option:hover {
+            background: rgba(100, 255, 218, 0.1);
+            border-color: var(--accent);
+            transform: translateX(10px);
+        }
+        
+        .quiz-option.correct {
+            background: rgba(0, 255, 0, 0.2);
+            border-color: #00ff00;
+            animation: correctPulse 0.5s;
+        }
+        
+        .quiz-option.wrong {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: #ff0000;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .score-display {
+            font-size: 1.5rem;
+            color: var(--accent);
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+        
+        /* Memory Game Styles */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .memory-card {
+            aspect-ratio: 1;
+            background: var(--secondary);
+            border: 2px solid rgba(100, 255, 218, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            transform-style: preserve-3d;
+        }
+        
+        .memory-card:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+        
+        .memory-card.flipped {
+            background: rgba(100, 255, 218, 0.2);
+            transform: rotateY(180deg);
+        }
+        
+        .memory-card.matched {
+            background: rgba(0, 255, 0, 0.2);
+            border-color: #00ff00;
+            animation: matchBounce 0.6s;
+        }
+        
+        @keyframes matchBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Typing Test Styles */
+        .typing-display {
+            background: rgba(100, 255, 218, 0.05);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .typing-input {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--secondary);
+            border: 2px solid rgba(100, 255, 218, 0.2);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+        
+        .typing-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+        }
+        
+        .typing-stats {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 8px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Calculator Styles */
+        .calc-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 1.2rem;
+            background: var(--secondary);
+            border: 2px solid rgba(100, 255, 218, 0.2);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+        
+        .calc-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .calc-results {
+            background: rgba(100, 255, 218, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .calc-results div {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .calc-results div:last-child {
+            border-bottom: none;
+        }
+        
+        .calc-results strong {
+            color: var(--accent);
+        }
+        
+        /* Chart Styles */
+        .chart-input {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--secondary);
+            border: 2px solid rgba(100, 255, 218, 0.2);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .chart-canvas {
+            width: 100%;
+            margin-top: 1.5rem;
+            background: var(--secondary);
+            border-radius: 8px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            padding: 1rem;
+        }
+        
+        /* Resources Section */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .resource-card {
+            background: var(--secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            transition: var(--transition);
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--primary);
+        }
+        
+        .resource-card iframe {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .resource-content {
+            padding: 1.5rem;
+        }
+        
+        .resource-content h4 {
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Links Grid */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .resource-link {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .resource-link:hover {
+            border-color: var(--accent);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(100, 255, 218, 0.2);
+        }
+        
+        .resource-link i {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+        
+        .resource-link h4 {
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+        
+        .resource-link p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+            margin-top: 5rem;
+        }
+        
+        footer p {
+            color: var(--text-secondary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .memory-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .typing-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">← Back to Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="#quiz">Quiz</a></li>
+                <li><a href="#memory">Memory</a></li>
+                <li><a href="#typing">Typing</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div>
+            <h1>🎮 Games & Activities</h1>
+            <p>Test your data analysis skills with interactive games and tools</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <!-- Interactive Games Section -->
+        <div class="section" id="games">
+            <div class="section-header">
+                <h2>Interactive Games</h2>
+            </div>
+            
+            <div class="games-grid">
+                <!-- Data Analytics Quiz -->
+                <div class="game-card" id="quiz">
+                    <i class="fas fa-question-circle game-icon"></i>
+                    <h3>Data Analytics Quiz</h3>
+                    <p>Test your knowledge of data analysis concepts, tools, and best practices. Challenge yourself with questions about Python, SQL, statistics, and more!</p>
+                    <button class="game-btn" onclick="startQuiz()">Start Quiz</button>
+                    <div id="quiz-area" class="game-area" style="display: none;">
+                        <div class="quiz-container">
+                            <div id="question-container"></div>
+                            <div id="score-display" class="score-display"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Memory Match Game -->
+                <div class="game-card" id="memory">
+                    <i class="fas fa-brain game-icon"></i>
+                    <h3>Memory Match</h3>
+                    <p>Match pairs of data visualization icons! Improve your memory while getting familiar with common data analysis symbols and charts.</p>
+                    <button class="game-btn" onclick="startMemoryGame()">Play Game</button>
+                    <div id="memory-game" class="game-area memory-grid" style="display: none;"></div>
+                </div>
+
+                <!-- Typing Speed Test -->
+                <div class="game-card" id="typing">
+                    <i class="fas fa-keyboard game-icon"></i>
+                    <h3>Coding Speed Test</h3>
+                    <p>How fast can you type code snippets? Test your typing speed with real Python and SQL commands used in data analysis.</p>
+                    <button class="game-btn" onclick="startTypingTest()">Start Test</button>
+                    <div id="typing-test" class="game-area" style="display: none;">
+                        <div class="typing-display" id="typing-text"></div>
+                        <input type="text" class="typing-input" id="typing-input" placeholder="Start typing when ready...">
+                        <div id="typing-stats" class="typing-stats"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Tools Section -->
+        <div class="section" id="tools">
+            <div class="section-header">
+                <h2>Interactive Tools</h2>
+            </div>
+            
+            <div class="games-grid">
+                <!-- Statistics Calculator -->
+                <div class="game-card">
+                    <i class="fas fa-calculator game-icon"></i>
+                    <h3>Statistics Calculator</h3>
+                    <p>Calculate mean, median, mode, standard deviation, and more. Perfect for quick statistical analysis!</p>
+                    <textarea class="calc-input" id="calc-data" placeholder="Enter numbers separated by commas (e.g., 10, 20, 30, 40, 50)"></textarea>
+                    <button class="game-btn" onclick="calculateStats()">Calculate Statistics</button>
+                    <div id="stats-results" class="calc-results"></div>
+                </div>
+
+                <!-- Quick Chart Generator -->
+                <div class="game-card">
+                    <i class="fas fa-chart-bar game-icon"></i>
+                    <h3>Quick Chart Generator</h3>
+                    <p>Create instant bar charts from your data. Visualize your numbers in seconds!</p>
+                    <input type="text" class="chart-input" id="chart-data" placeholder="Enter numbers separated by commas (e.g., 15, 25, 35, 45)">
+                    <button class="game-btn" onclick="generateChart()">Generate Chart</button>
+                    <canvas id="quick-chart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Resources Section -->
+        <div class="section" id="resources">
+            <div class="section-header">
+                <h2>Learning Resources</h2>
+            </div>
+            
+            <h3 style="color: var(--white); margin-bottom: 2rem;">📹 Recommended Videos</h3>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/rfscVS0vtbw" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Python for Data Analysis</h4>
+                        <p>Complete tutorial on Python basics for data analysis</p>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/jbkSRLYSojo" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="resource-content">
+                        <h4>Power BI Tutorial</h4>
+                        <p>Learn Power BI from scratch</p>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/HXV3zeQKqGY" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="resource-content">
+                        <h4>SQL for Beginners</h4>
+                        <p>Master SQL queries and database management</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: var(--white); margin: 4rem 0 2rem;">🔗 Useful Resources</h3>
+            <div class="links-grid">
+                <a href="https://www.kaggle.com/" class="resource-link" target="_blank">
+                    <i class="fab fa-kaggle"></i>
+                    <div>
+                        <h4>Kaggle</h4>
+                        <p>Datasets & Competitions</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.datacamp.com/" class="resource-link" target="_blank">
+                    <i class="fas fa-graduation-cap"></i>
+                    <div>
+                        <h4>DataCamp</h4>
+                        <p>Interactive Learning</p>
+                    </div>
+                </a>
+                
+                <a href="https://github.com/topics/data-analysis" class="resource-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <div>
+                        <h4>GitHub Projects</h4>
+                        <p>Open Source Code</p>
+                    </div>
+                </a>
+                
+                <a href="https://stackoverflow.com/questions/tagged/data-analysis" class="resource-link" target="_blank">
+                    <i class="fab fa-stack-overflow"></i>
+                    <div>
+                        <h4>Stack Overflow</h4>
+                        <p>Q&A Community</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 Anas Ibrahim. Built with passion for data.</p>
+    </footer>
+    
+    <script>
+        // Quiz Game
+        const quizQuestions = [
+            {
+                question: "What does SQL stand for?",
+                options: ["Structured Query Language", "Simple Question Language", "Standard Query Logic", "System Query Language"],
+                correct: 0
+            },
+            {
+                question: "Which Python library is best for data manipulation?",
+                options: ["NumPy", "Pandas", "Matplotlib", "Seaborn"],
+                correct: 1
+            },
+            {
+                question: "What is the most common data visualization tool?",
+                options: ["Excel", "Tableau", "PowerPoint", "Word"],
+                correct: 1
+            },
+            {
+                question: "What does ETL stand for?",
+                options: ["Extract, Transform, Load", "Execute, Test, Launch", "Export, Transfer, Link", "Evaluate, Track, Log"],
+                correct: 0
+            },
+            {
+                question: "Which statistical measure represents the middle value?",
+                options: ["Mean", "Median", "Mode", "Range"],
+                correct: 1
+            },
+            {
+                question: "What is the purpose of data normalization?",
+                options: ["Increase data size", "Scale data to a standard range", "Delete outliers", "Add more columns"],
+                correct: 1
+            },
+            {
+                question: "Which chart type is best for showing trends over time?",
+                options: ["Pie Chart", "Bar Chart", "Line Chart", "Scatter Plot"],
+                correct: 2
+            },
+            {
+                question: "What does API stand for?",
+                options: ["Application Programming Interface", "Advanced Python Integration", "Automated Process Interaction", "Analysis Protocol Implementation"],
+                correct: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let quizActive = false;
+
+        function startQuiz() {
+            const quizArea = document.getElementById('quiz-area');
+            quizArea.style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            quizActive = true;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const questionContainer = document.getElementById('question-container');
+            const scoreDisplay = document.getElementById('score-display');
+            
+            if (currentQuestion >= quizQuestions.length) {
+                const percentage = Math.round((score / quizQuestions.length) * 100);
+                let message = '';
+                if (percentage >= 80) message = '🎉 Excellent!';
+                else if (percentage >= 60) message = '👍 Good job!';
+                else message = '📚 Keep learning!';
+                
+                questionContainer.innerHTML = `<h3 style="color: var(--accent); text-align: center;">${message}<br>Quiz Complete!</h3>`;
+                scoreDisplay.innerHTML = `Final Score: ${score}/${quizQuestions.length} (${percentage}%)`;
+                quizActive = false;
+                return;
+            }
+
+            const q = quizQuestions[currentQuestion];
+            let html = `<div class="question-text">Question ${currentQuestion + 1} of ${quizQuestions.length}: ${q.question}</div>`;
+            
+            q.options.forEach((option, index) => {
+                html += `<div class="quiz-option" data-index="${index}">${option}</div>`;
+            });
+            
+            questionContainer.innerHTML = html;
+            scoreDisplay.innerHTML = `Score: ${score}/${quizQuestions.length}`;
+            
+            document.querySelectorAll('.quiz-option').forEach((option, index) => {
+                option.addEventListener('click', () => checkAnswer(index));
+            });
+        }
+
+        function checkAnswer(selected) {
+            if (!quizActive) return;
+            
+            const correct = quizQuestions[currentQuestion].correct;
+            const options = document.querySelectorAll('.quiz-option');
+            
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            if (selected === correct) {
+                options[selected].classList.add('correct');
+                score++;
+            } else {
+                options[selected].classList.add('wrong');
+                options[correct].classList.add('correct');
+            }
+            
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 1500);
+        }
+
+        // Memory Game
+        const memoryIcons = ['📊', '📈', '📉', '💹', '🎯', '🔍', '💻', '🎲'];
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let canFlip = true;
+
+        function startMemoryGame() {
+            const gameGrid = document.getElementById('memory-game');
+            gameGrid.style.display = 'grid';
+            
+            memoryCards = [...memoryIcons, ...memoryIcons].sort(() => Math.random() - 0.5);
+            flippedCards = [];
+            matchedPairs = 0;
+            canFlip = true;
+            
+            gameGrid.innerHTML = '';
+
+            memoryCards.forEach((icon, index) => {
+            const card = document.createElement('div');
+            card.className = 'memory-card';
+            card.dataset.icon = icon;
+            card.dataset.index = index;
+            card.innerHTML = '❓';
+            card.addEventListener('click', function() {
+                flipCard(this);
+            });
+            gameGrid.appendChild(card);
+        });
+    }
+
+    function flipCard(card) {
+        if (!canFlip || flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) {
+            return;
+        }
+        
+        card.classList.add('flipped');
+        card.innerHTML = card.dataset.icon;
+        flippedCards.push(card);
+        
+        if (flippedCards.length === 2) {
+            canFlip = false;
+            setTimeout(checkMatch, 1000);
+        }
+    }
+
+    function checkMatch() {
+        const [card1, card2] = flippedCards;
+        
+        if (card1.dataset.icon === card2.dataset.icon) {
+            card1.classList.add('matched');
+            card2.classList.add('matched');
+            matchedPairs++;
+            
+            if (matchedPairs === memoryIcons.length) {
+                setTimeout(() => {
+                    alert('🎉 Congratulations! You matched all pairs!');
+                }, 500);
+            }
+        } else {
+            card1.classList.remove('flipped');
+            card2.classList.remove('flipped');
+            card1.innerHTML = '❓';
+            card2.innerHTML = '❓';
+        }
+        
+        flippedCards = [];
+        canFlip = true;
+    }
+
+    // Typing Speed Test
+    const codeSnippets = [
+        "import pandas as pd",
+        "df = pd.read_csv('data.csv')",
+        "SELECT * FROM users WHERE age > 18",
+        "def analyze_data(df): return df.describe()",
+        "plt.plot(x, y)",
+        "df.groupby('category').mean()",
+        "np.array([1, 2, 3, 4, 5])",
+        "df.sort_values('column', ascending=False)",
+        "print(df.head())"
+    ];
+
+    let typingStartTime = null;
+    let typingText = '';
+    let typingActive = false;
+
+    function startTypingTest() {
+        const testDiv = document.getElementById('typing-test');
+        testDiv.style.display = 'block';
+        
+        typingText = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+        document.getElementById('typing-text').textContent = typingText;
+        
+        const input = document.getElementById('typing-input');
+        input.value = '';
+        input.disabled = false;
+        input.focus();
+        
+        document.getElementById('typing-stats').innerHTML = '';
+        typingStartTime = null;
+        typingActive = true;
+        
+        input.removeEventListener('input', checkTyping);
+        input.addEventListener('input', checkTyping);
+    }
+
+    function checkTyping(e) {
+        if (!typingActive) return;
+        
+        const input = e.target.value;
+        
+        if (!typingStartTime && input.length > 0) {
+            typingStartTime = Date.now();
+        }
+        
+        if (!typingStartTime) return;
+        
+        const elapsed = (Date.now() - typingStartTime) / 1000;
+        const words = input.length / 5;
+        const minutes = elapsed / 60;
+        const wpm = Math.round(words / minutes) || 0;
+        
+        const accuracy = calculateAccuracy(input, typingText);
+        
+        if (input === typingText) {
+            document.getElementById('typing-stats').innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value" style="color: #00ff00;">✅</div>
+                    <div class="stat-label">Complete!</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${elapsed.toFixed(1)}s</div>
+                    <div class="stat-label">Time</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${wpm}</div>
+                    <div class="stat-label">WPM</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${accuracy}%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+            `;
+            typingActive = false;
+            e.target.disabled = true;
+        } else {
+            document.getElementById('typing-stats').innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${wpm}</div>
+                    <div class="stat-label">WPM</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${accuracy}%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+            `;
+        }
+    }
+
+    function calculateAccuracy(input, target) {
+        let correct = 0;
+        const length = Math.min(input.length, target.length);
+        
+        for (let i = 0; i < length; i++) {
+            if (input[i] === target[i]) correct++;
+        }
+        
+        return length > 0 ? Math.round((correct / length) * 100) : 100;
+    }
+
+    // Statistics Calculator
+    function calculateStats() {
+        const input = document.getElementById('calc-data').value;
+        const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+        
+        const resultsDiv = document.getElementById('stats-results');
+        
+        if (numbers.length === 0) {
+            resultsDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center;">⚠️ Please enter valid numbers separated by commas</div>';
+            return;
+        }
+        
+        const sum = numbers.reduce((a, b) => a + b, 0);
+        const mean = sum / numbers.length;
+        const sorted = [...numbers].sort((a, b) => a - b);
+        const median = sorted.length % 2 === 0 
+            ? (sorted[sorted.length/2 - 1] + sorted[sorted.length/2]) / 2
+            : sorted[Math.floor(sorted.length/2)];
+        const min = Math.min(...numbers);
+        const max = Math.max(...numbers);
+        const range = max - min;
+        
+        const variance = numbers.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / numbers.length;
+        const stdDev = Math.sqrt(variance);
+        
+        resultsDiv.innerHTML = `
+            <div><strong>Count:</strong> <span>${numbers.length}</span></div>
+            <div><strong>Sum:</strong> <span>${sum.toFixed(2)}</span></div>
+            <div><strong>Mean:</strong> <span>${mean.toFixed(2)}</span></div>
+            <div><strong>Median:</strong> <span>${median.toFixed(2)}</span></div>
+            <div><strong>Std Dev:</strong> <span>${stdDev.toFixed(2)}</span></div>
+            <div><strong>Variance:</strong> <span>${variance.toFixed(2)}</span></div>
+            <div><strong>Min:</strong> <span>${min}</span></div>
+            <div><strong>Max:</strong> <span>${max}</span></div>
+            <div><strong>Range:</strong> <span>${range.toFixed(2)}</span></div>
+        `;
+    }
+
+    // Chart Generator
+    function generateChart() {
+        const input = document.getElementById('chart-data').value;
+        const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+        
+        const canvas = document.getElementById('quick-chart');
+        
+        if (numbers.length === 0) {
+            alert('Please enter valid numbers separated by commas (e.g., 10,20,30,40)');
+            return;
+        }
+        
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.parentElement.offsetWidth - 40;
+        canvas.height = 400;
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const max = Math.max(...numbers);
+        const padding = 60;
+        const chartHeight = canvas.height - padding * 2;
+        const chartWidth = canvas.width - padding * 2;
+        const barWidth = Math.min(chartWidth / numbers.length - 20, 80);
+        const heightScale = chartHeight / max;
+        
+        numbers.forEach((num, i) => {
+            const barHeight = num * heightScale;
+            const x = padding + i * (barWidth + 20) + 10;
+            const y = canvas.height - padding - barHeight;
+            
+            const gradient = ctx.createLinearGradient(x, y, x, canvas.height - padding);
+            gradient.addColorStop(0, '#64ffda');
+            gradient.addColorStop(1, '#4dd8ba');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(x, y, barWidth, barHeight);
+            
+            ctx.fillStyle = '#ccd6f6';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(num.toString(), x + barWidth/2, y - 15);
+            
+            ctx.fillStyle = '#8892b0';
+            ctx.font = '14px Arial';
+            ctx.fillText((i + 1).toString(), x + barWidth/2, canvas.height - padding + 30);
+        });
+        
+        ctx.strokeStyle = '#8892b0';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, canvas.height - padding);
+        ctx.lineTo(canvas.width - padding, canvas.height - padding);
+        ctx.stroke();
+        
+        ctx.fillStyle = '#ccd6f6';
+        ctx.font = 'bold 18px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Data Visualization', canvas.width / 2, 30);
+    }
+</script>
