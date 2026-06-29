@@ -31,12 +31,40 @@
   a{color:inherit; text-decoration:none;}
   p{color:var(--on-variant);}
 
-  /* cursor glow, lightweight stand-in for the Antigravity ring effect */
+  /* ambient glow that drifts with the cursor (kept subtle, behind content) */
   .glow{
     position:fixed; inset:0; z-index:0; pointer-events:none;
-    background:radial-gradient(420px circle at var(--mx) var(--my), rgba(168,199,250,0.08), transparent 70%);
-    transition:background .1s linear;
+    background:radial-gradient(480px circle at var(--mx) var(--my), rgba(168,199,250,0.06), transparent 70%);
   }
+
+  /* custom cursor: one soft circle that eases toward the pointer, expands with a label on hoverables */
+  @media (hover:hover) and (pointer:fine){
+    body{cursor:none;}
+    a, button, .btn{cursor:none;}
+  }
+  .cursor{
+    position:fixed; top:0; left:0; pointer-events:none; z-index:9999;
+    width:18px; height:18px; border-radius:50%;
+    background:var(--primary); opacity:0.9;
+    transform:translate(-50%,-50%) scale(1);
+    transition:width .3s cubic-bezier(.2,.8,.2,1), height .3s cubic-bezier(.2,.8,.2,1),
+               background .3s ease, opacity .3s ease;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cursor span{
+    font-family:var(--mono); font-size:0.62rem; color:var(--primary-on); white-space:nowrap;
+    opacity:0; transition:opacity .2s ease;
+  }
+  .cursor.hover{
+    width:64px; height:64px; background:var(--primary); opacity:1;
+  }
+  .cursor.hover span{opacity:1;}
+  @media (hover:none), (pointer:coarse){
+    .cursor{display:none;}
+  }
+
+  /* magnetic CTA pull */
+  .magnetic{transition:transform .25s cubic-bezier(.2,.8,.2,1);}
 
   /* ===== nav: pill ===== */
   nav{position:fixed; top:1.2rem; left:0; right:0; z-index:1000; display:flex; justify-content:center; padding:0 1rem;}
@@ -123,6 +151,49 @@
   .pf-visual svg{width:100%; height:130px;}
   @media (max-width:760px){ .project-feature{grid-template-columns:1fr;} }
 
+  /* ===== video container ===== */
+  .video-shell{
+    width:100%; margin-top:2.5rem; border:1px solid var(--line); border-radius:28px; overflow:hidden;
+    background:var(--surface); position:relative;
+  }
+  .video-frame{position:relative; aspect-ratio:16/9; background:#000;}
+  .video-frame video{width:100%; height:100%; object-fit:cover; display:block;}
+  .video-overlay{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.45));
+    transition:opacity .35s ease; cursor:none;
+  }
+  .video-overlay.hide{opacity:0; pointer-events:none;}
+  .play-btn{
+    width:84px; height:84px; border-radius:50%; background:var(--primary); color:var(--primary-on);
+    display:flex; align-items:center; justify-content:center; font-size:1.5rem;
+    box-shadow:0 0 0 0 rgba(168,199,250,0.5); animation:playpulse 2.4s infinite;
+    transition:transform .25s ease;
+  }
+  .video-overlay:hover .play-btn{transform:scale(1.08);}
+  @keyframes playpulse{
+    0%{box-shadow:0 0 0 0 rgba(168,199,250,0.45);}
+    70%{box-shadow:0 0 0 22px rgba(168,199,250,0);}
+    100%{box-shadow:0 0 0 0 rgba(168,199,250,0);}
+  }
+  .video-bar{
+    display:flex; align-items:center; gap:1rem; padding:1rem 1.4rem; font-family:var(--mono); font-size:0.75rem; color:var(--on-variant);
+  }
+  .video-progress{flex:1; height:3px; background:var(--line); border-radius:3px; overflow:hidden;}
+  .video-progress i{display:block; height:100%; width:0%; background:var(--primary); transition:width .15s linear;}
+  .video-bar button{background:none; border:none; color:var(--on-variant); font-size:0.9rem; cursor:none;}
+  .video-bar button:hover{color:var(--primary);}
+
+  /* ===== skills marquee ===== */
+  .marquee{
+    width:100%; overflow:hidden; margin-top:1.4rem; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:1rem 0;
+    mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track{display:flex; gap:3rem; white-space:nowrap; animation:scrollmarquee 22s linear infinite;}
+  .marquee-track span{font-family:var(--mono); font-size:0.85rem; color:var(--on-variant); display:flex; align-items:center; gap:0.6rem;}
+  .marquee-track span i{color:var(--primary); font-size:0.5rem;}
+  @keyframes scrollmarquee{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
   /* ===== experience timeline ===== */
   .timeline{width:100%; margin-top:2.5rem; border-top:1px solid var(--line);}
   .tl-item{display:grid; grid-template-columns:160px 1fr; gap:2rem; padding:2rem 0; border-bottom:1px solid var(--line);}
@@ -149,6 +220,7 @@
 <body>
 
 <div class="glow" id="glow"></div>
+<div class="cursor" id="cursor"><span id="cursorLabel"></span></div>
 
 <nav>
   <div class="pill-nav">
@@ -201,6 +273,12 @@
       <div class="tags"><span>Git</span><span>Jupyter</span><span>AWS</span></div>
     </div>
   </div>
+  <div class="marquee rv rv-d2">
+    <div class="marquee-track">
+      <span><i class="fas fa-circle"></i>Python</span><span><i class="fas fa-circle"></i>SQL</span><span><i class="fas fa-circle"></i>Power BI</span><span><i class="fas fa-circle"></i>Tableau</span><span><i class="fas fa-circle"></i>Excel</span><span><i class="fas fa-circle"></i>Pandas</span><span><i class="fas fa-circle"></i>NumPy</span><span><i class="fas fa-circle"></i>R</span><span><i class="fas fa-circle"></i>Git</span><span><i class="fas fa-circle"></i>AWS</span>
+      <span><i class="fas fa-circle"></i>Python</span><span><i class="fas fa-circle"></i>SQL</span><span><i class="fas fa-circle"></i>Power BI</span><span><i class="fas fa-circle"></i>Tableau</span><span><i class="fas fa-circle"></i>Excel</span><span><i class="fas fa-circle"></i>Pandas</span><span><i class="fas fa-circle"></i>NumPy</span><span><i class="fas fa-circle"></i>R</span><span><i class="fas fa-circle"></i>Git</span><span><i class="fas fa-circle"></i>AWS</span>
+    </div>
+  </div>
 </section>
 
 <section id="projects">
@@ -221,6 +299,24 @@
         <polyline points="0,100 40,85 80,92 120,55 160,65 200,30 240,42 280,15" fill="none" stroke="#A8C7FA" stroke-width="2.5"/>
         <circle cx="280" cy="15" r="4" fill="#A8C7FA"/>
       </svg>
+    </div>
+  </div>
+
+  <div class="video-shell rv rv-d2">
+    <div class="video-frame">
+      <video id="demoVideo" playsinline preload="metadata"
+        poster="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect width='800' height='450' fill='%2315171B'/%3E%3C/svg%3E">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      </video>
+      <div class="video-overlay" id="videoOverlay">
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+      </div>
+    </div>
+    <div class="video-bar">
+      <button id="playToggle"><i class="fas fa-play"></i></button>
+      <span>Dashboard walkthrough</span>
+      <div class="video-progress"><i id="videoProgress"></i></div>
+      <button id="muteToggle"><i class="fas fa-volume-up"></i></button>
     </div>
   </div>
 </section>
@@ -267,6 +363,76 @@
   document.addEventListener('mousemove', e=>{
     document.documentElement.style.setProperty('--mx', e.clientX + 'px');
     document.documentElement.style.setProperty('--my', e.clientY + 'px');
+  });
+
+  /* custom cursor: single circle that eases toward the pointer (smooth lerp), expands on hoverables */
+  const cursor = document.getElementById('cursor');
+  const cursorLabel = document.getElementById('cursorLabel');
+  let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+  window.addEventListener('mousemove', e=>{ mouseX = e.clientX; mouseY = e.clientY; });
+  function cursorLoop(){
+    curX += (mouseX - curX) * 0.18;
+    curY += (mouseY - curY) * 0.18;
+    if(cursor){ cursor.style.left = curX + 'px'; cursor.style.top = curY + 'px'; }
+    requestAnimationFrame(cursorLoop);
+  }
+  cursorLoop();
+
+  const hoverMap = [
+    ['.video-overlay, .play-btn', 'Play'],
+    ['.btn', 'Go'],
+    ['.card', 'View'],
+    ['.project-feature', 'View'],
+    ['a, button', '']
+  ];
+  hoverMap.forEach(([selector, label])=>{
+    document.querySelectorAll(selector).forEach(el=>{
+      el.addEventListener('mouseenter', ()=>{
+        cursor.classList.add('hover');
+        cursorLabel.textContent = label;
+      });
+      el.addEventListener('mouseleave', ()=>{
+        cursor.classList.remove('hover');
+        cursorLabel.textContent = '';
+      });
+    });
+  });
+
+  /* magnetic pull on primary CTAs */
+  document.querySelectorAll('.btn').forEach(btn=>{
+    btn.classList.add('magnetic');
+    btn.addEventListener('mousemove', e=>{
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width/2;
+      const y = e.clientY - r.top - r.height/2;
+      btn.style.transform = `translate(${x*0.25}px, ${y*0.35}px)`;
+    });
+    btn.addEventListener('mouseleave', ()=> btn.style.transform = '');
+  });
+
+  /* video player controls */
+  const video = document.getElementById('demoVideo');
+  const overlay = document.getElementById('videoOverlay');
+  const playToggle = document.getElementById('playToggle');
+  const muteToggle = document.getElementById('muteToggle');
+  const progress = document.getElementById('videoProgress');
+  function togglePlay(){
+    if(!video) return;
+    if(video.paused){ video.play(); overlay.classList.add('hide'); }
+    else { video.pause(); overlay.classList.remove('hide'); }
+  }
+  if(overlay) overlay.addEventListener('click', togglePlay);
+  if(playToggle) playToggle.addEventListener('click', togglePlay);
+  if(video){
+    video.addEventListener('play', ()=>{ playToggle.innerHTML = '<i class="fas fa-pause"></i>'; });
+    video.addEventListener('pause', ()=>{ playToggle.innerHTML = '<i class="fas fa-play"></i>'; overlay.classList.remove('hide'); });
+    video.addEventListener('timeupdate', ()=>{
+      if(video.duration) progress.style.width = (video.currentTime/video.duration*100) + '%';
+    });
+  }
+  if(muteToggle) muteToggle.addEventListener('click', ()=>{
+    video.muted = !video.muted;
+    muteToggle.innerHTML = video.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
   });
 
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
