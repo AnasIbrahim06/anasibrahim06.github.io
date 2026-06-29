@@ -1,2041 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anas Ibrahim - Data Analyst</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #0a192f;
-            --secondary: #112240;
-            --accent: #64ffda;
-            --accent-dim: #4dd8ba;
-            --text-primary: #ccd6f6;
-            --text-secondary: #8892b0;
-            --white: #e6f1ff;
-            --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 25, 47, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-decoration: none;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            position: relative;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 0 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .hero-intro {
-            font-size: 1rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            color: var(--white);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.1;
-        }
-        
-        .hero h2 {
-            font-size: clamp(2rem, 6vw, 4rem);
-            color: var(--text-secondary);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-        }
-        
-        .hero p {
-            max-width: 600px;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-            line-height: 1.8;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            border: 2px solid var(--accent);
-            color: var(--accent);
-            text-decoration: none;
-            border-radius: 4px;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-        
-        .cta-button:hover {
-            background: rgba(100, 255, 218, 0.1);
-            transform: translateY(-3px);
-        }
-        
-        /* Grid Background */
-        .grid-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(100, 255, 218, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(100, 255, 218, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-        }
-        
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-        
-        /* Section Styles */
-        section {
-            padding: 100px 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-            color: var(--white);
-            margin-bottom: 3rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .section-title::before {
-            content: '';
-            width: 50px;
-            height: 2px;
-            background: var(--accent);
-        }
-        
-        .section-number {
-            color: var(--accent);
-            font-family: 'Courier New', monospace;
-            font-size: 1.2rem;
-        }
-        
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-        
-        .about-text p {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .stat-card {
-            background: var(--secondary);
-            padding: 1.5rem;
-            border-radius: 4px;
-            border: 1px solid rgba(100, 255, 218, 0.1);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            color: var(--accent);
-            font-weight: 700;
-        }
-        
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .profile-card {
-            background: var(--secondary);
-            padding: 2rem;
-            border-radius: 4px;
-            border: 1px solid rgba(100, 255, 218, 0.1);
-            text-align: center;
-        }
-        
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-dim));
-            border-radius: 4px;
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: var(--primary);
-        }
-        
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .skill-category {
-            background: var(--secondary);
-            padding: 2rem;
-            border-radius: 4px;
-            border: 1px solid rgba(100, 255, 218, 0.1);
-            transition: var(--transition);
-        }
-        
-        .skill-category:hover {
-            border-color: var(--accent);
-        }
-        
-        .skill-category h3 {
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .skill-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-        
-        .skill-tag {
-            padding: 0.5rem 1rem;
-            background: rgba(100, 255, 218, 0.1);
-            color: var(--text-secondary);
-            border-radius: 4px;
-            font-size: 0.9rem;
-            border: 1px solid transparent;
-            transition: var(--transition);
-        }
-        
-        .skill-tag:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            gap: 2rem;
-        }
-        
-        .project-card {
-            background: var(--secondary);
-            border-radius: 4px;
-            padding: 2rem;
-            border: 1px solid rgba(100, 255, 218, 0.1);
-            transition: var(--transition);
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-        
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .project-icon {
-            font-size: 2rem;
-            color: var(--accent);
-        }
-        
-        .project-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .project-link {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-        
-        .project-link:hover {
-            color: var(--accent);
-            transform: translateY(-2px);
-        }
-        
-        .project-card h3 {
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-        
-        .project-card p {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-        
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            font-family: 'Courier New', monospace;
-        }
-        
-        /* Experience Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-        
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 2px;
-            background: var(--accent);
-        }
-        
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-            padding-left: 2rem;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2.5rem;
-            top: 0;
-            width: 12px;
-            height: 12px;
-            background: var(--accent);
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-        }
-        
-        .timeline-date {
-            color: var(--accent);
-            font-size: 0.9rem;
-            font-family: 'Courier New', monospace;
-            margin-bottom: 0.5rem;
-        }
-        
-        .timeline-item h3 {
-            color: var(--white);
-            margin-bottom: 0.5rem;
-        }
-        
-        .timeline-company {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-        
-        .timeline-description {
-            color: var(--text-secondary);
-        }
-        
-        /* Contact Section */
-        .contact-content {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .contact-content h2 {
-            font-size: 3rem;
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-        
-        .contact-content p {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-        
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-        }
-        
-        .contact-item i {
-            color: var(--accent);
-        }
-        
-        /* Footer */
-        footer {
-            padding: 2rem;
-            text-align: center;
-            border-top: 1px solid rgba(100, 255, 218, 0.1);
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .social-link {
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            transition: var(--transition);
-        }
-        
-        .social-link:hover {
-            color: var(--accent);
-            transform: translateY(-3px);
-        }
-        
-        footer p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        /* Scroll Indicator */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-dim));
-            width: 0%;
-            z-index: 1001;
-            transition: width 0.1s;
-            box-shadow: 0 0 10px var(--accent);
-        }
-        
-        /* Floating Particles */
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float-particle 20s infinite linear;
-        }
-        
-        @keyframes float-particle {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.3;
-            }
-            90% {
-                opacity: 0.3;
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px);
-                opacity: 0;
-            }
-        }
-        
-        /* Cursor Glow Effect */
-        .cursor-glow {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            transition: transform 0.2s ease;
-            z-index: 9999;
-            mix-blend-mode: difference;
-        }
-        
-        .cursor-dot {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-            mix-blend-mode: difference;
-        }
-        
-        /* Glitch Effect for Title */
-        @keyframes glitch {
-            0% {
-                text-shadow: 2px 2px var(--accent), -2px -2px #ff00ff;
-            }
-            25% {
-                text-shadow: -2px -2px var(--accent), 2px 2px #ff00ff;
-            }
-            50% {
-                text-shadow: 2px -2px var(--accent), -2px 2px #ff00ff;
-            }
-            75% {
-                text-shadow: -2px 2px var(--accent), 2px -2px #ff00ff;
-            }
-            100% {
-                text-shadow: 2px 2px var(--accent), -2px -2px #ff00ff;
-            }
-        }
-        
-        .hero h1:hover {
-            animation: glitch 0.3s infinite;
-        }
-        
-        /* Typing Effect */
-        .typing-text::after {
-            content: '|';
-            color: var(--accent);
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        
-        /* Card Hover Effects */
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.1), transparent);
-            transition: width 0.5s;
-        }
-        
-        .stat-card:hover::before {
-            width: 100%;
-        }
-        
-        /* Pulse Animation */
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 0 10px rgba(100, 255, 218, 0);
-            }
-        }
-        
-        .profile-img {
-            animation: pulse 2s infinite;
-        }
-        
-        /* Ripple Effect */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(100, 255, 218, 0.3);
-            transform: scale(0);
-            animation: ripple-animation 0.6s ease-out;
-            pointer-events: none;
-        }
-        
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-        
-        /* Floating Animation for Skills */
-        @keyframes float-skill {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        .skill-tag:hover {
-            animation: float-skill 0.6s ease-in-out;
-        }
-        
-        /* Data Stream Effect */
-        .data-stream {
-            position: absolute;
-            width: 2px;
-            height: 50px;
-            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-            animation: stream 3s infinite linear;
-            opacity: 0.5;
-        }
-        
-        @keyframes stream {
-            0% {
-                transform: translateY(-100%);
-            }
-            100% {
-                transform: translateY(100vh);
-            }
-        }
-        
-        /* Neon Glow for Buttons */
-        .cta-button {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(100, 255, 218, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .cta-button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .cta-button:hover {
-            box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
-        }
-        
-        /* Project Card Shine Effect */
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(100, 255, 218, 0.1) 50%,
-                transparent 70%
-            );
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-        
-        @keyframes shine {
-            0% {
-                left: -50%;
-            }
-            100% {
-                left: 150%;
-            }
-        }
-        
-        /* Number Counter Animation */
-        @keyframes countUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .stat-number.animate {
-            animation: countUp 0.6s ease-out;
-        }
-        
-        /* Magnetic Effect for Links */
-        .magnetic {
-            transition: transform 0.3s ease;
-        }
-        
-        /* Background Code Rain */
-        .code-rain {
-            position: absolute;
-            font-family: 'Courier New', monospace;
-            color: var(--accent);
-            opacity: 0.1;
-            font-size: 12px;
-            white-space: nowrap;
-            animation: rain 10s linear infinite;
-        }
-        
-        @keyframes rain {
-            0% {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.1;
-            }
-            90% {
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            section {
-                padding: 80px 1.5rem;
-            }
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anas Ibrahim — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root{
+    --bg:#0B0C0F;
+    --surface:#15171B;
+    --surface-2:#1D2025;
+    --line:#2A2D33;
+    --on:#E8EAED;
+    --on-variant:#9AA0A6;
+    --primary:#A8C7FA;
+    --primary-on:#06204A;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+    --mx:50%; --my:50%;
+  }
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--on); font-family:var(--sans); font-weight:400;
+    line-height:1.6; overflow-x:hidden;
+  }
+  ::selection{background:var(--primary); color:var(--primary-on);}
+  a{color:inherit; text-decoration:none;}
+  p{color:var(--on-variant);}
 
-        /* Games Section Styles */
-.games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
+  /* cursor glow, lightweight stand-in for the Antigravity ring effect */
+  .glow{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(420px circle at var(--mx) var(--my), rgba(168,199,250,0.08), transparent 70%);
+    transition:background .1s linear;
+  }
 
-.game-card {
-    background: var(--secondary);
-    padding: 2rem;
-    border-radius: 8px;
-    border: 1px solid rgba(100, 255, 218, 0.1);
-    text-align: center;
-    transition: var(--transition);
-}
+  /* ===== nav: pill ===== */
+  nav{position:fixed; top:1.2rem; left:0; right:0; z-index:1000; display:flex; justify-content:center; padding:0 1rem;}
+  .pill-nav{
+    display:flex; align-items:center; gap:0.2rem; background:rgba(21,23,27,0.75);
+    backdrop-filter:blur(16px); border:1px solid var(--line); border-radius:999px; padding:0.4rem 0.5rem 0.4rem 1.1rem;
+  }
+  .pill-nav .mark{font-size:0.92rem; font-weight:500; margin-right:1.2rem; white-space:nowrap;}
+  .pill-nav .mark .dot{color:var(--primary);}
+  .pill-nav ul{display:flex; list-style:none; gap:0.1rem;}
+  .pill-nav a{
+    font-size:0.85rem; color:var(--on-variant); padding:0.55em 1.1em; border-radius:999px; transition:background .2s, color .2s;
+  }
+  .pill-nav a:hover{background:var(--surface-2); color:var(--on);}
+  @media (max-width:760px){ .pill-nav ul{display:none;} }
 
-.game-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-5px);
-}
+  /* ===== full-height centered sections, Antigravity style ===== */
+  section{
+    min-height:100dvh; display:grid; place-content:safe center; justify-items:start;
+    padding:7rem 2rem; max-width:1180px; margin:0 auto; position:relative; z-index:1;
+  }
+  section.center{place-content:safe center; justify-items:center; text-align:center;}
 
-.game-icon {
-    font-size: 3rem;
-    color: var(--accent);
-    margin-bottom: 1rem;
-}
+  .eyebrow{font-family:var(--mono); font-size:0.78rem; color:var(--primary); letter-spacing:0.04em; margin-bottom:1.2rem;}
 
-.game-card h3 {
-    color: var(--white);
-    margin-bottom: 1rem;
-}
+  h1, h2{font-weight:350; letter-spacing:-0.01em; line-height:1;}
+  h1{font-size:clamp(2.6rem, 7vw, 5.2rem); max-width:18ch;}
+  h2{font-size:clamp(2rem, 4.5vw, 3rem); max-width:22ch; margin-bottom:1rem;}
+  h1 .light{color:var(--on-variant);}
+  h1 .accent{color:var(--primary);}
 
-.game-card p {
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-}
+  .lead{font-size:1.1rem; max-width:48ch; margin-top:1.4rem;}
 
-.game-btn {
-    background: transparent;
-    border: 2px solid var(--accent);
-    color: var(--accent);
-    padding: 0.8rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 1rem;
-}
+  .row-cta{display:flex; gap:0.8rem; margin-top:2.2rem; flex-wrap:wrap;}
+  .btn{
+    font-size:0.92rem; padding:0.85em 1.6em; border-radius:999px; display:inline-flex; align-items:center; gap:0.5em;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .btn-fill{background:var(--primary); color:var(--primary-on); font-weight:500;}
+  .btn-fill:hover{transform:translateY(-2px);}
+  .btn-outline{border:1px solid var(--line); color:var(--on);}
+  .btn-outline:hover{border-color:var(--primary); transform:translateY(-2px);}
 
-.game-btn:hover {
-    background: rgba(100, 255, 218, 0.1);
-    transform: scale(1.05);
-}
+  /* fade-rise reveal */
+  .rv{opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease;}
+  .rv.in{opacity:1; transform:translateY(0);}
+  .rv-d1.in{transition-delay:.08s;} .rv-d2.in{transition-delay:.16s;} .rv-d3.in{transition-delay:.24s;}
 
-/* Quiz Styles */
-.quiz-container {
-    margin-top: 2rem;
-    text-align: left;
-}
+  /* ===== about ===== */
+  #about{display:grid; grid-template-columns:1fr; gap:3rem;}
+  .kv-row{display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; width:100%; margin-top:2.5rem;}
+  .kv{border:1px solid var(--line); border-radius:20px; padding:1.6rem; background:var(--surface);}
+  .kv .n{font-size:1.8rem; font-weight:400; color:var(--primary);}
+  .kv .l{font-family:var(--mono); font-size:0.7rem; color:var(--on-variant); margin-top:0.3rem; text-transform:uppercase; letter-spacing:0.05em;}
+  @media (max-width:700px){ .kv-row{grid-template-columns:1fr;} }
 
-#question-container {
-    background: rgba(100, 255, 218, 0.05);
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
+  /* ===== skills / projects: card carousel like antigravity ===== */
+  .card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; width:100%; margin-top:2.5rem;}
+  .card{
+    aspect-ratio:4/5; border:1px solid var(--line); border-radius:24px; background:var(--surface);
+    padding:1.8rem; display:flex; flex-direction:column; justify-content:space-between;
+    transition:transform .35s ease, border-color .35s ease, background .35s ease;
+  }
+  .card:hover{transform:translateY(-6px); border-color:var(--primary); background:var(--surface-2);}
+  .card .ic{font-size:1.4rem; color:var(--primary);}
+  .card h3{font-weight:500; font-size:1.15rem; margin-top:1rem;}
+  .card .tags{display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.8rem;}
+  .card .tags span{font-family:var(--mono); font-size:0.68rem; color:var(--on-variant); border:1px solid var(--line); padding:0.3em 0.7em; border-radius:999px;}
+  @media (max-width:900px){ .card-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .card-grid{grid-template-columns:1fr;} .card{aspect-ratio:auto;} }
 
-.quiz-option {
-    background: var(--primary);
-    padding: 1rem;
-    margin: 0.5rem 0;
-    border-radius: 4px;
-    cursor: pointer;
-    border: 1px solid rgba(100, 255, 218, 0.2);
-    transition: var(--transition);
-}
+  /* ===== project feature ===== */
+  .project-feature{
+    width:100%; border:1px solid var(--line); border-radius:28px; background:var(--surface);
+    padding:2.4rem; margin-top:2.5rem; display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:center;
+    transition:border-color .3s ease;
+  }
+  .project-feature:hover{border-color:var(--primary);}
+  .project-feature h3{font-weight:500; font-size:1.6rem; margin-bottom:0.8rem;}
+  .stack{font-family:var(--mono); font-size:0.74rem; color:var(--primary); margin-top:1rem; display:block;}
+  .pf-links a{margin-right:1rem; color:var(--on-variant);}
+  .pf-links a:hover{color:var(--primary);}
+  .pf-visual{border:1px solid var(--line); border-radius:18px; padding:1.4rem; background:var(--bg);}
+  .pf-visual svg{width:100%; height:130px;}
+  @media (max-width:760px){ .project-feature{grid-template-columns:1fr;} }
 
-.quiz-option:hover {
-    background: rgba(100, 255, 218, 0.1);
-    border-color: var(--accent);
-}
+  /* ===== experience timeline ===== */
+  .timeline{width:100%; margin-top:2.5rem; border-top:1px solid var(--line);}
+  .tl-item{display:grid; grid-template-columns:160px 1fr; gap:2rem; padding:2rem 0; border-bottom:1px solid var(--line);}
+  .tl-item .date{font-family:var(--mono); font-size:0.78rem; color:var(--on-variant);}
+  .tl-item h3{font-weight:500; font-size:1.25rem;}
+  .tl-item .company{color:var(--primary); font-size:0.9rem; margin:0.3rem 0 0.6rem;}
+  @media (max-width:600px){ .tl-item{grid-template-columns:1fr; gap:0.4rem;} }
 
-.quiz-option.correct {
-    background: rgba(0, 255, 0, 0.2);
-    border-color: #00ff00;
-}
+  /* ===== contact ===== */
+  .contact-grid{display:flex; gap:2rem; flex-wrap:wrap; justify-content:center; margin-top:2.4rem; font-family:var(--mono); font-size:0.85rem; color:var(--on-variant);}
+  .contact-grid div{display:flex; align-items:center; gap:0.5em;}
+  .contact-grid i{color:var(--primary);}
 
-.quiz-option.wrong {
-    background: rgba(255, 0, 0, 0.2);
-    border-color: #ff0000;
-}
+  footer{padding:3rem 2rem; text-align:center; border-top:1px solid var(--line); position:relative; z-index:1;}
+  .social{display:flex; justify-content:center; gap:1.6rem; margin-bottom:1rem;}
+  .social a{font-size:1.05rem; color:var(--on-variant); transition:color .2s;}
+  .social a:hover{color:var(--primary);}
+  footer p{font-family:var(--mono); font-size:0.72rem; color:var(--on-variant);}
 
-#score-display {
-    font-size: 1.5rem;
-    color: var(--accent);
-    margin-top: 1rem;
-    text-align: center;
-}
-
-/* Memory Game Styles */
-.memory-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.memory-card {
-    aspect-ratio: 1;
-    background: var(--primary);
-    border: 2px solid rgba(100, 255, 218, 0.2);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.memory-card:hover {
-    transform: scale(1.05);
-    border-color: var(--accent);
-}
-
-.memory-card.flipped {
-    background: rgba(100, 255, 218, 0.2);
-    transform: rotateY(180deg);
-}
-
-.memory-card.matched {
-    background: rgba(0, 255, 0, 0.2);
-    border-color: #00ff00;
-}
-
-/* Typing Test Styles */
-#typing-test {
-    margin-top: 2rem;
-}
-
-#typing-text {
-    background: rgba(100, 255, 218, 0.05);
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    font-family: 'Courier New', monospace;
-    color: var(--text-secondary);
-}
-
-#typing-input {
-    width: 100%;
-    padding: 1rem;
-    background: var(--primary);
-    border: 2px solid rgba(100, 255, 218, 0.2);
-    border-radius: 4px;
-    color: var(--text-primary);
-    font-family: 'Courier New', monospace;
-    font-size: 1rem;
-}
-
-#typing-input:focus {
-    outline: none;
-    border-color: var(--accent);
-}
-
-#typing-stats {
-    margin-top: 1rem;
-    color: var(--accent);
-    font-size: 1.2rem;
-}
-
-/* Resources Section */
-.resources-container {
-    margin-bottom: 3rem;
-}
-
-.videos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.video-card {
-    background: var(--secondary);
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid rgba(100, 255, 218, 0.1);
-    transition: var(--transition);
-}
-
-.video-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent);
-}
-
-.video-thumbnail {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: var(--primary);
-}
-
-.video-card h4 {
-    color: var(--white);
-    padding: 1rem 1rem 0.5rem;
-}
-
-.video-card p {
-    color: var(--text-secondary);
-    padding: 0 1rem 1rem;
-    font-size: 0.9rem;
-}
-
-/* Links Grid */
-.links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.resource-link {
-    background: var(--secondary);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid rgba(100, 255, 218, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.resource-link:hover {
-    border-color: var(--accent);
-    transform: translateX(10px);
-}
-
-.resource-link i {
-    font-size: 2rem;
-    color: var(--accent);
-}
-
-.resource-link h4 {
-    color: var(--white);
-    margin-bottom: 0.3rem;
-}
-
-.resource-link p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-/* Playground Styles */
-.playground-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-}
-
-.playground-card {
-    background: var(--secondary);
-    padding: 2rem;
-    border-radius: 8px;
-    border: 1px solid rgba(100, 255, 218, 0.1);
-}
-
-.playground-card h3 {
-    color: var(--white);
-    margin-bottom: 1.5rem;
-}
-
-.chart-controls input,
-.playground-card textarea {
-    width: 100%;
-    padding: 1rem;
-    background: var(--primary);
-    border: 2px solid rgba(100, 255, 218, 0.2);
-    border-radius: 4px;
-    color: var(--text-primary);
-    margin-bottom: 1rem;
-    font-family: inherit;
-}
-
-.playground-card textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-#quick-chart {
-    width: 100%;
-    margin-top: 1rem;
-    background: var(--primary);
-    border-radius: 8px;
-    border: 1px solid rgba(100, 255, 218, 0.2);
-}
-
-#stats-results {
-    background: rgba(100, 255, 218, 0.05);
-    padding: 1rem;
-    border-radius: 4px;
-    margin-top: 1rem;
-    color: var(--text-secondary);
-}
-
-#stats-results div {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-}
-
-#stats-results div:last-child {
-    border-bottom: none;
-}
-
-@media (max-width: 768px) {
-    .memory-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .playground-container {
-        grid-template-columns: 1fr;
-    }
-}
-    </style>
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important;} .rv{opacity:1 !important; transform:none !important;} }
+  a:focus-visible, button:focus-visible{outline:2px solid var(--primary); outline-offset:2px;}
+</style>
 </head>
 <body>
-    <div class="scroll-progress"></div>
-    <div class="cursor-glow"></div>
-    <div class="cursor-dot"></div>
-    
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo magnetic">AI</a>
-            <ul class="nav-links">
-                <li><a href="#about" class="magnetic">About</a></li>
-                <li><a href="#skills" class="magnetic">Skills</a></li>
-                <li><a href="#projects" class="magnetic">Projects</a></li>
-                <li><a href="#experience" class="magnetic">Experience</a></li>
-                <li><a href="#games" class="magnetic">Games</a></li>
-                <li><a href="#contact" class="magnetic">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-    <section class="hero">
-        <div class="grid-bg"></div>
-        <div id="particles-container"></div>
-        <div id="code-rain-container"></div>
-        <div class="hero-container">
-            <p class="hero-intro">Hi, my name is</p>
-            <h1>Anas Ibrahim</h1>
-            <h2 class="typing-text">I turn data into insights.</h2>
-            <p>I'm a passionate data analyst specializing in transforming complex datasets into actionable business intelligence. With expertise in statistical analysis, data visualization, and predictive modeling, I help organizations make data-driven decisions.</p>
-            <a href="#contact" class="cta-button magnetic">Get In Touch</a>
-        </div>
-    </section>
-    
-    <section id="about">
-        <h2 class="section-title">
-            <span class="section-number">01.</span>
-            About Me
-        </h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>I'm a data analyst with a passion for uncovering insights hidden in complex datasets. My journey in data analytics began during my university studies, where I discovered the power of data-driven decision making.</p>
-                
-                <p>Today, I specialize in helping businesses leverage their data to drive growth and efficiency. Whether it's building interactive dashboards, performing statistical analysis, or creating predictive models, I'm committed to delivering solutions that make a real impact.</p>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">5+</div>
-                        <div class="stat-label">Projects Completed</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">5+</div>
-                        <div class="stat-label">Months Experience</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="profile-card">
-                <div class="profile-img">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3 style="color: var(--white); margin-bottom: 0.5rem;">Data Analyst</h3>
-                <p style="color: var(--text-secondary);">Passionate about turning raw data into meaningful insights</p>
-            </div>
-        </div>
-    </section>
-    
-    <section id="skills">
-        <h2 class="section-title">
-            <span class="section-number">02.</span>
-            Skills & Tools
-        </h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h3><i class="fas fa-database"></i> Data Analysis</h3>
-                <div class="skill-list">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">R</span>
-                    <span class="skill-tag">SQL</span>
-                    <span class="skill-tag">Excel</span>
-                    <span class="skill-tag">Pandas</span>
-                    <span class="skill-tag">NumPy</span>
-                </div>
-            </div>
-            
-            <div class="skill-category">
-                <h3><i class="fas fa-chart-bar"></i> Visualization</h3>
-                <div class="skill-list">
-                    <span class="skill-tag">Tableau</span>
-                    <span class="skill-tag">Power BI</span>
-        
-                </div>
-            </div>
-            
-            
-            <div class="skill-category">
-                <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
-                <div class="skill-list">
-                    <span class="skill-tag">Git</span>
-                    <span class="skill-tag">Jupyter</span>
-                    <span class="skill-tag">AWS</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="projects">
-        <h2 class="section-title">
-            <span class="section-number">03.</span>
-            Featured Projects
-        </h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-header">
-                    <div class="project-icon"><i class="fas fa-chart-line"></i></div>
-                    <div class="project-links">
-                        <a href="https://github.com/AnasIbrahim06?tab=repositories" class="project-link"><i class="fab fa-github"></i></a>
-                        <a href="/projects" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-                <h3>Consumer Financial Complaints</h3>
-                <p>Interactive Power BI dashboard analyzing company behavior and complaint across multiple regions.</p>
-                <div class="tech-stack">
-                    PowerBI • SQL
-                </div>
-            </div>
 
-            <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-header">
-                    <div class="project-icon"><i class="fas fa-chart-line"></i></div>
-                    <div class="project-links">
-                        <a href="https://github.com/AnasIbrahim06?tab=repositories" class="project-link"><i class="fab fa-github"></i></a>
-                        <a href="/projects" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-                <h3>Social Media Advertisement</h3>
-                <p>Interactive Power BI dashboard analyzing Social Media Trend.</p>
-                <div class="tech-stack">
-                    PowerBI • SQL • Excel • Tableau
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="experience">
-        <h2 class="section-title">
-            <span class="section-number">04.</span>
-            Experience
-        </h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">2025 - Present</div>
-                <h3> Data Analyst intern</h3>
-                <p class="timeline-company">RP2 - Rounded Professional Program </p>
-                <p class="timeline-description">Data-driven decision-making by analyzing business metrics, building dashboards, and uncovering actionable insights. My role involves working with tools like Power BI, SQL, and Excel to clean, visualize, and interpret data across various departments.</p>
-            </div>
-            
-            
-        </div>
-    </section>
+<div class="glow" id="glow"></div>
 
-    <!-- Fun Interactive Sections - Add before contact section -->
+<nav>
+  <div class="pill-nav">
+    <span class="mark">Anas<span class="dot">.</span></span>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
 
-<!-- Games Section -->
-<section id="games">
-    <h2 class="section-title">
-        <span class="section-number">05.</span>
-        Fun & Games
-    </h2>
-    <div class="games-grid">
-        <!-- Data Quiz Game -->
-        <div class="game-card">
-            <div class="game-icon"><i class="fas fa-question-circle"></i></div>
-            <h3>Data Analytics Quiz</h3>
-            <p>Test your data analysis knowledge!</p>
-            <button class="game-btn" onclick="startQuiz()">Start Quiz</button>
-            <div id="quiz-area" class="quiz-container" style="display: none;">
-                <div id="question-container"></div>
-                <div id="score-display"></div>
-            </div>
-        </div>
-
-        <!-- Memory Game -->
-        <div class="game-card">
-            <div class="game-icon"><i class="fas fa-brain"></i></div>
-            <h3>Memory Match</h3>
-            <p>Match data visualization icons!</p>
-            <button class="game-btn" onclick="startMemoryGame()">Play Game</button>
-            <div id="memory-game" class="memory-grid" style="display: none;"></div>
-        </div>
-
-        <!-- Typing Speed Test -->
-        <div class="game-card">
-            <div class="game-icon"><i class="fas fa-keyboard"></i></div>
-            <h3>Coding Speed Test</h3>
-            <p>How fast can you type code?</p>
-            <button class="game-btn" onclick="startTypingTest()">Start Test</button>
-            <div id="typing-test" style="display: none;">
-                <div id="typing-text"></div>
-                <input type="text" id="typing-input" placeholder="Start typing...">
-                <div id="typing-stats"></div>
-            </div>
-        </div>
-    </div>
+<section class="hero">
+  <div class="eyebrow rv in">DATA ANALYST · KOCHI, KERALA</div>
+  <h1 class="rv in">Build decisions <span class="light">the new way —</span> <span class="accent">with data.</span></h1>
+  <p class="lead rv in rv-d1">I clean, model and visualise data so the next decision is obvious, not a guess. Currently working in Power BI, SQL and Excel.</p>
+  <div class="row-cta rv in rv-d2">
+    <a href="#contact" class="btn btn-fill">Get in touch <i class="fas fa-arrow-right"></i></a>
+    <a href="#projects" class="btn btn-outline">See the work</a>
+  </div>
 </section>
 
-<!-- Add this section before contact in index.html -->
-<section style="text-align: center; padding: 5rem 2rem; background: var(--secondary); border-radius: 12px;">
-    <h2 style="color: var(--white); margin-bottom: 1rem;">🎮 Want to Test Your Skills?</h2>
-    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
-        Try out interactive games, quizzes, and tools designed for data analysts!
-    </p>
-    <a href="games.html" class="cta-button" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;">
-        Play Games & Activities
-    </a>
+<section id="about">
+  <div class="eyebrow rv">ABOUT</div>
+  <h2 class="rv">A spreadsheet can argue a point better than an opinion.</h2>
+  <p class="lead rv rv-d1">That idea is where this started — at university, the first time data settled an argument instead of fueling one. Today I work in the space between raw exports and decisions: cleaning messy data, building dashboards people actually open, and writing findings in plain language rather than jargon.</p>
+  <div class="kv-row rv rv-d2">
+    <div class="kv"><div class="n">05</div><div class="l">Projects shipped</div></div>
+    <div class="kv"><div class="n">05</div><div class="l">Months in practice</div></div>
+    <div class="kv"><div class="n">3</div><div class="l">Core tools daily</div></div>
+  </div>
 </section>
 
-<!-- Learning Resources Section -->
-<section id="resources">
-    <h2 class="section-title">
-        <span class="section-number">06.</span>
-        Learning Resources
-    </h2>
-    
-    <!-- Video Tutorials -->
-    <div class="resources-container">
-        <h3 style="color: var(--white); margin-bottom: 2rem;">📹 Recommended Videos</h3>
-        <div class="videos-grid">
-            <div class="video-card">
-                <div class="video-thumbnail">
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/rfscVS0vtbw" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <h4>Python for Data Analysis</h4>
-                <p>Complete tutorial on Python basics for data analysis</p>
-            </div>
-            
-            <div class="video-card">
-                <div class="video-thumbnail">
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/jbkSRLYSojo" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <h4>Power BI Tutorial</h4>
-                <p>Learn Power BI from scratch</p>
-            </div>
-            
-            <div class="video-card">
-                <div class="video-thumbnail">
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/HXV3zeQKqGY" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <h4>SQL for Beginners</h4>
-                <p>Master SQL queries and database management</p>
-            </div>
-        </div>
+<section id="skills">
+  <div class="eyebrow rv">SKILLS &amp; TOOLS</div>
+  <h2 class="rv">Built on a small, dependable toolkit.</h2>
+  <div class="card-grid rv rv-d1">
+    <div class="card">
+      <div><div class="ic"><i class="fas fa-database"></i></div><h3>Data Analysis</h3></div>
+      <div class="tags"><span>Python</span><span>R</span><span>SQL</span><span>Excel</span><span>Pandas</span><span>NumPy</span></div>
     </div>
-
-    <!-- Useful Links -->
-    <div class="links-container">
-        <h3 style="color: var(--white); margin: 3rem 0 2rem;">🔗 Useful Resources</h3>
-        <div class="links-grid">
-            <a href="https://www.kaggle.com/" class="resource-link" target="_blank">
-                <i class="fab fa-kaggle"></i>
-                <div>
-                    <h4>Kaggle</h4>
-                    <p>Datasets & Competitions</p>
-                </div>
-            </a>
-            
-            <a href="https://www.datacamp.com/" class="resource-link" target="_blank">
-                <i class="fas fa-graduation-cap"></i>
-                <div>
-                    <h4>DataCamp</h4>
-                    <p>Interactive Learning</p>
-                </div>
-            </a>
-            
-            <a href="https://github.com/topics/data-analysis" class="resource-link" target="_blank">
-                <i class="fab fa-github"></i>
-                <div>
-                    <h4>GitHub Projects</h4>
-                    <p>Open Source Code</p>
-                </div>
-            </a>
-            
-            <a href="https://stackoverflow.com/questions/tagged/data-analysis" class="resource-link" target="_blank">
-                <i class="fab fa-stack-overflow"></i>
-                <div>
-                    <h4>Stack Overflow</h4>
-                    <p>Q&A Community</p>
-                </div>
-            </a>
-        </div>
+    <div class="card">
+      <div><div class="ic"><i class="fas fa-chart-bar"></i></div><h3>Visualisation</h3></div>
+      <div class="tags"><span>Tableau</span><span>Power BI</span></div>
     </div>
+    <div class="card">
+      <div><div class="ic"><i class="fas fa-tools"></i></div><h3>Tools &amp; Platforms</h3></div>
+      <div class="tags"><span>Git</span><span>Jupyter</span><span>AWS</span></div>
+    </div>
+  </div>
 </section>
 
-<!-- Data Visualization Playground -->
-<section id="playground">
-    <h2 class="section-title">
-        <span class="section-number">07.</span>
-        Interactive Playground
-    </h2>
-    
-    <div class="playground-container">
-        <!-- Chart Generator -->
-        <div class="playground-card">
-            <h3><i class="fas fa-chart-bar"></i> Quick Chart Generator</h3>
-            <div class="chart-controls">
-                <input type="text" id="chart-data" placeholder="Enter numbers (e.g., 10,20,30,40)">
-                <button class="game-btn" onclick="generateChart()">Generate Chart</button>
-            </div>
-            <canvas id="quick-chart"></canvas>
-        </div>
-
-        <!-- Data Calculator -->
-        <div class="playground-card">
-            <h3><i class="fas fa-calculator"></i> Statistics Calculator</h3>
-            <textarea id="calc-data" placeholder="Enter numbers separated by commas"></textarea>
-            <button class="game-btn" onclick="calculateStats()">Calculate</button>
-            <div id="stats-results"></div>
-        </div>
+<section id="projects">
+  <div class="eyebrow rv">FEATURED WORK</div>
+  <h2 class="rv">One dashboard, one clear lift in revenue.</h2>
+  <div class="project-feature rv rv-d1">
+    <div>
+      <h3>Sales Analytics Dashboard</h3>
+      <p>An interactive dashboard tracking sales trends, customer segmentation and revenue forecasting — surfacing a 20% lift in conversion opportunities that were previously invisible in raw exports.</p>
+      <span class="stack">POWER BI · SQL</span>
+      <div class="pf-links" style="margin-top:1.2rem;">
+        <a href="#"><i class="fab fa-github"></i> Code</a>
+        <a href="/projects"><i class="fas fa-external-link-alt"></i> View</a>
+      </div>
     </div>
+    <div class="pf-visual">
+      <svg viewBox="0 0 280 130" preserveAspectRatio="none">
+        <polyline points="0,100 40,85 80,92 120,55 160,65 200,30 240,42 280,15" fill="none" stroke="#A8C7FA" stroke-width="2.5"/>
+        <circle cx="280" cy="15" r="4" fill="#A8C7FA"/>
+      </svg>
+    </div>
+  </div>
 </section>
-    
-    <section id="contact">
-        <h2 class="section-title">
-            <span class="section-number">08.</span>
-            Get In Touch
-        </h2>
-        <div class="contact-content">
-            <h2>Let's Work Together</h2>
-            <p>I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!</p>
-            <a href="mailto:anasibru3@gmail.com" class="cta-button">Say Hello</a>
-            
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>anasibru3@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>+91 9895427043</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Kochi, Kerala</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <footer>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/anas-ibrahim-6b9381305/" class="social-link"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/AnasIbrahim06" class="social-link"><i class="fab fa-github"></i></a>
-            <a href="https://x.com/AnasIbr79972835" class="social-link"><i class="fab fa-twitter"></i></a>
-            <!-- <a href="#" class="social-link"><i class="fas fa-envelope"></i></a> -->
-        </div>
-        <p>© 2025 Anas Ibrahim. Built with passion for data.</p>
-    </footer>
-    
-    <script>
-        // Custom Cursor
-        const cursorGlow = document.querySelector('.cursor-glow');
-        const cursorDot = document.querySelector('.cursor-dot');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursorGlow.style.left = e.clientX + 'px';
-            cursorGlow.style.top = e.clientY + 'px';
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
-        });
-        
-        // Cursor size change on hover
-        document.querySelectorAll('a, button, .magnetic').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorGlow.style.transform = 'translate(-50%, -50%) scale(2)';
-                cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
-            });
-            
-            el.addEventListener('mouseleave', () => {
-                cursorGlow.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-            });
-        });
-        
-        // Create Floating Particles
-        const particlesContainer = document.getElementById('particles-container');
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 20 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-            particlesContainer.appendChild(particle);
-        }
-        
-        // Create Code Rain Effect
-        const codeRainContainer = document.getElementById('code-rain-container');
-        const codeChars = ['0', '1', '{', '}', '[', ']', '(', ')', '<', '>', '/', '\\', 'def', 'var', 'let', 'if', 'else'];
-        for (let i = 0; i < 15; i++) {
-            const codeRain = document.createElement('div');
-            codeRain.className = 'code-rain';
-            codeRain.textContent = codeChars[Math.floor(Math.random() * codeChars.length)];
-            codeRain.style.left = Math.random() * 100 + '%';
-            codeRain.style.animationDelay = Math.random() * 10 + 's';
-            codeRain.style.animationDuration = (Math.random() * 5 + 8) + 's';
-            codeRainContainer.appendChild(codeRain);
-        }
-        
-        // Create Data Stream Effect
-        const hero = document.querySelector('.hero');
-        for (let i = 0; i < 10; i++) {
-            const stream = document.createElement('div');
-            stream.className = 'data-stream';
-            stream.style.left = Math.random() * 100 + '%';
-            stream.style.animationDelay = Math.random() * 3 + 's';
-            stream.style.animationDuration = (Math.random() * 2 + 2) + 's';
-            hero.appendChild(stream);
-        }
-        
-        // Ripple Effect on Buttons
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                ripple.className = 'ripple';
-                
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-        
-        // Magnetic Effect
-        document.querySelectorAll('.magnetic').forEach(el => {
-            el.addEventListener('mousemove', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                
-                this.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-            });
-            
-            el.addEventListener('mouseleave', function() {
-                this.style.transform = 'translate(0, 0)';
-            });
-        });
-        
-        // Counter Animation
-        const animateCounter = (element, target) => {
-            let current = 0;
-            const increment = target / 50;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target + '+';
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(current) + '+';
-                }
-            }, 30);
-        };
-        
-        // Scroll progress indicator
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset;
-            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            document.querySelector('.scroll-progress').style.width = scrollPercent + '%';
-        });
-        
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    
-                    // Animate stat numbers when they come into view
-                    if (entry.target.classList.contains('stat-card')) {
-                        const statNumber = entry.target.querySelector('.stat-number');
-                        const targetValue = parseInt(statNumber.textContent);
-                        if (!isNaN(targetValue)) {
-                            animateCounter(statNumber, targetValue);
-                            statNumber.classList.add('animate');
-                        }
-                    }
-                }
-            });
-        }, observerOptions);
-        
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
-        });
-        
-        // Observe stat cards
-        document.querySelectorAll('.stat-card').forEach(card => {
-            observer.observe(card);
-        });
-        
-        // Typing effect
-        const typingText = document.querySelector('.typing-text');
-        if (typingText) {
-            const text = typingText.textContent;
-            typingText.textContent = '';
-            let i = 0;
-            
-            const typeWriter = () => {
-                if (i < text.length) {
-                    typingText.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 100);
-                }
-            };
-            
-            setTimeout(typeWriter, 500);
-        }
-        
-        // Parallax effect on scroll
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.hero-container');
-            
-            parallaxElements.forEach(el => {
-                const speed = 0.5;
-                el.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
 
+<section id="experience">
+  <div class="eyebrow rv">EXPERIENCE</div>
+  <h2 class="rv">Currently in practice.</h2>
+  <div class="timeline rv rv-d1">
+    <div class="tl-item">
+      <div class="date">2025 — PRESENT</div>
+      <div>
+        <h3>Data Analyst Intern</h3>
+        <div class="company">RP2 — Rounded Professional Program</div>
+        <p>Supporting data-driven decisions by analysing business metrics, building dashboards, and surfacing actionable insight — working daily in Power BI, SQL and Excel across departments.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Quiz Game - Fixed
-const quizQuestions = [
-    {
-        question: "What does SQL stand for?",
-        options: ["Structured Query Language", "Simple Question Language", "Standard Query Logic", "System Query Language"],
-        correct: 0
-    },
-    {
-        question: "Which Python library is best for data manipulation?",
-        options: ["NumPy", "Pandas", "Matplotlib", "Seaborn"],
-        correct: 1
-    },
-    {
-        question: "What is the most common data visualization tool?",
-        options: ["Excel", "Tableau", "PowerPoint", "Word"],
-        correct: 1
-    },
-    {
-        question: "What does ETL stand for?",
-        options: ["Extract, Transform, Load", "Execute, Test, Launch", "Export, Transfer, Link", "Evaluate, Track, Log"],
-        correct: 0
-    }
-];
+<section id="contact" class="center">
+  <div class="eyebrow rv">CONTACT</div>
+  <h2 class="rv">Let's build something with data.</h2>
+  <p class="lead rv rv-d1">Open to new projects and conversations — if there's a dataset worth a second look, I'd like to hear about it.</p>
+  <div class="row-cta rv rv-d2">
+    <a href="mailto:anasibru3@gmail.com" class="btn btn-fill">Say hello <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="contact-grid rv rv-d2">
+    <div><i class="fas fa-envelope"></i> anasibru3@gmail.com</div>
+    <div><i class="fas fa-phone"></i> +91 9895427043</div>
+    <div><i class="fas fa-map-marker-alt"></i> Kochi, Kerala</div>
+  </div>
+</section>
 
-let currentQuestion = 0;
-let score = 0;
-let quizActive = false;
+<footer>
+  <div class="social">
+    <a href="https://www.linkedin.com/in/anas-ibrahim-6b9381305/"><i class="fab fa-linkedin"></i></a>
+    <a href="https://github.com/AnasIbrahim06"><i class="fab fa-github"></i></a>
+    <a href="https://x.com/AnasIbr79972835"><i class="fab fa-twitter"></i></a>
+  </div>
+  <p>© 2025 Anas Ibrahim — built calm, made for data.</p>
+</footer>
 
-function startQuiz() {
-    const quizArea = document.getElementById('quiz-area');
-    quizArea.style.display = 'block';
-    currentQuestion = 0;
-    score = 0;
-    quizActive = true;
-    showQuestion();
-}
+<script>
+  document.addEventListener('mousemove', e=>{
+    document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+    document.documentElement.style.setProperty('--my', e.clientY + 'px');
+  });
 
-function showQuestion() {
-    const questionContainer = document.getElementById('question-container');
-    const scoreDisplay = document.getElementById('score-display');
-    
-    if (currentQuestion >= quizQuestions.length) {
-        questionContainer.innerHTML = '<h3 style="color: var(--accent); text-align: center;">Quiz Complete!</h3>';
-        scoreDisplay.innerHTML = `Final Score: ${score}/${quizQuestions.length} ✨`;
-        quizActive = false;
-        return;
-    }
-
-    const q = quizQuestions[currentQuestion];
-    let html = `<h4 style="color: var(--white); margin-bottom: 1rem;">Q${currentQuestion + 1}: ${q.question}</h4>`;
-    
-    q.options.forEach((option, index) => {
-        html += `<div class="quiz-option" data-index="${index}">${option}</div>`;
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
     });
-    
-    questionContainer.innerHTML = html;
-    scoreDisplay.innerHTML = `Score: ${score}/${quizQuestions.length}`;
-    
-    // Add click listeners to options
-    document.querySelectorAll('.quiz-option').forEach((option, index) => {
-        option.addEventListener('click', () => checkAnswer(index));
-    });
-}
+  });
 
-function checkAnswer(selected) {
-    if (!quizActive) return;
-    
-    const correct = quizQuestions[currentQuestion].correct;
-    const options = document.querySelectorAll('.quiz-option');
-    
-    // Disable all options
-    options.forEach(opt => opt.style.pointerEvents = 'none');
-    
-    if (selected === correct) {
-        options[selected].classList.add('correct');
-        score++;
-    } else {
-        options[selected].classList.add('wrong');
-        options[correct].classList.add('correct');
-    }
-    
-    setTimeout(() => {
-        currentQuestion++;
-        showQuestion();
-    }, 1500);
-}
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); });
+  }, {threshold:0.15, rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
 
-// Memory Game - Fixed
-const memoryIcons = ['📊', '📈', '📉', '💹', '🎯', '🔍', '💻', '🎲'];
-let memoryCards = [];
-let flippedCards = [];
-let matchedPairs = 0;
-let canFlip = true;
-
-function startMemoryGame() {
-    const gameGrid = document.getElementById('memory-game');
-    gameGrid.style.display = 'grid';
-    
-    memoryCards = [...memoryIcons, ...memoryIcons].sort(() => Math.random() - 0.5);
-    flippedCards = [];
-    matchedPairs = 0;
-    canFlip = true;
-    
-    gameGrid.innerHTML = '';
-    
-    memoryCards.forEach((icon, index) => {
-        const card = document.createElement('div');
-        card.className = 'memory-card';
-        card.dataset.icon = icon;
-        card.dataset.index = index;
-        card.innerHTML = '❓';
-        card.addEventListener('click', function() {
-            flipCard(this);
-        });
-        gameGrid.appendChild(card);
-    });
-}
-
-function flipCard(card) {
-    if (!canFlip || flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) {
-        return;
-    }
-    
-    card.classList.add('flipped');
-    card.innerHTML = card.dataset.icon;
-    flippedCards.push(card);
-    
-    if (flippedCards.length === 2) {
-        canFlip = false;
-        setTimeout(checkMatch, 1000);
-    }
-}
-
-function checkMatch() {
-    const [card1, card2] = flippedCards;
-    
-    if (card1.dataset.icon === card2.dataset.icon) {
-        card1.classList.add('matched');
-        card2.classList.add('matched');
-        matchedPairs++;
-        
-        if (matchedPairs === memoryIcons.length) {
-            setTimeout(() => {
-                alert('🎉 Congratulations! You won!');
-            }, 500);
-        }
-    } else {
-        card1.classList.remove('flipped');
-        card2.classList.remove('flipped');
-        card1.innerHTML = '❓';
-        card2.innerHTML = '❓';
-    }
-    
-    flippedCards = [];
-    canFlip = true;
-}
-
-// Typing Speed Test - Fixed
-const codeSnippets = [
-    "import pandas as pd",
-    "df = pd.read_csv('data.csv')",
-    "SELECT * FROM users WHERE age > 18",
-    "def analyze_data(df): return df.describe()",
-    "plt.plot(x, y)",
-    "df.groupby('category').mean()",
-    "np.array([1, 2, 3, 4, 5])"
-];
-
-let typingStartTime = null;
-let currentTypingText = '';  // CHANGED: Renamed from typingText to currentTypingText
-let typingActive = false;
-
-function startTypingTest() {
-    const testDiv = document.getElementById('typing-test');
-    testDiv.style.display = 'block';
-    
-    currentTypingText = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];  // CHANGED
-    document.getElementById('typing-text').textContent = currentTypingText;  // CHANGED
-    
-    const input = document.getElementById('typing-input');
-    input.value = '';
-    input.disabled = false;
-    input.focus();
-    
-    document.getElementById('typing-stats').textContent = 'Start typing...';
-    typingStartTime = null;
-    typingActive = true;
-    
-    // Remove old listener and add new one
-    input.removeEventListener('input', checkTyping);
-    input.addEventListener('input', checkTyping);
-}
-
-function checkTyping(e) {
-    if (!typingActive) return;
-    
-    const input = e.target.value;
-    
-    if (!typingStartTime && input.length > 0) {
-        typingStartTime = Date.now();
-    }
-    
-    if (!typingStartTime) return;
-    
-    const elapsed = (Date.now() - typingStartTime) / 1000;
-    const words = input.length / 5;
-    const minutes = elapsed / 60;
-    const wpm = Math.round(words / minutes) || 0;
-    
-    const accuracy = calculateAccuracy(input, currentTypingText);  // CHANGED
-    
-    if (input === currentTypingText) {  // CHANGED
-        document.getElementById('typing-stats').innerHTML = `
-            <div style="color: #00ff00;">✅ Complete!</div>
-            <div>Time: ${elapsed.toFixed(1)}s</div>
-            <div>Speed: ${wpm} WPM</div>
-            <div>Accuracy: ${accuracy}%</div>
-        `;
-        typingActive = false;
-        document.getElementById('typing-input').disabled = true;
-    } else {
-        document.getElementById('typing-stats').innerHTML = `
-            <div>Speed: ${wpm} WPM</div>
-            <div>Accuracy: ${accuracy}%</div>
-        `;
-    }
-}
-
-function calculateAccuracy(input, target) {
-    let correct = 0;
-    const length = Math.min(input.length, target.length);
-    
-    for (let i = 0; i < length; i++) {
-        if (input[i] === target[i]) correct++;
-    }
-    
-    return length > 0 ? Math.round((correct / length) * 100) : 100;
-}
-
-// Statistics Calculator - Fixed
-function calculateStats() {
-    const input = document.getElementById('calc-data').value;
-    const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
-    
-    const resultsDiv = document.getElementById('stats-results');
-    
-    if (numbers.length === 0) {
-        resultsDiv.innerHTML = '<div style="color: #ff6b6b;">⚠️ Please enter valid numbers separated by commas</div>';
-        return;
-    }
-    
-    const sum = numbers.reduce((a, b) => a + b, 0);
-    const mean = sum / numbers.length;
-    const sorted = [...numbers].sort((a, b) => a - b);
-    const median = sorted.length % 2 === 0 
-        ? (sorted[sorted.length/2 - 1] + sorted[sorted.length/2]) / 2
-        : sorted[Math.floor(sorted.length/2)];
-    const min = Math.min(...numbers);
-    const max = Math.max(...numbers);
-    const range = max - min;
-    
-    // Calculate standard deviation
-    const variance = numbers.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / numbers.length;
-    const stdDev = Math.sqrt(variance);
-    
-    resultsDiv.innerHTML = `
-        <div><strong style="color: var(--accent);">Count:</strong> ${numbers.length}</div>
-        <div><strong style="color: var(--accent);">Sum:</strong> ${sum.toFixed(2)}</div>
-        <div><strong style="color: var(--accent);">Mean:</strong> ${mean.toFixed(2)}</div>
-        <div><strong style="color: var(--accent);">Median:</strong> ${median.toFixed(2)}</div>
-        <div><strong style="color: var(--accent);">Std Dev:</strong> ${stdDev.toFixed(2)}</div>
-        <div><strong style="color: var(--accent);">Min:</strong> ${min}</div>
-        <div><strong style="color: var(--accent);">Max:</strong> ${max}</div>
-        <div><strong style="color: var(--accent);">Range:</strong> ${range.toFixed(2)}</div>
-    `;
-}
-
-// Chart Generator - Fixed
-function generateChart() {
-    const input = document.getElementById('chart-data').value;
-    const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
-    
-    const canvas = document.getElementById('quick-chart');
-    
-    if (numbers.length === 0) {
-        alert('Please enter valid numbers separated by commas (e.g., 10,20,30,40)');
-        return;
-    }
-    
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.parentElement.offsetWidth - 40;
-    canvas.height = 300;
-    
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    const max = Math.max(...numbers);
-    const padding = 40;
-    const chartHeight = canvas.height - padding * 2;
-    const chartWidth = canvas.width - padding * 2;
-    const barWidth = chartWidth / numbers.length - 10;
-    const heightScale = chartHeight / max;
-    
-    // Draw bars
-    numbers.forEach((num, i) => {
-        const barHeight = num * heightScale;
-        const x = padding + i * (barWidth + 10);
-        const y = canvas.height - padding - barHeight;
-        
-        // Draw bar with gradient
-        const gradient = ctx.createLinearGradient(x, y, x, canvas.height - padding);
-        gradient.addColorStop(0, '#64ffda');
-        gradient.addColorStop(1, '#4dd8ba');
-        
-        ctx.fillStyle = gradient;
-        ctx.fillRect(x, y, barWidth, barHeight);
-        
-        // Draw value on top
-        ctx.fillStyle = '#ccd6f6';
-        ctx.font = 'bold 14px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(num.toString(), x + barWidth/2, y - 10);
-        
-        // Draw index at bottom
-        ctx.fillStyle = '#8892b0';
-        ctx.font = '12px Arial';
-        ctx.fillText((i + 1).toString(), x + barWidth/2, canvas.height - padding + 20);
-    });
-    
-    // Draw axes
-    ctx.strokeStyle = '#8892b0';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(padding, padding);
-    ctx.lineTo(padding, canvas.height - padding);
-    ctx.lineTo(canvas.width - padding, canvas.height - padding);
-    ctx.stroke();}
-    </script>
 </body>
 </html>
