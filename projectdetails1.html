@@ -1,668 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Details - Anas Ibrahim</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consumer Financial Complaints — Anas Ibrahim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root{
+    --bg:#0B0C0F;
+    --surface:#15171B;
+    --surface-2:#1D2025;
+    --line:#2A2D33;
+    --on:#E8EAED;
+    --on-variant:#9AA0A6;
+    --primary:#A8C7FA;
+    --primary-on:#06204A;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+    --mx:50%; --my:50%;
+  }
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--on); font-family:var(--sans); font-weight:400;
+    line-height:1.6; overflow-x:hidden;
+  }
+  ::selection{background:var(--primary); color:var(--primary-on);}
+  a{color:inherit; text-decoration:none;}
+  p{color:var(--on-variant);}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #0a1628;
-            color: #e0e6ed;
-            overflow-x: hidden;
-        }
+  .glow{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(480px circle at var(--mx) var(--my), rgba(168,199,250,0.06), transparent 70%);
+  }
 
-        /* Particle Background */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
+  .magnetic{transition:transform .25s cubic-bezier(.2,.8,.2,1);}
 
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(96, 165, 250, 0.3);
-            border-radius: 50%;
-        }
+  /* ===== nav: pill ===== */
+  nav{position:fixed; top:1.2rem; left:0; right:0; z-index:1000; display:flex; justify-content:center; padding:0 1rem;}
+  .pill-nav{
+    display:flex; align-items:center; gap:0.2rem; background:rgba(21,23,27,0.75);
+    backdrop-filter:blur(16px); border:1px solid var(--line); border-radius:999px; padding:0.4rem 0.5rem 0.4rem 1.1rem;
+  }
+  .pill-nav .mark{font-size:0.92rem; font-weight:500; margin-right:1.2rem; white-space:nowrap;}
+  .pill-nav .mark .dot{color:var(--primary);}
+  .pill-nav ul{display:flex; list-style:none; gap:0.1rem;}
+  .pill-nav a{
+    font-size:0.85rem; color:var(--on-variant); padding:0.55em 1.1em; border-radius:999px; transition:background .2s, color .2s;
+  }
+  .pill-nav a:hover, .pill-nav a.active{background:var(--surface-2); color:var(--on);}
+  @media (max-width:760px){ .pill-nav ul{display:none;} }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 22, 40, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 5%;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(96, 165, 250, 0.1);
-        }
+  main{position:relative; z-index:1; padding-top:9rem; padding-bottom:6rem;}
+  .container{max-width:980px; margin:0 auto; padding:0 2rem;}
 
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  .eyebrow{font-family:var(--mono); font-size:0.78rem; color:var(--primary); letter-spacing:0.04em; margin-bottom:1.2rem;}
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #34d399;
-            text-decoration: none;
-        }
+  h1, h2, h3{font-weight:350; letter-spacing:-0.01em; line-height:1.15;}
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
+  /* fade-rise reveal */
+  .rv{opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease;}
+  .rv.in{opacity:1; transform:translateY(0);}
+  .rv-d1.in{transition-delay:.08s;} .rv-d2.in{transition-delay:.16s;} .rv-d3.in{transition-delay:.24s;}
 
-        .nav-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.95rem;
-        }
+  /* ===== back link ===== */
+  .back-button{
+    display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:0.82rem;
+    color:var(--on-variant); margin-bottom:2.5rem; transition:gap .25s ease, color .2s ease;
+  }
+  .back-button:hover{gap:0.8rem; color:var(--primary);}
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #34d399;
-        }
+  /* ===== project header ===== */
+  .project-header{text-align:center; margin-bottom:3rem;}
+  .project-icon{font-size:2.6rem; margin-bottom:1rem;}
+  .project-header h1{font-size:clamp(2rem, 5vw, 2.8rem); max-width:24ch; margin:0 auto 1.4rem;}
 
-        /* Main Content */
-        main {
-            position: relative;
-            z-index: 1;
-            padding-top: 100px;
-            min-height: 100vh;
-            padding-bottom: 4rem;
-        }
+  .project-meta{display:flex; justify-content:center; gap:1.8rem; margin-bottom:1.6rem; flex-wrap:wrap;}
+  .meta-item{
+    display:flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:0.8rem; color:var(--on-variant);
+  }
+  .meta-item i{color:var(--primary);}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 5%;
-        }
+  .project-tags{display:flex; justify-content:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:2.2rem;}
+  .project-tags .tag{
+    font-family:var(--mono); font-size:0.7rem; color:var(--on-variant);
+    border:1px solid var(--line); padding:0.4em 0.9em; border-radius:999px;
+  }
 
-        /* Back Button */
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #34d399;
-            text-decoration: none;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
+  .action-buttons{display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap;}
+  .btn{
+    font-size:0.9rem; padding:0.8em 1.6em; border-radius:999px; display:inline-flex; align-items:center; gap:0.55em;
+    border:1px solid var(--line); color:var(--on); transition:transform .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .btn-primary{background:var(--primary); color:var(--primary-on); border-color:var(--primary); font-weight:500;}
+  .btn:hover{transform:translateY(-2px); border-color:var(--primary);}
 
-        .back-button:hover {
-            gap: 0.75rem;
-        }
+  /* ===== hero image ===== */
+  .project-image-container{
+    margin:3rem 0; border-radius:24px; overflow:hidden; border:1px solid var(--line); background:var(--surface);
+  }
+  .project-image-container img{width:100%; height:auto; display:block;}
 
-        /* Project Header */
-        .project-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
+  /* ===== content sections ===== */
+  .content-section{
+    border:1px solid var(--line); border-radius:24px; background:var(--surface);
+    padding:2.2rem; margin-bottom:1.6rem; transition:border-color .3s ease;
+  }
+  .content-section:hover{border-color:var(--surface-2);}
+  .content-section h2{
+    font-size:1.5rem; margin-bottom:1.4rem; display:flex; align-items:center; gap:0.7rem; font-weight:500;
+  }
+  .content-section h2 .ic{color:var(--primary); font-size:1.2rem;}
+  .content-section h3{font-size:1.1rem; margin:1.6rem 0 0.9rem; color:var(--primary); font-weight:500;}
+  .content-section p{margin-bottom:1rem; font-size:0.96rem;}
 
-        .project-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
+  .content-section ul{list-style:none;}
+  .content-section li{
+    color:var(--on-variant); line-height:1.8; padding-left:1.5rem; margin-bottom:0.7rem; position:relative; font-size:0.95rem;
+  }
+  .content-section li::before{
+    content:'▹'; position:absolute; left:0; color:var(--primary); font-weight:bold;
+  }
+  .content-section li strong{color:var(--on);}
 
-        .project-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #60a5fa, #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+  /* ===== metrics ===== */
+  .metrics-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; margin-top:0.5rem;}
+  .metric-card{
+    border:1px solid var(--line); border-radius:18px; padding:1.6rem; text-align:center; background:var(--bg);
+    transition:border-color .25s ease, transform .25s ease;
+  }
+  .metric-card:hover{border-color:var(--primary); transform:translateY(-3px);}
+  .metric-value{font-size:1.9rem; font-weight:400; color:var(--primary); margin-bottom:0.4rem;}
+  .metric-label{font-family:var(--mono); font-size:0.7rem; color:var(--on-variant); text-transform:uppercase; letter-spacing:0.05em;}
 
-        .project-meta {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
+  /* ===== tech stack ===== */
+  .tech-stack{display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:0.9rem; margin-top:0.5rem;}
+  .tech-item{
+    border:1px solid var(--line); border-radius:16px; padding:1.2rem; text-align:center; background:var(--bg);
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .tech-item:hover{transform:translateY(-4px); border-color:var(--primary);}
+  .tech-icon{font-size:1.6rem; margin-bottom:0.5rem; color:var(--primary);}
+  .tech-name{font-family:var(--mono); font-size:0.78rem; color:var(--on);}
 
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
+  /* ===== gallery ===== */
+  .gallery{display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1rem; margin-top:0.5rem;}
+  .gallery-item{
+    border-radius:16px; overflow:hidden; border:1px solid var(--line); cursor:pointer;
+    transition:border-color .3s ease, transform .3s ease;
+  }
+  .gallery-item:hover{border-color:var(--primary); transform:translateY(-4px);}
+  .gallery-item img{width:100%; height:200px; object-fit:cover; display:block; transition:transform .4s ease;}
+  .gallery-item:hover img{transform:scale(1.06);}
 
-        .project-tags {
-            display: flex;
-            justify-content: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
+  @media (max-width:600px){
+    .action-buttons{flex-direction:column; width:100%;}
+    .btn{width:100%; justify-content:center;}
+    .project-meta{gap:1rem;}
+  }
 
-        .tag {
-            padding: 0.5rem 1rem;
-            background: rgba(96, 165, 250, 0.15);
-            color: #60a5fa;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            border: 1px solid rgba(96, 165, 250, 0.3);
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.75rem 2rem;
-            border: 1px solid #34d399;
-            background: rgba(52, 211, 153, 0.1);
-            color: #34d399;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn:hover {
-            background: #34d399;
-            color: #0a1628;
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background: #34d399;
-            color: #0a1628;
-        }
-
-        .btn-primary:hover {
-            background: #2bb380;
-        }
-
-        * Project Image */
-        .project-image-container {
-            margin: 3rem 0;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(96, 165, 250, 0.2);
-        }
-
-        .project-image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Content Sections */
-        .content-section {
-            background: rgba(15, 30, 50, 0.6);
-            border: 1px solid rgba(96, 165, 250, 0.2);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .content-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: #34d399;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.3rem;
-            margin: 1.5rem 0 1rem;
-            color: #60a5fa;
-        }
-
-        .content-section p {
-            color: #94a3b8;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .content-section ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .content-section li {
-            color: #94a3b8;
-            line-height: 1.8;
-            padding-left: 1.5rem;
-            margin-bottom: 0.75rem;
-            position: relative;
-        }
-
-        .content-section li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: #34d399;
-            font-weight: bold;
-        }
-
-        /* Metrics Grid */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .metric-card {
-            background: rgba(96, 165, 250, 0.1);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid rgba(96, 165, 250, 0.2);
-            text-align: center;
-        }
-
-        .metric-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #34d399;
-            margin-bottom: 0.5rem;
-        }
-
-        .metric-label {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
-        /* Tech Stack */
-        .tech-stack {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .tech-item {
-            background: rgba(52, 211, 153, 0.1);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(52, 211, 153, 0.3);
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .tech-item:hover {
-            transform: translateY(-5px);
-            border-color: #34d399;
-        }
-
-        .tech-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .tech-name {
-            color: #e0e6ed;
-            font-size: 0.9rem;
-        }
-
-        /* Gallery */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .gallery-item {
-            height: 200px;
-            background: linear-gradient(135deg, #1e3a8a, #0f172a);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(96, 165, 250, 0.2);
-            cursor: pointer;
-            transition: all 0.3s;
-            overflow: hidden;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.05);
-            border-color: #34d399;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .project-header h1 {
-                font-size: 2rem;
-            }
-
-            .project-meta {
-                gap: 1rem;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .project-image {
-                height: 250px;
-                font-size: 4rem;
-            }
-
-            .metrics-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important;} .rv{opacity:1 !important; transform:none !important;} }
+  a:focus-visible, button:focus-visible{outline:2px solid var(--primary); outline-offset:2px;}
+</style>
 </head>
 <body>
-    <!-- Particle Background -->
-    <div id="particles"></div>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="/" class="logo">AI</a>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <!-- <li><a href="skills.html">Skills</a></li>
-                <li><a href="projects.html" class="active">Projects</a></li>
-                <li><a href="experience.html">Experience</a></li>
-                <li><a href="contact.html">Contact</a></li> -->
-            </ul>
-        </div>
-    </nav>
+<div class="glow" id="glow"></div>
 
-    <!-- Main Content -->
-    <main>
-        <div class="container">
-            <a href="/projects" class="back-button">
-                ← Back to Projects
-            </a>
-
-            <!-- Project Header -->
-            <div class="project-header">
-                <div class="project-icon">📊</div>
-                <h1>Consumer Financial Complaints - Zoomchart</h1>
-                
-                <div class="project-meta">
-                    <div class="meta-item">
-                        <span>📅</span>
-                        <span>October 2025</span>
-                    </div>
-                    <div class="meta-item">
-                        <span>⏱️</span>
-                        <span>1 months</span>
-                    </div>
-                    <div class="meta-item">
-                        <span>👤</span>
-                        <span>Individual</span>
-                    </div>
-                </div>
-
-                <div class="project-tags">
-                    <span class="tag">Power BI</span>
-                    <span class="tag">SQL</span>
-                    <span class="tag">Data Visualization</span>
-                    <span class="tag">Business Intelligence</span>
-                </div>
-
-                <div class="action-buttons">
-                    <a href="https://app.powerbi.com/view?r=eyJrIjoiYmFiN2ZlNDctYzNkZi00MDBkLTg2MGYtZmJiY2UxOTEwM2U4IiwidCI6IjQ2NTRiNmYxLTBlNDctNDU3OS1hOGExLTAyZmU5ZDk0M2M3YiIsImMiOjl9" class="btn btn-primary">
-                        <span>🔗</span>
-                        View Live Dashboard
-                    </a>
-                    <a href="https://app.powerbi.com/view?r=eyJrIjoiYmFiN2ZlNDctYzNkZi00MDBkLTg2MGYtZmJiY2UxOTEwM2U4IiwidCI6IjQ2NTRiNmYxLTBlNDctNDU3OS1hOGExLTAyZmU5ZDk0M2M3YiIsImMiOjl9" class="btn">
-                        <span>📄</span>
-                        Download Report
-                    </a>
-                </div>
-            </div>
-
-            <!-- Project Image -->
-        <div class="project-image-container">
-  <div>
-    <img src="images/Screenshot 2025-10-25 022634.png" alt="Project Screenshot">
+<nav>
+  <div class="pill-nav">
+    <span class="mark">Anas<span class="dot">.</span></span>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="projects.html" class="active">Work</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
   </div>
-</div>
+</nav>
 
-            <!-- Overview Section -->
-            <div class="content-section">
-                <h2><span>📋</span> Project Overview</h2>
-                <p>
-                    This project involves acting as a data analyst for the Consumer Financial Protection Bureau (CFPB). The primary goal is to analyze a comprehensive dataset of consumer complaints regarding financial products and services across the United States.
-                </p>
-                <p>
-                    The analysis focuses on identifying key trends, patterns, and areas of concern. This includes evaluating the timeliness and effectiveness of company responses, identifying geographic hotspots for complaints, and pinpointing which financial products and issues are most problematic for consumers.
-                </p>
+<main>
+  <div class="container">
+    <a href="projects.html" class="back-button rv in"><i class="fas fa-arrow-left"></i> Back to Projects</a>
 
-                <h3>Problem Statement</h3>
-                <p>
-                    The CFPB collects thousands of complaints, but this raw data is difficult to act upon without a structured analysis. The core problem is to translate this large volume of complaint data into clear, actionable insights.
-                </p>
+    <!-- Project Header -->
+    <div class="project-header">
+      <div class="project-icon rv in">📊</div>
+      <div class="eyebrow rv in" style="display:flex; justify-content:center;">CASE STUDY</div>
+      <h1 class="rv in">Consumer Financial Complaints — Zoomchart</h1>
 
-                <h3>Solution</h3>
-                <p>
-                    Created an interactive Power BI dashboard that consolidates data from multiple sources, providing real-time visibility into sales performance with drill-down capabilities for detailed analysis.
-                </p>
-            </div>
+      <div class="project-meta rv in rv-d1">
+        <div class="meta-item"><i class="fas fa-calendar"></i><span>October 2025</span></div>
+        <div class="meta-item"><i class="fas fa-clock"></i><span>1 month</span></div>
+        <div class="meta-item"><i class="fas fa-user"></i><span>Individual</span></div>
+      </div>
 
-            <!-- Key Metrics -->
-            <div class="content-section">
-                <h2><span>📊</span> Key Results & Impact</h2>
-                <div class="metrics-grid">
-                    
-                    <div class="metric-card">
-                        <div class="metric-value">20+</div>
-                        <div class="metric-label">KPIs Tracked</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">75%</div>
-                        <div class="metric-label">User Satisfaction</div>
-                    </div>
-                </div>
-            </div>
+      <div class="project-tags rv in rv-d1">
+        <span class="tag">Power BI</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Data Visualization</span>
+        <span class="tag">Business Intelligence</span>
+      </div>
 
-            <!-- Features Section -->
-            <div class="content-section">
-                <h2><span>✨</span> Key Features</h2>
-                <ul>
-                    <li>Dual-page design for high-level "Overview" and granular "Strategic Insights".</li>
-                    <li>At-a-glance KPIs display critical metrics like Total Complaints and Resolution Rate.</li>
-                    <li>Geographic map and bar charts pinpoint state-level complaint hotspots.</li>
-                    <li>Line and bar charts reveal key seasonal (summer peak) and long-term (2017-2023) trends</li>
-                    <li>Treemap and tables drill down into the most common products, issues, and sub-issues.</li>
-                    <li>Donut chart clearly identifies the Web (72.66%) as the primary complaint channel.</li>
-                </ul>
-            </div>
+      <div class="action-buttons rv in rv-d2">
+        <a href="https://app.powerbi.com/view?r=eyJrIjoiYmFiN2ZlNDctYzNkZi00MDBkLTg2MGYtZmJiY2UxOTEwM2U4IiwidCI6IjQ2NTRiNmYxLTBlNDctNDU3OS1hOGExLTAyZmU5ZDk0M2M3YiIsImMiOjl9" class="btn btn-primary">
+          <i class="fas fa-link"></i> View Live Dashboard
+        </a>
+        <a href="https://app.powerbi.com/view?r=eyJrIjoiYmFiN2ZlNDctYzNkZi00MDBkLTg2MGYtZmJiY2UxOTEwM2U4IiwidCI6IjQ2NTRiNmYxLTBlNDctNDU3OS1hOGExLTAyZmU5ZDk0M2M3YiIsImMiOjl9" class="btn">
+          <i class="fas fa-file-arrow-down"></i> Download Report
+        </a>
+      </div>
+    </div>
 
-            <!-- Technical Implementation -->
-            <div class="content-section">
-                <h2><span>🔧</span> Technical Implementation</h2>
-                
-                <h3>Data Pipeline</h3>
-                <ul>
-                    <li>Extracted data from multiple sources including SQL Server, Excel files</li>
-                    <li>Implemented ETL processes using Power Query for data cleaning and transformation</li>
-                    <li>Created a star schema data model for optimal query performance</li>
-                    <li>Set up automated data refresh schedules using Power BI Service</li>
-                </ul>
+    <!-- Project Image -->
+    <div class="project-image-container rv in rv-d3">
+      <img src="images/Screenshot 2025-10-25 022634.png" alt="Project Screenshot">
+    </div>
 
-                <h3>Analysis Techniques</h3>
-                <ul>
-                    <li>Time series analysis for trend identification and forecasting</li>
-                    <li>The data model enables cross-filtering across the entire report.</li>
-                    <li>Map visual and a bar chart to spatially identify complaint hotspots</li>
-                    <li>DAX calculations for complex business metrics and KPIs</li>
-                </ul>
+    <!-- Overview Section -->
+    <div class="content-section rv">
+      <h2><span class="ic"><i class="fas fa-list-check"></i></span> Project Overview</h2>
+      <p>
+        This project involves acting as a data analyst for the Consumer Financial Protection Bureau (CFPB). The primary goal is to analyze a comprehensive dataset of consumer complaints regarding financial products and services across the United States.
+      </p>
+      <p>
+        The analysis focuses on identifying key trends, patterns, and areas of concern. This includes evaluating the timeliness and effectiveness of company responses, identifying geographic hotspots for complaints, and pinpointing which financial products and issues are most problematic for consumers.
+      </p>
 
-                <h3>Technologies Used</h3>
-                <div class="tech-stack">
-                    <div class="tech-item">
-                        <div class="tech-icon">📊</div>
-                        <div class="tech-name">Power BI</div>
-                    </div>
-                    <div class="tech-item">
-                        <div class="tech-icon">🗄️</div>
-                        <div class="tech-name">SQL Server</div>
-                    </div>
-                    <div class="tech-item">
-                        <div class="tech-icon">📈</div>
-                        <div class="tech-name">Excel</div>
-                    </div>
-                    
-                    <div class="tech-item">
-                        <div class="tech-icon">🔄</div>
-                        <div class="tech-name">Power Query</div>
-                    </div>
-                    <div class="tech-item">
-                        <div class="tech-icon">📐</div>
-                        <div class="tech-name">DAX</div>
-                    </div>
-                </div>
-            </div>
+      <h3>Problem Statement</h3>
+      <p>
+        The CFPB collects thousands of complaints, but this raw data is difficult to act upon without a structured analysis. The core problem is to translate this large volume of complaint data into clear, actionable insights.
+      </p>
 
-            <!-- Challenges Section -->
-            <!-- <div class="content-section">
-                <h2><span>⚡</span> Challenges & Solutions</h2>
-                
-                <h3>Challenge 1: Data Quality Issues</h3>
-                <p>
-                    Initial data contained inconsistencies, duplicates, and missing values from multiple legacy systems.
-                </p>
-                <p>
-                    <strong>Solution:</strong> Implemented robust data validation rules in Power Query, created data quality reports, and worked with source system owners to improve data entry processes.
-                </p>
+      <h3>Solution</h3>
+      <p>
+        Created an interactive Power BI dashboard that consolidates data from multiple sources, providing real-time visibility into sales performance with drill-down capabilities for detailed analysis.
+      </p>
+    </div>
 
-                <h3>Challenge 2: Performance Optimization</h3>
-                <p>
-                    Dashboard was initially slow with large datasets containing millions of transactions.
-                </p>
-                <p>
-                    <strong>Solution:</strong> Optimized the data model using aggregations, implemented incremental refresh, and created calculated columns vs measures strategically for better performance.
-                </p>
-
-                <h3>Challenge 3: User Adoption</h3>
-                <p>
-                    Initial resistance from sales team unfamiliar with BI tools.
-                </p>
-                <p>
-                    <strong>Solution:</strong> Conducted training sessions, created user guides, and incorporated feedback loops to make the dashboard more intuitive and user-friendly.
-                </p>
-            </div> -->
-
-            <!-- Lessons Learned -->
-            <div class="content-section">
-                <h2><span>💡</span> Lessons  Learned</h2>
-                <ul>
-                    <li>Importance of stakeholder engagement throughout the development process</li>
-                    <li>Value of iterative development with regular feedback cycles</li>
-                    <li>Need for comprehensive data documentation and metadata management</li>
-                    <li>Significance of performance testing with production-scale data early in development</li>
-                    <li>Critical role of user training and change management in BI project success</li>
-                </ul>
-            </div>
-
-            <!-- Gallery Section -->
-            <div class="content-section">
-                <h2><span>🖼️</span> Dashboard Screenshots</h2>
-                <div class="gallery">
-                    <div class="gallery-item"><img src="images/Screenshot 2025-10-25 022634.png" alt="Overview"></div>
-                    <div class="gallery-item"><img src="images/Screenshot 2025-10-25 022623.png" alt="Insights"></div>
-                    
-                </div>
-            </div>
-
-            
-
+    <!-- Key Metrics -->
+    <div class="content-section rv">
+      <h2><span class="ic"><i class="fas fa-chart-line"></i></span> Key Results &amp; Impact</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">20+</div>
+          <div class="metric-label">KPIs Tracked</div>
         </div>
-    </main>
+        <div class="metric-card">
+          <div class="metric-value">75%</div>
+          <div class="metric-label">User Satisfaction</div>
+        </div>
+      </div>
+    </div>
 
-    <script>
-        // Particle Animation
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 50;
+    <!-- Features Section -->
+    <div class="content-section rv">
+      <h2><span class="ic"><i class="fas fa-sparkles"></i></span> Key Features</h2>
+      <ul>
+        <li>Dual-page design for high-level "Overview" and granular "Strategic Insights".</li>
+        <li>At-a-glance KPIs display critical metrics like Total Complaints and Resolution Rate.</li>
+        <li>Geographic map and bar charts pinpoint state-level complaint hotspots.</li>
+        <li>Line and bar charts reveal key seasonal (summer peak) and long-term (2017-2023) trends</li>
+        <li>Treemap and tables drill down into the most common products, issues, and sub-issues.</li>
+        <li>Donut chart clearly identifies the Web (72.66%) as the primary complaint channel.</li>
+      </ul>
+    </div>
 
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            particlesContainer.appendChild(particle);
+    <!-- Technical Implementation -->
+    <div class="content-section rv">
+      <h2><span class="ic"><i class="fas fa-gears"></i></span> Technical Implementation</h2>
 
-            animateParticle(particle);
-        }
+      <h3>Data Pipeline</h3>
+      <ul>
+        <li>Extracted data from multiple sources including SQL Server, Excel files</li>
+        <li>Implemented ETL processes using Power Query for data cleaning and transformation</li>
+        <li>Created a star schema data model for optimal query performance</li>
+        <li>Set up automated data refresh schedules using Power BI Service</li>
+      </ul>
 
-        function animateParticle(particle) {
-            const duration = 15000 + Math.random() * 15000;
-            const startX = parseFloat(particle.style.left);
-            const startY = parseFloat(particle.style.top);
-            const endX = Math.random() * 100;
-            const endY = Math.random() * 100;
+      <h3>Analysis Techniques</h3>
+      <ul>
+        <li>Time series analysis for trend identification and forecasting</li>
+        <li>The data model enables cross-filtering across the entire report.</li>
+        <li>Map visual and a bar chart to spatially identify complaint hotspots</li>
+        <li>DAX calculations for complex business metrics and KPIs</li>
+      </ul>
 
-            particle.animate([
-                { left: startX + '%', top: startY + '%', opacity: 0 },
-                { opacity: 0.6, offset: 0.1 },
-                { opacity: 0.6, offset: 0.9 },
-                { left: endX + '%', top: endY + '%', opacity: 0 }
-            ], {
-                duration: duration,
-                iterations: Infinity
-            });
-        }
+      <h3>Technologies Used</h3>
+      <div class="tech-stack">
+        <div class="tech-item">
+          <div class="tech-icon"><i class="fas fa-chart-column"></i></div>
+          <div class="tech-name">Power BI</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon"><i class="fas fa-database"></i></div>
+          <div class="tech-name">SQL Server</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon"><i class="fas fa-table-cells"></i></div>
+          <div class="tech-name">Excel</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon"><i class="fas fa-arrows-rotate"></i></div>
+          <div class="tech-name">Power Query</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon"><i class="fas fa-ruler-combined"></i></div>
+          <div class="tech-name">DAX</div>
+        </div>
+      </div>
+    </div>
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+    <!-- Lessons Learned -->
+    <div class="content-section rv">
+      <h2><span class="ic"><i class="fas fa-lightbulb"></i></span> Lessons Learned</h2>
+      <ul>
+        <li>Importance of stakeholder engagement throughout the development process</li>
+        <li>Value of iterative development with regular feedback cycles</li>
+        <li>Need for comprehensive data documentation and metadata management</li>
+        <li>Significance of performance testing with production-scale data early in development</li>
+        <li>Critical role of user training and change management in BI project success</li>
+      </ul>
+    </div>
+
+    <!-- Gallery Section -->
+    <div class="content-section rv">
+      <h2><span class="ic"><i class="fas fa-images"></i></span> Dashboard Screenshots</h2>
+      <div class="gallery">
+        <div class="gallery-item"><img src="images/Screenshot 2025-10-25 022634.png" alt="Overview"></div>
+        <div class="gallery-item"><img src="images/Screenshot 2025-10-25 022623.png" alt="Insights"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  document.addEventListener('mousemove', e=>{
+    document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+    document.documentElement.style.setProperty('--my', e.clientY + 'px');
+  });
+
+  /* magnetic pull on buttons */
+  document.querySelectorAll('.btn').forEach(btn=>{
+    btn.classList.add('magnetic');
+    btn.addEventListener('mousemove', e=>{
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width/2;
+      const y = e.clientY - r.top - r.height/2;
+      btn.style.transform = `translate(${x*0.2}px, ${y*0.3}px)`;
+    });
+    btn.addEventListener('mouseleave', ()=> btn.style.transform = '');
+  });
+
+  /* simple lightbox for gallery */
+  document.querySelectorAll('.gallery-item img').forEach(img=>{
+    img.addEventListener('click', ()=>{
+      window.open(img.src, '_blank');
+    });
+  });
+
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); });
+  }, {threshold:0.12, rootMargin:'0px 0px -50px 0px'});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+
 </body>
 </html>
