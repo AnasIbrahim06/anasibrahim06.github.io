@@ -1,347 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Anas Ibrahim</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Anas Ibrahim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root{
+    --bg:#0B0C0F;
+    --surface:#15171B;
+    --surface-2:#1D2025;
+    --line:#2A2D33;
+    --on:#E8EAED;
+    --on-variant:#9AA0A6;
+    --primary:#A8C7FA;
+    --primary-on:#06204A;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+    --mx:50%; --my:50%;
+  }
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--on); font-family:var(--sans); font-weight:400;
+    line-height:1.6; overflow-x:hidden;
+  }
+  ::selection{background:var(--primary); color:var(--primary-on);}
+  a{color:inherit; text-decoration:none;}
+  p{color:var(--on-variant);}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #0a1628;
-            color: #e0e6ed;
-            overflow-x: hidden;
-        }
+  /* ambient glow that drifts with the cursor */
+  .glow{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(480px circle at var(--mx) var(--my), rgba(168,199,250,0.06), transparent 70%);
+  }
 
-        /* Particle Background */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
+  .magnetic{transition:transform .25s cubic-bezier(.2,.8,.2,1);}
 
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(96, 165, 250, 0.3);
-            border-radius: 50%;
-        }
+  /* ===== nav: pill ===== */
+  nav{position:fixed; top:1.2rem; left:0; right:0; z-index:1000; display:flex; justify-content:center; padding:0 1rem;}
+  .pill-nav{
+    display:flex; align-items:center; gap:0.2rem; background:rgba(21,23,27,0.75);
+    backdrop-filter:blur(16px); border:1px solid var(--line); border-radius:999px; padding:0.4rem 0.5rem 0.4rem 1.1rem;
+  }
+  .pill-nav .mark{font-size:0.92rem; font-weight:500; margin-right:1.2rem; white-space:nowrap;}
+  .pill-nav .mark .dot{color:var(--primary);}
+  .pill-nav ul{display:flex; list-style:none; gap:0.1rem;}
+  .pill-nav a{
+    font-size:0.85rem; color:var(--on-variant); padding:0.55em 1.1em; border-radius:999px; transition:background .2s, color .2s;
+  }
+  .pill-nav a:hover, .pill-nav a.active{background:var(--surface-2); color:var(--on);}
+  @media (max-width:760px){ .pill-nav ul{display:none;} }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 22, 40, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 5%;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(96, 165, 250, 0.1);
-        }
+  main{position:relative; z-index:1; padding-top:9rem;}
+  .container{max-width:1180px; margin:0 auto; padding:0 2rem 6rem;}
 
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  .eyebrow{font-family:var(--mono); font-size:0.78rem; color:var(--primary); letter-spacing:0.04em; margin-bottom:1.2rem;}
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #34d399;
-            text-decoration: none;
-        }
+  h1, h2{font-weight:350; letter-spacing:-0.01em; line-height:1;}
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
+  .page-header{text-align:center; margin-bottom:3rem;}
+  .page-header h1{font-size:clamp(2.4rem, 6vw, 3.4rem); margin-bottom:1rem;}
+  .page-header .lead{font-size:1.05rem; max-width:48ch; margin:0 auto;}
 
-        .nav-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.95rem;
-        }
+  /* fade-rise reveal */
+  .rv{opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease;}
+  .rv.in{opacity:1; transform:translateY(0);}
+  .rv-d1.in{transition-delay:.08s;} .rv-d2.in{transition-delay:.16s;} .rv-d3.in{transition-delay:.24s;}
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #34d399;
-        }
+  /* ===== filter pills ===== */
+  .filter-container{display:flex; justify-content:center; gap:0.6rem; margin-bottom:3rem; flex-wrap:wrap;}
+  .filter-btn{
+    font-family:var(--mono); font-size:0.78rem; padding:0.6em 1.3em; border-radius:999px;
+    background:var(--surface); border:1px solid var(--line); color:var(--on-variant);
+    cursor:pointer; transition:background .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .filter-btn:hover{border-color:var(--primary); color:var(--on);}
+  .filter-btn.active{background:var(--primary); border-color:var(--primary); color:var(--primary-on);}
 
-        /* Main Content */
-        main {
-            position: relative;
-            z-index: 1;
-            padding-top: 100px;
-            min-height: 100vh;
-        }
+  /* ===== projects grid ===== */
+  .projects-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(330px, 1fr)); gap:1.2rem;
+  }
+  .project-card{
+    border:1px solid var(--line); border-radius:24px; background:var(--surface);
+    overflow:hidden; display:flex; flex-direction:column;
+    transition:transform .35s ease, border-color .35s ease, background .35s ease;
+  }
+  .project-card:hover{transform:translateY(-6px); border-color:var(--primary); background:var(--surface-2);}
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 5%;
-        }
+  .project-image{
+    width:100%; height:170px; display:flex; align-items:center; justify-content:center;
+    font-size:2.4rem; position:relative; overflow:hidden; background:var(--bg);
+    border-bottom:1px solid var(--line);
+  }
+  .project-image::before{
+    content:''; position:absolute; inset:-50%; width:200%; height:200%;
+    background:radial-gradient(circle, rgba(168,199,250,0.10) 0%, transparent 70%);
+    animation:pulseglow 4s ease-in-out infinite;
+  }
+  @keyframes pulseglow{
+    0%,100%{transform:scale(1); opacity:0.5;}
+    50%{transform:scale(1.2); opacity:0.85;}
+  }
+  .project-image span{position:relative; z-index:1;}
 
-        .page-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
+  .project-content{padding:1.6rem; display:flex; flex-direction:column; flex:1;}
+  .project-tags{display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem;}
+  .project-tags .tag{
+    font-family:var(--mono); font-size:0.68rem; color:var(--on-variant);
+    border:1px solid var(--line); padding:0.3em 0.7em; border-radius:999px;
+  }
+  .project-content h3{font-weight:500; font-size:1.15rem; margin-bottom:0.6rem;}
+  .project-content p{font-size:0.92rem; margin-bottom:1.2rem; flex:1;}
 
-        .page-header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #60a5fa, #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+  .project-links{display:flex; gap:0.7rem; margin-top:auto;}
+  .project-link{
+    font-size:0.82rem; padding:0.6em 1.2em; border-radius:999px; display:inline-flex; align-items:center; gap:0.45em;
+    border:1px solid var(--line); color:var(--on); transition:border-color .2s ease, background .2s ease, transform .2s ease;
+  }
+  .project-link.primary{background:var(--primary); color:var(--primary-on); border-color:var(--primary); font-weight:500;}
+  .project-link:hover{transform:translateY(-2px); border-color:var(--primary);}
 
-        .page-header p {
-            font-size: 1.2rem;
-            color: #94a3b8;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+  @media (max-width:600px){
+    .projects-grid{grid-template-columns:1fr;}
+  }
 
-        /* Filter Buttons */
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.75rem 1.5rem;
-            background: rgba(96, 165, 250, 0.1);
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            color: #94a3b8;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: rgba(52, 211, 153, 0.2);
-            border-color: #34d399;
-            color: #34d399;
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .project-card {
-            background: rgba(15, 30, 50, 0.6);
-            border: 1px solid rgba(96, 165, 250, 0.2);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.4s;
-            cursor: pointer;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: #34d399;
-            box-shadow: 0 10px 40px rgba(52, 211, 153, 0.2);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #1e3a8a, #0f172a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(52, 211, 153, 0.1) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            padding: 0.25rem 0.75rem;
-            background: rgba(96, 165, 250, 0.15);
-            color: #60a5fa;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            border: 1px solid rgba(96, 165, 250, 0.3);
-        }
-
-        .project-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-            color: #e0e6ed;
-        }
-
-        .project-content p {
-            color: #94a3b8;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .project-link {
-            padding: 0.5rem 1rem;
-            background: rgba(52, 211, 153, 0.1);
-            border: 1px solid #34d399;
-            color: #34d399;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-
-        .project-link:hover {
-            background: #34d399;
-            color: #0a1628;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .page-header h1 {
-                font-size: 2rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important;} .rv{opacity:1 !important; transform:none !important;} }
+  a:focus-visible, button:focus-visible{outline:2px solid var(--primary); outline-offset:2px;}
+</style>
 </head>
 <body>
-    <!-- Particle Background -->
-    <div id="particles"></div>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="/" class="logo">AI</a>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <!-- <li><a href="skills.html">Skills</a></li>
-                <li><a href="projects.html" class="active">Projects</a></li>
-                <li><a href="experience.html">Experience</a></li>
-                <li><a href="contact.html">Contact</a></li> -->
-            </ul>
-        </div>
-    </nav>
+<div class="glow" id="glow"></div>
 
-    <!-- Main Content -->
-    <main>
-        <div class="container">
-            <div class="page-header">
-                <h1>My Projects</h1>
-                <p>A showcase of data analysis projects demonstrating my expertise in transforming data into actionable insights</p>
-            </div>
+<nav>
+  <div class="pill-nav">
+    <span class="mark">Anas<span class="dot">.</span></span>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="projects.html" class="active">Work</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
 
-            <!-- Filter Buttons -->
-            <div class="filter-container">
-                <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="analysis">Data Analysis</button>
-                <button class="filter-btn" data-filter="visualization">Visualization</button>
-                <button class="filter-btn" data-filter="ml">Machine Learning</button>
-                <button class="filter-btn" data-filter="dashboard">Dashboards</button>
-            </div>
+<main>
+  <div class="container">
+    <div class="page-header">
+      <div class="eyebrow rv in">FEATURED WORK</div>
+      <h1 class="rv in">My Projects</h1>
+      <p class="lead rv in rv-d1">A showcase of data analysis projects demonstrating my expertise in transforming data into actionable insights.</p>
+    </div>
 
-            <!-- Projects Grid -->
-            <div class="projects-grid" id="projectsGrid">
-                <!-- Project cards will be generated by JavaScript -->
-            </div>
-        </div>
-    </main>
+    <div class="filter-container rv in rv-d2">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="analysis">Data Analysis</button>
+      <button class="filter-btn" data-filter="visualization">Visualization</button>
+      <button class="filter-btn" data-filter="ml">Machine Learning</button>
+      <button class="filter-btn" data-filter="dashboard">Dashboards</button>
+    </div>
 
-    <script>
-        // Particle Animation
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 50;
+    <div class="projects-grid rv in rv-d3" id="projectsGrid">
+      <!-- Project cards generated by JavaScript -->
+    </div>
+  </div>
+</main>
 
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            particlesContainer.appendChild(particle);
+<script>
+  document.addEventListener('mousemove', e=>{
+    document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+    document.documentElement.style.setProperty('--my', e.clientY + 'px');
+  });
 
-            animateParticle(particle);
-        }
+  /* magnetic pull on links/buttons */
+  document.querySelectorAll('.project-link, .filter-btn').forEach(btn=>{
+    btn.classList.add('magnetic');
+    btn.addEventListener('mousemove', e=>{
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width/2;
+      const y = e.clientY - r.top - r.height/2;
+      btn.style.transform = `translate(${x*0.15}px, ${y*0.2}px)`;
+    });
+    btn.addEventListener('mouseleave', ()=> btn.style.transform = '');
+  });
 
-        function animateParticle(particle) {
-            const duration = 15000 + Math.random() * 15000;
-            const startX = parseFloat(particle.style.left);
-            const startY = parseFloat(particle.style.top);
-            const endX = Math.random() * 100;
-            const endY = Math.random() * 100;
-
-            particle.animate([
-                { left: startX + '%', top: startY + '%', opacity: 0 },
-                { opacity: 0.6, offset: 0.1 },
-                { opacity: 0.6, offset: 0.9 },
-                { left: endX + '%', top: endY + '%', opacity: 0 }
-            ], {
-                duration: duration,
-                iterations: Infinity
-            });
-        }
-
-        // Project Data
-        // Project Data
-        const projects = [
+  // Project Data
+  const projects = [
     {
         title: 'Consumer Financial Complaints',
         description: 'Interactive Power BI dashboard analyzing company behavior and complaint across multiple regions.',
@@ -367,25 +216,26 @@
         category: ['analysis', 'dashboard', 'visualization'],
         icon: '📱',
         detailsLink: '/projectdetails3',
-        
     }
-];
-        
+  ];
 
-        // Render Projects
-function renderProjects(filter = 'all') {
+  // Render Projects
+  function renderProjects(filter = 'all') {
     const grid = document.getElementById('projectsGrid');
     grid.innerHTML = '';
 
-    const filteredProjects = filter === 'all' 
-        ? projects 
+    const filteredProjects = filter === 'all'
+        ? projects
         : projects.filter(p => p.category.includes(filter));
 
-    filteredProjects.forEach((project, idx) => {
+    filteredProjects.forEach((project) => {
         const card = document.createElement('div');
         card.className = 'project-card';
-        card.style.animationDelay = idx * 0.1 + 's';
-        
+
+        const demoLinkHtml = project.demoLink
+            ? `<a href="${project.demoLink}" class="project-link primary" target="_blank">Live Demo <i class="fas fa-arrow-up-right-from-square" style="font-size:0.7em;"></i></a>`
+            : '';
+
         card.innerHTML = `
             <div class="project-image">
                 <span>${project.icon}</span>
@@ -398,27 +248,45 @@ function renderProjects(filter = 'all') {
                 <p>${project.description}</p>
                 <div class="project-links">
                     <a href="${project.detailsLink}" class="project-link">View Details</a>
-                    <a href="${project.demoLink}" class="project-link" target="_blank">Live Demo</a>
+                    ${demoLinkHtml}
                 </div>
             </div>
         `;
-        
+
         grid.appendChild(card);
-    });
-}
 
-        // Filter Functionality
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderProjects(btn.dataset.filter);
-            });
+        /* re-apply magnetic effect to newly created links */
+        card.querySelectorAll('.project-link').forEach(btn=>{
+          btn.classList.add('magnetic');
+          btn.addEventListener('mousemove', e=>{
+            const r = btn.getBoundingClientRect();
+            const x = e.clientX - r.left - r.width/2;
+            const y = e.clientY - r.top - r.height/2;
+            btn.style.transform = `translate(${x*0.15}px, ${y*0.2}px)`;
+          });
+          btn.addEventListener('mouseleave', ()=> btn.style.transform = '');
         });
+    });
+  }
 
-        // Initial render
-        renderProjects();
-    </script>
+  // Filter Functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderProjects(btn.dataset.filter);
+    });
+  });
+
+  // Initial render
+  renderProjects();
+
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); });
+  }, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+
 </body>
 </html>
